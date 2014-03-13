@@ -6,7 +6,7 @@ build.*
 Thumbs.db
 
 # Sublime Text specific
-*.sublime-project
+*.sublime*
 config/
 
 # Images and general files
