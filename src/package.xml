@@ -54,6 +54,7 @@
         <members>Site</members>
         <members>SocialPersona</members>
         <members>Solution</members>
+        <members>Stay_In_Touch_Request__c</members>
         <members>Task</members>
         <members>User</members>
         <name>CustomObject</name>
@@ -72,15 +73,10 @@
     </types>
     <types>
         <members>unfiled$public</members>
-        <members>unfiled$public/MarketingProductInquiryResponse</members>
         <members>unfiled$public/SUPPORTSelfServiceNewCommentNotificationSAMPLE</members>
-        <members>unfiled$public/SUPPORTSelfServiceNewUserLoginInformationSAMPLE</members>
-        <members>unfiled$public/SUPPORTSelfServiceResetPasswordSAMPLE</members>
-        <members>unfiled$public/SalesNewCustomerEmail</members>
         <members>unfiled$public/SupportCaseAssignmentNotification</members>
         <members>unfiled$public/SupportCaseCreatedPhoneInquiries</members>
         <members>unfiled$public/SupportCaseCreatedWebInquiries</members>
-        <members>unfiled$public/SupportCaseResponse</members>
         <members>unfiled$public/SupportEscalatedCaseNotification</members>
         <members>unfiled$public/SupportEscalatedCaseReassignment</members>
         <members>unfiled$public/SupportSelfServiceNewLoginandPassword</members>
@@ -129,6 +125,7 @@
         <members>Site</members>
         <members>SocialPersona</members>
         <members>Solution</members>
+        <members>Stay_In_Touch_Request__c</members>
         <members>Task</members>
         <members>User</members>
         <members>UserLicense</members>

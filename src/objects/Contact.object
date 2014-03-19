@@ -110,6 +110,26 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Last_MSIT_Request_Result__c</fullName>
+        <description>Result of the last MSIT request. Notification workflow to requesting user is based on values of this field.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Result of the last MSIT request</inlineHelpText>
+        <label>Last MSIT Request Result</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Changed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>No Change</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>true</sorted>
+        </picklist>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>LeadSource</fullName>
         <picklist>
             <picklistValues>
