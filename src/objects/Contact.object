@@ -231,7 +231,7 @@
         <displayType>massActionButton</displayType>
         <height>600</height>
         <linkType>page</linkType>
-        <masterLabel>Mass Stay In Touch Request</masterLabel>
+        <masterLabel>Mass Stay In Touch Requests</masterLabel>
         <openType>sidebar</openType>
         <page>MSIT_AdjustEmailAndSend</page>
         <protected>false</protected>
