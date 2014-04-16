@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Mass Stay In Touch: Notify internal user that no changes were made.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Stay In Touch – notify no change</name>
+    <style>none</style>
+    <subject>Mass Stay In Touch: No changes made for {!Contact.FirstName} {!Contact.LastName}</subject>
+    <type>text</type>
+</EmailTemplate>

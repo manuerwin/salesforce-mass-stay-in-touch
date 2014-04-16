@@ -30,33 +30,9 @@
     </types>
     <types>
         <members>Account</members>
-        <members>AccountContactRole</members>
         <members>Activity</members>
-        <members>Asset</members>
-        <members>Campaign</members>
-        <members>CampaignMember</members>
-        <members>Case</members>
-        <members>CaseContactRole</members>
         <members>Contact</members>
-        <members>ContentVersion</members>
-        <members>Contract</members>
-        <members>ContractContactRole</members>
-        <members>Event</members>
-        <members>Idea</members>
-        <members>Lead</members>
-        <members>Opportunity</members>
-        <members>OpportunityCompetitor</members>
-        <members>OpportunityContactRole</members>
-        <members>OpportunityLineItem</members>
-        <members>PartnerRole</members>
-        <members>Pricebook2</members>
-        <members>Product2</members>
-        <members>Site</members>
-        <members>SocialPersona</members>
-        <members>Solution</members>
         <members>Stay_In_Touch_Request__c</members>
-        <members>Task</members>
-        <members>User</members>
         <name>CustomObject</name>
     </types>
     <types>
@@ -72,15 +48,9 @@
         <name>CustomTab</name>
     </types>
     <types>
-        <members>unfiled$public</members>
-        <members>unfiled$public/SUPPORTSelfServiceNewCommentNotificationSAMPLE</members>
-        <members>unfiled$public/SupportCaseAssignmentNotification</members>
-        <members>unfiled$public/SupportCaseCreatedPhoneInquiries</members>
-        <members>unfiled$public/SupportCaseCreatedWebInquiries</members>
-        <members>unfiled$public/SupportEscalatedCaseNotification</members>
-        <members>unfiled$public/SupportEscalatedCaseReassignment</members>
-        <members>unfiled$public/SupportSelfServiceNewLoginandPassword</members>
-        <members>unfiled$public/SupportSelfServiceResetPassword</members>
+        <members>Mass_Stay_In_Touch_Emails</members>
+        <members>Mass_Stay_In_Touch_Emails/Stay_In_Touch_notify_changes</members>
+        <members>Mass_Stay_In_Touch_Emails/Stay_In_Touch_notify_no_change</members>
         <name>EmailTemplate</name>
     </types>
     <types>
@@ -92,7 +62,7 @@
         <name>HomePageLayout</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Stay_In_Touch_Request__c-Stay In Touch Layout</members>
         <name>Layout</name>
     </types>
     <types>
@@ -100,7 +70,7 @@
         <name>Letterhead</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Standard</members>
         <name>Profile</name>
     </types>
     <types>
@@ -108,28 +78,9 @@
         <name>StaticResource</name>
     </types>
     <types>
-        <members>Account</members>
-        <members>Asset</members>
-        <members>Campaign</members>
-        <members>CampaignMember</members>
-        <members>Case</members>
         <members>Contact</members>
-        <members>Contract</members>
-        <members>Event</members>
-        <members>Idea</members>
-        <members>Lead</members>
-        <members>Opportunity</members>
-        <members>OpportunityLineItem</members>
-        <members>Organization</members>
-        <members>Product2</members>
-        <members>Site</members>
-        <members>SocialPersona</members>
-        <members>Solution</members>
         <members>Stay_In_Touch_Request__c</members>
-        <members>Task</members>
-        <members>User</members>
-        <members>UserLicense</members>
         <name>Workflow</name>
     </types>
-    <version>29.0</version>
+    <version>28.0</version>
 </Package>

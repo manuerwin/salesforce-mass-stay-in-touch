@@ -1,0 +1,8 @@
+Dear {!Contact.OwnerFirstName},
+{!Contact.FirstName} {!Contact.LastName} has advised no changes are needed as a result of the recent Stay In Touch Request.
+
+You can review the Contact here: {!Contact.Link}
+
+======================
+This email is auto generated
+======================
