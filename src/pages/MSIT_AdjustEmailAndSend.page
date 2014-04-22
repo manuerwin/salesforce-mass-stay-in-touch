@@ -1,22 +1,42 @@
 <apex:page standardController="Contact" recordSetVar="contacts" extensions="MSIT_AdjustEmailAndSend_ExCon">
 <!-- 
 Type:		Visualforce Page for Mass Stay In Touch Requests
-Purpose:	The user should be shown a page where they can adjust the text content of the email subject, the text content of the body of the Stay In Touch email, view the list of fields that will be displayed to the recipient, and adjust the text content of their email signature.
+Purpose:	The user should be shown a page where they can adjust the text content of the email subject, the text content
+			of the body of the Stay In Touch email, view the list of fields that will be displayed to the recipient,
+			and adjust the text content of their email signature.
  
-They can optionally tick a checkbox to be bcc’d on one of the emails.
- 
-They can optionally tick a checkbox to cause each email to be stored as an activity associated to the relevant Contact. Note: this checkbox should not be shown if a custom setting to always store activities is true.
- 
-As standard List View functionality does not specifically restrict based on “Do Not Contact” Contact attributes, they should be shown text at the top of the page reminding them to ensure their original List View was configured to exclude Contacts who have indicated they do not wish to be contacted.
- 
-If possible they should be shown the number of emails left that can be sent based on org governor limits. Note: if the limit has been exceeded, the page should only display a message to that effect, advising the user to check back later and/or contact their system administrator.
+			They can optionally tick a checkbox to be bcc’d on one of the emails.
+			They can optionally tick a checkbox to cause each email to be stored as an activity associated to the relevant Contact. Note: this checkbox should not be shown if a custom setting to always store activities is true.
+ 			As standard List View functionality does not specifically restrict based on “Do Not Contact” Contact attributes, they should be shown text at the top of the page notifying them that Contacts who have indicated
+ 			they do not wish to be contacted (Email Opt Out) have been excluded.
+			If possible they should be shown the number of emails left that can be sent based on org governor limits. Note: if the limit has been exceeded, the page should only display a message to that effect, advising the user to check back later and/or contact their system administrator.
 			
 Used By:	Custom Contact List Button
 History:
 
 17-Apr-2014	Manu Erwin (Salesforce.com)		Created
 -->
-  <h1>Congratulations</h1>
-  This is your new Page
-  <!-- End Default Content REMOVE THIS -->
+
+	<apex:sectionHeader id="sectionHeader" title="Mass Stay-in-Touch" subtitle="Confirmation" />
+
+	<apex:form id="theForm" >
+		<apex:pageBlock id="reviewAndConfirm" title="Review and Confirm" >
+			<apex:pageBlockSection id="numberOfRecipients" collapsible="false" columns="1" >
+				You currently have <b>XX recipient(s)</b> selected to receive this email.
+				Note: Contacts who have opted out of email have been excluded from your initial selection.
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection id="bccAndStoreActivityCheckboxes" collapsible="false" columns="1" >
+				BCC me on one message
+				Store an activity for each message
+			</apex:pageBlockSection>
+
+			<apex:pageBlockSection id="emailContent" collapsible="false" columns="1">
+				Review and edit the subject, body, and signature below. When satisfactory, click Send.
+
+				<apex:inputField id="emailSubject" label="Subject" required="true" value="{!Contact.Name}" />
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+
 </apex:page>
