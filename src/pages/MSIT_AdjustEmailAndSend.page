@@ -21,8 +21,15 @@ History:
 
 	<apex:form id="theForm" >
 		<apex:pageBlock id="reviewAndConfirm" title="Review and Confirm" >
+
+			<apex:pageMessages />
+
+			<apex:pageBlockButtons id="pageButtons" >
+				<apex:commandButton id="cancel" action="{!cancel}" value="Cancel" />
+				<apex:commandButton id="send" action="{!sendEmail}" value="Send Email to all Contacts" />
+			</apex:pageBlockButtons>
 			<apex:pageBlockSection id="numberOfRecipients" collapsible="false" columns="1" >
-				You currently have <b>{!numberOfSelectedContacts} recipient(s)</b> selected to receive this email.
+				You currently have <b>{!numberOfTargetedContacts} recipient(s)</b> selected to receive this email.
 				Note: Contacts who have opted out of email have been excluded from your initial selection.
 			</apex:pageBlockSection>
 
@@ -34,8 +41,26 @@ History:
 			<apex:pageBlockSection id="emailContent" collapsible="false" columns="1" >
 				Review and edit the subject, body, and signature below. When satisfactory, click Send.
 
-				<apex:inputText id="emailSubject" label="Subject" required="true" value="{!emailSubject}" />
-				<apex:inputTextarea id="emailBody" label="Stay In Touch Note" required="true" value="{!emailBody}" />
+		        <apex:pageBlockSectionItem>
+		            <apex:outputLabel value="Subject" for="emailSubject" />
+		            <apex:outputPanel>
+		                <div class="requiredInput">
+		                    <div class="requiredBlock"></div>
+							<apex:inputText id="emailSubject" required="true" value="{!emailSubject}" />
+		                </div>
+		            </apex:outputPanel>
+		        </apex:pageBlockSectionItem>
+
+		        <apex:pageBlockSectionItem>
+		            <apex:outputLabel value="Stay In Touch Note" for="emailBody" />
+		            <apex:outputPanel>
+		                <div class="requiredInput">
+		                    <div class="requiredBlock"></div>
+							<apex:inputTextarea id="emailBody" required="true" value="{!emailBody}" />
+		                </div>
+		            </apex:outputPanel>
+		        </apex:pageBlockSectionItem>
+
 			</apex:pageBlockSection>
 
 			<apex:pageBlockSection id="emailFields" collapsible="false" columns="2" >
@@ -48,21 +73,30 @@ History:
 				<apex:outputText id="mailingStreetField" value="(Mailing Street)" />
 				<apex:outputText id="addressField" value="(Mailing City, Mailing State/Province, Mailing Zip/Postal Code)" />
 
-				<apex:outputText id="MailingCountryField" value="(Mailing Country)" />
-				<apex:outputText id="EmailField" value="(Email)" />
+				<apex:outputText id="mailingCountryField" value="(Mailing Country)" />
+				<apex:outputText id="emailField" value="(Email)" />
 
-				<apex:outputText id="PhoneField" value="(Phone)" />
-				<apex:outputText id="MobileField" value="(Mobile)" />
+				<apex:outputText id="phoneField" value="(Phone)" />
+				<apex:outputText id="mobileField" value="(Mobile)" />
 
-				<apex:outputText id="HomePhoneField" value="(Home Phone)" />
-				<apex:outputText id="FaxField" value="(Fax)" />
+				<apex:outputText id="homePhoneField" value="(Home Phone)" />
+				<apex:outputText id="faxField" value="(Fax)" />
 
-				<apex:outputText id="AssistantField" value="(Assistant)" />
-				<apex:outputText id="AsstPhoneField" value="(Asst. Phone)" />
+				<apex:outputText id="assistantField" value="(Assistant)" />
+				<apex:outputText id="asstPhoneField" value="(Asst. Phone)" />
 			</apex:pageBlockSection>
 
 			<apex:pageBlockSection id="emailSignatureSection" collapsible="false" columns="1" >
-				<apex:inputTextarea id="emailSignature" label="Signature" required="true" value="{!emailSignature}" />
+		        <apex:pageBlockSectionItem>
+		            <apex:outputLabel value="Signature" for="emailSignature" />
+		            <apex:outputPanel>
+		                <div class="requiredInput">
+		                    <div class="requiredBlock"></div>
+							<apex:inputTextarea id="emailSignature" required="true" value="{!emailSignature}" />
+		                </div>
+		            </apex:outputPanel>
+		        </apex:pageBlockSectionItem>
+
 			</apex:pageBlockSection>
 
 		</apex:pageBlock>
