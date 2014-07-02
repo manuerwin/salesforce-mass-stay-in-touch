@@ -1,3 +1,9 @@
+//	Type:		Controller Extension
+//	Purpose:	Provide functionality for VF Page Mass Stay In Touch Requests
+//				
+//	Used By:	MSIT_AdjustEmailAndSend.page
+//	History:	17-Apr-2014	Manu Erwin (Salesforce.com)		Created
+
 public with sharing class MSIT_AdjustEmailAndSend_ExCon {
 
 	/* CONSTANTS */
@@ -31,7 +37,10 @@ public with sharing class MSIT_AdjustEmailAndSend_ExCon {
 		get {
 			if (targetedContactIdToContact == null) {
 				targetedContactIdToContact = new Map<Id, Contact>([SELECT Id, Email, HasOptedOutOfEmail
-									FROM Contact WHERE Id IN :selectedContacts AND HasOptedOutOfEmail = false]);
+									FROM Contact
+									WHERE Id IN :selectedContacts
+									AND HasOptedOutOfEmail = false
+									AND Email != null]);
 			}
 			return targetedContactIdToContact;
 		}
