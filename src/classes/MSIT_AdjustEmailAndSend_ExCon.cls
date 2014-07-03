@@ -27,6 +27,26 @@ public with sharing class MSIT_AdjustEmailAndSend_ExCon {
 		set;
 	}
 	public PageReference sendEmail() {
+		// Build up the core email attributes
+		Messaging.MassEmailMessage massEmailMessage;
+		// Set the email from details
+		User currentUser = [SELECT Email FROM User WHERE Username = :UserInfo.getUserName() LIMIT 1];
+		massEmailMessage.setReplyTo(currentUser.Email);
+		massEmailMessage.setSenderDisplayName(UserInfo.getFirstName()+' '+UserInfo.getLastName());
+		// Set the email subject
+		massEmailMessage.setSubject(emailSubject);
+		// Use the entered signature rather than the users standard signature
+		massEmailMessage.setUseSignature(false);
+		// Set the Contacts receiving the email
+		List<Id> contactIds = new List<Id>(targetedContactIdToContact.keySet());
+		massEmailMessage.setTargetObjectIds(contactIds);
+		// Set the template for this email
+		massEmailMessage.setTemplateID('123456789012345678');
+		// Set whether an activity is created
+		massEmailMessage.setSaveAsActivity(storeActivity);
+		// BCC the user on the first email
+		massEmailMessage.setBccSender(bccMe);
+
 		return null;
 	}
 
