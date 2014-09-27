@@ -1,16 +1,31 @@
 <apex:page standardController="Contact" recordSetVar="contacts" extensions="MSIT_AdjustEmailAndSend_ExCon">
 <!-- 
+	Copyright (C) 2014  Manu Erwin
+
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 	Type:		Visualforce Page for Mass Stay In Touch Requests
-	Purpose:	The user should be shown a page where they can adjust the text content of the email subject, the text content
-				of the body of the Stay In Touch email, view the list of fields that will be displayed to the recipient,
-				and adjust the text content of their email signature.
-	 
+	Purpose:	The user should be shown a page where they can adjust the text content of the email subject,
+				the text content of the body of the Stay In Touch email, view the list of fields that will be
+				displayed to the recipient, and adjust the text content of their email signature.
+
 				They can optionally tick a checkbox to be bcc’d on one of the emails.
 				They can optionally tick a checkbox to cause each email to be stored as an activity associated to the relevant Contact.
 				Note: this checkbox should not be shown if a custom setting to always store activities is true.
-	 			As standard List View functionality does not specifically restrict based on “Do Not Contact” Contact attributes,
-	 			they should be shown text at the top of the page notifying them that Contacts who have indicated
-	 			they do not wish to be contacted (Email Opt Out) have been excluded.
+					As standard List View functionality does not specifically restrict based on “Do Not Contact” Contact attributes,
+					they should be shown text at the top of the page notifying them that Contacts who have indicated
+					they do not wish to be contacted (Email Opt Out) have been excluded.
 				If possible they should be shown the number of emails left that can be sent based on org governor limits.
 				Note: if the limit has been exceeded, the page should only display a message to that effect,
 				advising the user to check back later and/or contact their system administrator.
