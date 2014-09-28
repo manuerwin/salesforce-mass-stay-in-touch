@@ -12,7 +12,6 @@ config/
 # Images and general files
 ehthumbs.db
 Icon?
-*.png
 *.sh
 *.xls*
 *.csv
