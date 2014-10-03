@@ -70,7 +70,7 @@
         <name>Letterhead</name>
     </types>
     <types>
-        <members>Standard</members>
+        <members>Admin</members>
         <name>Profile</name>
     </types>
     <types>
