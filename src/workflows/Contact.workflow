@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
+        <fullName>Mass_Stay_In_Touch_notify_Contact_Owner_changes_made</fullName>
+        <description>Mass Stay In Touch - notify Contact Owner changes made</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Mass_Stay_In_Touch_Emails/Stay_In_Touch_notify_changes</template>
+    </alerts>
+    <alerts>
         <fullName>Mass_Stay_In_Touch_notify_Contact_Owner_no_changes_made</fullName>
         <description>Mass Stay In Touch - notify Contact Owner no changes made</description>
         <protected>false</protected>
@@ -10,20 +20,10 @@
         <senderType>CurrentUser</senderType>
         <template>Mass_Stay_In_Touch_Emails/Stay_In_Touch_notify_no_change</template>
     </alerts>
-    <alerts>
-        <fullName>Stay_In_Touch_changed</fullName>
-        <description>Stay In Touch - changed</description>
-        <protected>false</protected>
-        <recipients>
-            <type>owner</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>Mass_Stay_In_Touch_Emails/Stay_In_Touch_notify_changes</template>
-    </alerts>
     <rules>
         <fullName>Stay In Touch %E2%80%93 changes made</fullName>
         <actions>
-            <name>Stay_In_Touch_changed</name>
+            <name>Mass_Stay_In_Touch_notify_Contact_Owner_changes_made</name>
             <type>Alert</type>
         </actions>
         <active>true</active>

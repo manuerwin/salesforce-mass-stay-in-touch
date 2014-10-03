@@ -45,8 +45,7 @@ public with sharing class MSIT_AdjustEmailAndSend_ExCon {
 		// Build up the core email attributes
 		Messaging.MassEmailMessage massEmailMessage;
 		// Set the email from details
-		User currentUser = [SELECT Email FROM User WHERE Username = :UserInfo.getUserName() LIMIT 1];
-		massEmailMessage.setReplyTo(currentUser.Email);
+		massEmailMessage.setReplyTo(UserInfo.getUserEmail());
 		massEmailMessage.setSenderDisplayName(UserInfo.getFirstName()+' '+UserInfo.getLastName());
 		// Set the email subject
 		massEmailMessage.setSubject(emailSubject);

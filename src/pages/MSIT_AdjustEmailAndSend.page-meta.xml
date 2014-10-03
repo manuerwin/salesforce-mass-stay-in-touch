@@ -2,6 +2,7 @@
 <ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>29.0</apiVersion>
     <availableInTouch>true</availableInTouch>
+    <confirmationTokenRequired>true</confirmationTokenRequired>
     <description>Requirement: 2 - Internal User Adjusts Email Content and Sends</description>
     <label>MSIT_AdjustEmailAndSend</label>
 </ApexPage>
