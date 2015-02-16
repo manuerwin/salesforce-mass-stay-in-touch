@@ -33,6 +33,7 @@ public with sharing class MSIT_AdjustEmailAndSend_ExCon {
 	public Boolean bccMe {get; set;}
 	public Boolean storeActivity {get; set;}
 	public String emailBody {get; set;}
+	public String emailGreeting {get; set;}
 	public String emailSubject {get; set;}
 	public String emailSignature {get; set;}
 	public Integer numberOfTargetedContacts {
@@ -42,24 +43,39 @@ public with sharing class MSIT_AdjustEmailAndSend_ExCon {
 		set;
 	}
 	public PageReference sendEmail() {
-		// Build up the core email attributes
-		Messaging.MassEmailMessage massEmailMessage;
-		// Set the email from details
+
+		List<Messaging.Email> emails = new List<Messaging.Email>();
+		Messaging.MassEmailMessage massEmailMessage = new Messaging.MassEmailMessage();
+
+		// TODO: get the email Template Id from a Custom Setting
+		//EmailTemplate template = [select Id, Name, Subject,body, HtmlValue FROM EmailTemplate WHERE Name LIKE :templateName+'%'];
+		Id emailTemplateId = '00Xi0000001Elo8';
+		massEmailMessage.setTemplateID(emailTemplateId);
+		massEmailMessage.setSaveAsActivity(storeActivity);
 		massEmailMessage.setReplyTo(UserInfo.getUserEmail());
 		massEmailMessage.setSenderDisplayName(UserInfo.getFirstName()+' '+UserInfo.getLastName());
-		// Set the email subject
 		massEmailMessage.setSubject(emailSubject);
-		// Use the entered signature rather than the users standard signature
 		massEmailMessage.setUseSignature(false);
-		// Set the Contacts receiving the email
 		List<Id> contactIds = new List<Id>(targetedContactIdToContact.keySet());
 		massEmailMessage.setTargetObjectIds(contactIds);
-		// Set the template for this email
-		massEmailMessage.setTemplateID('123456789012345678');
-		// Set whether an activity is created
-		massEmailMessage.setSaveAsActivity(storeActivity);
-		// BCC the user on the first email
 		massEmailMessage.setBccSender(bccMe);
+		emails.add(massEmailMessage);
+
+		System.Debug(System.LoggingLevel.DEBUG, '##DEBUG: Number of emails: '  + emails.size() );
+		if (emails.size() > 0) {
+			System.Debug(System.LoggingLevel.DEBUG, '##DEBUG: Number of emails > 0. Proceed');
+			try {
+				List<Messaging.SendEmailResult> sendEmailResults = Messaging.sendEmail(emails, false);
+				for(Messaging.Sendemailresult sendResult : sendEmailResults) {
+					if(!sendResult.isSuccess()) {
+						// TODO: add all errors to list and pageMessages for user
+						System.Debug(System.LoggingLevel.DEBUG, 'Messaging failed ' + sendResult.getErrors()[0].getMessage());
+					}
+				}
+			} catch (Exception ex) {
+				// TODO: catch and display error to user
+			}
+		}
 
 		return null;
 	}

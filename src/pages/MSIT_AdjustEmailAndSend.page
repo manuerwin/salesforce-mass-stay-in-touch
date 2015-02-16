@@ -23,15 +23,15 @@
 				They can optionally tick a checkbox to be bcc’d on one of the emails.
 				They can optionally tick a checkbox to cause each email to be stored as an activity associated to the relevant Contact.
 				Note: this checkbox should not be shown if a custom setting to always store activities is true.
-					As standard List View functionality does not specifically restrict based on “Do Not Contact” Contact attributes,
-					they should be shown text at the top of the page notifying them that Contacts who have indicated
-					they do not wish to be contacted (Email Opt Out) have been excluded.
+				As standard List View functionality does not specifically restrict based on “Do Not Contact” Contact attributes,
+				they should be shown text at the top of the page notifying them that Contacts who have indicated
+				they do not wish to be contacted (Email Opt Out) have been excluded.
 				If possible they should be shown the number of emails left that can be sent based on org governor limits.
 				Note: if the limit has been exceeded, the page should only display a message to that effect,
 				advising the user to check back later and/or contact their system administrator.
 				
 	Used By:	Custom Contact List Button
-	History:	17-Apr-2014	Manu Erwin (Salesforce.com)		Created
+	History:	17-Apr-2014	Manu Erwin (Salesforce.com)    Created
 -->
 
 	<apex:sectionHeader id="sectionHeader" title="Mass Stay-in-Touch" subtitle="Confirmation" />
@@ -47,10 +47,10 @@
 			</apex:pageBlockButtons>
 			<apex:pageBlockSection id="numberOfRecipients" collapsible="false" columns="1" >
 				You currently have <b>{!numberOfTargetedContacts} recipient(s)</b> selected to receive this email.
-				Note: Contacts who have opted out of email have been excluded from your initial selection.
+				Note: Contacts without an email address and who have opted out of email have been excluded.
 			</apex:pageBlockSection>
 
-			<apex:pageBlockSection id="bccAndStoreActivityCheckboxes" collapsible="false" columns="1" >
+			<apex:pageBlockSection id="bccAndStoreActivityCheckboxes" collapsible="false" columns="2" >
 				<apex:inputCheckbox id="bccMe" label="BCC me on one message" value="{!bccMe}" />
 				<apex:inputCheckbox id="storeActivity" label="Store an activity for each message" value="{!storeActivity}" />
 			</apex:pageBlockSection>
@@ -68,6 +68,17 @@
 		            </apex:outputPanel>
 		        </apex:pageBlockSectionItem>
 
+Enter your greeting, for example, Dear or Hi. This will be followed by the Contacts first name, for example, "Hi John,"
+		        <apex:pageBlockSectionItem >
+		            <apex:outputLabel value="Greeting" for="emailGreeting" />
+		            <apex:outputPanel >
+		                <div class="requiredInput">
+		                    <div class="requiredBlock"></div>
+							<apex:inputTextarea id="emailGreeting" required="true" value="{!emailGreeting}" />
+		                </div>
+		            </apex:outputPanel>
+		        </apex:pageBlockSectionItem>
+
 		        <apex:pageBlockSectionItem >
 		            <apex:outputLabel value="Stay In Touch Note" for="emailBody" />
 		            <apex:outputPanel >
@@ -81,7 +92,9 @@
 			</apex:pageBlockSection>
 
 			<apex:pageBlockSection id="emailFields" collapsible="false" columns="2" >
-				<apex:outputText id="nameField" value="(Name)" />
+				The following fields will be merged into the email following your note.
+             
+             <apex:outputText id="nameField" value="(Name)" />
 				<apex:outputText id="titleField" value="(Title)" />
 
 				<apex:outputText id="departmentField" value="(Department)" />

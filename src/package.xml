@@ -17,18 +17,6 @@
         <name>ApexTrigger</name>
     </types>
     <types>
-        <members>*</members>
-        <name>CustomApplication</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>CustomApplicationComponent</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>CustomLabels</name>
-    </types>
-    <types>
         <members>Account</members>
         <members>Activity</members>
         <members>Contact</members>
@@ -37,29 +25,14 @@
     </types>
     <types>
         <members>*</members>
-        <name>CustomObjectTranslation</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>CustomPageWebLink</name>
-    </types>
-    <types>
-        <members>*</members>
         <name>CustomTab</name>
     </types>
     <types>
         <members>Mass_Stay_In_Touch_Emails</members>
+        <members>Mass_Stay_In_Touch_Emails/Mass_Stay_In_Touch_Contact_Template_NO_NOT_DELETE</members>
         <members>Mass_Stay_In_Touch_Emails/Stay_In_Touch_notify_changes</members>
         <members>Mass_Stay_In_Touch_Emails/Stay_In_Touch_notify_no_change</members>
         <name>EmailTemplate</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>HomePageComponent</name>
-    </types>
-    <types>
-        <members>*</members>
-        <name>HomePageLayout</name>
     </types>
     <types>
         <members>Stay_In_Touch_Request__c-Stay In Touch Layout</members>
