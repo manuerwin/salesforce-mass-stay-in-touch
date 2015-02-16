@@ -27,6 +27,9 @@ public with sharing class MSIT_AdjustEmailAndSend_ExCon {
     public MSIT_AdjustEmailAndSend_ExCon(ApexPages.StandardSetController standardController) {
     	System.debug(System.LoggingLevel.DEBUG, '##DEBUG: standardController.getSelected(): ' + standardController.getSelected());
     	selectedContacts = (List<Contact>) standardController.getSelected();
+		// TODO: get the email Template Id from a Custom Setting
+		//EmailTemplate template = [select Id, Name, Subject,body, HtmlValue FROM EmailTemplate WHERE Name LIKE :templateName+'%'];
+		emailTemplateId = '00Xi0000001Elo8';
 	}
 
 	/* PUBLIC VARIABLES AND METHODS*/
@@ -38,14 +41,12 @@ public with sharing class MSIT_AdjustEmailAndSend_ExCon {
 		}
 		set;
 	}
+	public String emailTemplateId {get; set;}
 	public PageReference sendEmail() {
 
 		List<Messaging.Email> emails = new List<Messaging.Email>();
 		Messaging.MassEmailMessage massEmailMessage = new Messaging.MassEmailMessage();
 
-		// TODO: get the email Template Id from a Custom Setting
-		//EmailTemplate template = [select Id, Name, Subject,body, HtmlValue FROM EmailTemplate WHERE Name LIKE :templateName+'%'];
-		Id emailTemplateId = '00Xi0000001Elo8';
 		massEmailMessage.Description = 'Staying in Touch';
 		massEmailMessage.setTemplateID(emailTemplateId);
 		massEmailMessage.setSaveAsActivity(storeActivity);
