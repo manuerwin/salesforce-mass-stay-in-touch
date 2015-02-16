@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Template used for Mass Stay In Touch</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Mass Stay In Touch - Contact Template - NO NOT DELETE</name>
+    <style>none</style>
+    <subject>Staying in touch</subject>
+    <type>text</type>
+</EmailTemplate>

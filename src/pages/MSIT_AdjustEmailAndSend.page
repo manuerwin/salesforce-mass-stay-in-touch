@@ -55,78 +55,14 @@
 				<apex:inputCheckbox id="storeActivity" label="Store an activity for each message" value="{!storeActivity}" />
 			</apex:pageBlockSection>
 
-			<apex:pageBlockSection id="emailContent" collapsible="false" columns="1" >
-				Review and edit the subject, body, and signature below. When satisfactory, click Send.
-
-		        <apex:pageBlockSectionItem >
-		            <apex:outputLabel value="Subject" for="emailSubject" />
-		            <apex:outputPanel >
-		                <div class="requiredInput">
-		                    <div class="requiredBlock"></div>
-							<apex:inputText id="emailSubject" required="true" value="{!emailSubject}" />
-		                </div>
-		            </apex:outputPanel>
-		        </apex:pageBlockSectionItem>
-
-Enter your greeting, for example, Dear or Hi. This will be followed by the Contacts first name, for example, "Hi John,"
-		        <apex:pageBlockSectionItem >
-		            <apex:outputLabel value="Greeting" for="emailGreeting" />
-		            <apex:outputPanel >
-		                <div class="requiredInput">
-		                    <div class="requiredBlock"></div>
-							<apex:inputTextarea id="emailGreeting" required="true" value="{!emailGreeting}" />
-		                </div>
-		            </apex:outputPanel>
-		        </apex:pageBlockSectionItem>
-
-		        <apex:pageBlockSectionItem >
-		            <apex:outputLabel value="Stay In Touch Note" for="emailBody" />
-		            <apex:outputPanel >
-		                <div class="requiredInput">
-		                    <div class="requiredBlock"></div>
-							<apex:inputTextarea id="emailBody" required="true" value="{!emailBody}" />
-		                </div>
-		            </apex:outputPanel>
-		        </apex:pageBlockSectionItem>
-
+			<apex:pageBlockSection id="emailTemplate" collapsible="false" columns="1" >
+				This Email Template will be used for the mass email to your selected contacts, please ensure you have updated it with your desired stay in touch greeting, messsage, and signature.
+				<apex:outputLink id="emailTemplateLink" target="https://na15.salesforce.com/{!emailTemplateId}" />
 			</apex:pageBlockSection>
 
-			<apex:pageBlockSection id="emailFields" collapsible="false" columns="2" >
-				The following fields will be merged into the email following your note.
-             
-             <apex:outputText id="nameField" value="(Name)" />
-				<apex:outputText id="titleField" value="(Title)" />
-
-				<apex:outputText id="departmentField" value="(Department)" />
-				<apex:outputText id="CompanyField" value="(Company)" />
-
-				<apex:outputText id="mailingStreetField" value="(Mailing Street)" />
-				<apex:outputText id="addressField" value="(Mailing City, Mailing State/Province, Mailing Zip/Postal Code)" />
-
-				<apex:outputText id="mailingCountryField" value="(Mailing Country)" />
-				<apex:outputText id="emailField" value="(Email)" />
-
-				<apex:outputText id="phoneField" value="(Phone)" />
-				<apex:outputText id="mobileField" value="(Mobile)" />
-
-				<apex:outputText id="homePhoneField" value="(Home Phone)" />
-				<apex:outputText id="faxField" value="(Fax)" />
-
-				<apex:outputText id="assistantField" value="(Assistant)" />
-				<apex:outputText id="asstPhoneField" value="(Asst. Phone)" />
-			</apex:pageBlockSection>
-
-			<apex:pageBlockSection id="emailSignatureSection" collapsible="false" columns="1" >
-		        <apex:pageBlockSectionItem >
-		            <apex:outputLabel value="Signature" for="emailSignature" />
-		            <apex:outputPanel >
-		                <div class="requiredInput">
-		                    <div class="requiredBlock"></div>
-							<apex:inputTextarea id="emailSignature" required="true" value="{!emailSignature}" />
-		                </div>
-		            </apex:outputPanel>
-		        </apex:pageBlockSectionItem>
-
+			<apex:pageBlockSection id="emailFields" collapsible="false" columns="1" >
+				The following fields will be available for the contact to update/confirm. Ensure you include them in the email template.
+             	[TODO - FIELDSET]
 			</apex:pageBlockSection>
 
 		</apex:pageBlock>

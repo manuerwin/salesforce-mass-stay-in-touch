@@ -32,10 +32,6 @@ public with sharing class MSIT_AdjustEmailAndSend_ExCon {
 	/* PUBLIC VARIABLES AND METHODS*/
 	public Boolean bccMe {get; set;}
 	public Boolean storeActivity {get; set;}
-	public String emailBody {get; set;}
-	public String emailGreeting {get; set;}
-	public String emailSubject {get; set;}
-	public String emailSignature {get; set;}
 	public Integer numberOfTargetedContacts {
 		get {
 			return targetedContactIdToContact.values().size();
@@ -50,11 +46,11 @@ public with sharing class MSIT_AdjustEmailAndSend_ExCon {
 		// TODO: get the email Template Id from a Custom Setting
 		//EmailTemplate template = [select Id, Name, Subject,body, HtmlValue FROM EmailTemplate WHERE Name LIKE :templateName+'%'];
 		Id emailTemplateId = '00Xi0000001Elo8';
+		massEmailMessage.Description = 'Staying in Touch';
 		massEmailMessage.setTemplateID(emailTemplateId);
 		massEmailMessage.setSaveAsActivity(storeActivity);
 		massEmailMessage.setReplyTo(UserInfo.getUserEmail());
 		massEmailMessage.setSenderDisplayName(UserInfo.getFirstName()+' '+UserInfo.getLastName());
-		massEmailMessage.setSubject(emailSubject);
 		massEmailMessage.setUseSignature(false);
 		List<Id> contactIds = new List<Id>(targetedContactIdToContact.keySet());
 		massEmailMessage.setTargetObjectIds(contactIds);
@@ -73,7 +69,7 @@ public with sharing class MSIT_AdjustEmailAndSend_ExCon {
 					}
 				}
 			} catch (Exception ex) {
-				// TODO: catch and display error to user
+				// TODO: catch and display error to user as pageMessage
 			}
 		}
 

@@ -1,0 +1,28 @@
+Hi {!Contact.FirstName},
+it's been awhile since we caught up and I want to make sure I've still got your details.
+
+Can you please review them below and either confirm or update them by clicking the appropriate link.
+
+Name: {!Contact.Name}
+Title: {!Contact.Title}
+Department: {!Contact.Department}
+Company: 
+Mailing Street: 
+Mailing City, Mailing State/Province, Mailing Zip/Postal Code: 
+Mailing Country: 
+Email: 
+Phone: 
+Mobile: 
+Home Phone: 
+Fax: 
+Assistant: 
+Asst. Phone: 
+
+These details are correct! <INSERT LINK FOR CONFIRM>
+
+These details need to be updated! <INSERT LINK FOR UPDATE>
+
+Thanks!
+{!User.FirstName}
+{!User.Email}
+{!User.Phone}
