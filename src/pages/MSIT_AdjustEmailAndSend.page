@@ -56,8 +56,10 @@
 			</apex:pageBlockSection>
 
 			<apex:pageBlockSection id="emailTemplate" collapsible="false" columns="1" >
-				This Email Template will be used for the mass email to your selected contacts, please ensure you have updated it with your desired stay in touch greeting, messsage, and signature.
-				<apex:outputLink id="emailTemplateLink" target="https://na15.salesforce.com/{!emailTemplateId}" />
+				This Email Template will be used for the mass email to your selected contacts, please ensure it is updated it with your desired stay in touch greeting, messsage, and signature. Note: if you can't edit it, please request changes via your System Administrator.
+				<apex:outputLink id="emailTemplateLink" value="https://na15.salesforce.com/{!emailTemplateId}" target="_blank">
+					Click to view the Email Template.
+				</apex:outputLink>
 			</apex:pageBlockSection>
 
 			<apex:pageBlockSection id="emailFields" collapsible="false" columns="1" >
