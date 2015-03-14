@@ -58,19 +58,22 @@ public with sharing class MSIT_AdjustEmailAndSend_ExCon {
 		massEmailMessage.setBccSender(bccMe);
 		emails.add(massEmailMessage);
 
-		System.Debug(System.LoggingLevel.DEBUG, '##DEBUG: Number of emails: '  + emails.size() );
-		if (emails.size() > 0) {
-			System.Debug(System.LoggingLevel.DEBUG, '##DEBUG: Number of emails > 0. Proceed');
+		System.Debug(System.LoggingLevel.DEBUG, '##DEBUG: Number of contactIds: ' + contactIds.size() );
+		System.Debug(System.LoggingLevel.DEBUG, '##DEBUG: contactIds: ' + contactIds );
+		if (contactIds.size() > 0) {
+			System.Debug(System.LoggingLevel.DEBUG, '##DEBUG: Number of contactIds > 0. Proceed');
 			try {
 				List<Messaging.SendEmailResult> sendEmailResults = Messaging.sendEmail(emails, false);
-				for(Messaging.Sendemailresult sendResult : sendEmailResults) {
+				for(Messaging.SendEmailResult sendResult : sendEmailResults) {
 					if(!sendResult.isSuccess()) {
-						// TODO: add all errors to list and pageMessages for user
-						System.Debug(System.LoggingLevel.DEBUG, 'Messaging failed ' + sendResult.getErrors()[0].getMessage());
+						ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Email sending error message: ' + sendResult.getErrors()[0].getMessage()));
+						ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Email sending error Status Code: ' + sendResult.getErrors()[0].getStatusCode()));
+						ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Email sending error fields: ' + sendResult.getErrors()[0].getFields()));
+						ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Email sending error record ids: ' + sendResult.getErrors()[0].getTargetObjectId()));
 					}
 				}
 			} catch (Exception ex) {
-				// TODO: catch and display error to user as pageMessage
+				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'An exception has occurred: ' + ex.getMessage()));
 			}
 		}
 
