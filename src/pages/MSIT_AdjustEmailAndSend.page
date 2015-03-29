@@ -65,7 +65,7 @@
 			<apex:pageBlockSection id="emailFields" collapsible="false" columns="1" title="Fields for review" >
 				<!-- The fields shown on this page are configured by changing the Contact "Mass Stay In Touch" Field Set -->
 				The following fields will be available for the contact to confirm or update. Ensure you include them in the email template.
-				<apex:repeat value="{!$ObjectType.Contact.FieldSets.msit__Mass_Stay_In_Touch}" var="field"> 
+				<apex:repeat value="{!$ObjectType.Contact.FieldSets.Mass_Stay_In_Touch}" var="field"> 
 					<apex:outputText value="{!field.Label}" />
 				</apex:repeat>
 			</apex:pageBlockSection>
