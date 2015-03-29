@@ -2,10 +2,12 @@
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
         <members>MSIT_AdjustEmailAndSend_ExCon</members>
+        <members>MSIT_RespondAndSubmit_ExCon</members>
         <name>ApexClass</name>
     </types>
     <types>
         <members>MSIT_AdjustEmailAndSend</members>
+        <members>MSIT_RespondAndSubmit</members>
         <name>ApexPage</name>
     </types>
     <types>

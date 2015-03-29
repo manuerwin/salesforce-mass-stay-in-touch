@@ -4,6 +4,10 @@
         <apexClass>MSIT_AdjustEmailAndSend_ExCon</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>MSIT_RespondAndSubmit_ExCon</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
     <custom>false</custom>
     <fieldPermissions>
         <editable>true</editable>
@@ -335,6 +339,10 @@
     </objectPermissions>
     <pageAccesses>
         <apexPage>MSIT_AdjustEmailAndSend</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>MSIT_RespondAndSubmit</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <tabVisibilities>

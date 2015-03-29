@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>33.0</apiVersion>
+    <availableInTouch>false</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>External User Reviews, Updates, and Submits Changes
+
+If the recipient indicates no changes, they should be shown a web page with a thank you message. If however they have indicated that changes are needed, they should be shown a web page that:
+- Advises changes will be notified to the internal user’s email
+- Displays a list of fields with values
+- Allows them to enter a message to the internal user
+- Allows them to submit the changes
+- Shows them the thank you message</description>
+    <label>MSIT_RespondAndSubmit</label>
+    <packageVersions>
+        <majorNumber>1</majorNumber>
+        <minorNumber>8</minorNumber>
+        <namespace>sf_chttr_apps</namespace>
+    </packageVersions>
+</ApexPage>
