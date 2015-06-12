@@ -16,24 +16,27 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 //  Used By:    MSIT_AdjustEmailAndSend.page
-
-//  History:    17-Apr-2014 Manu Erwin  Created
+//  History:    see https://github.com/manuerwin/salesforce-mass-stay-in-touch
 
 public with sharing class MSIT_AdjustEmailAndSend_ExCon {
 
     /* CONSTANTS */
 
     /* CONSTRUCTOR */
-    public MSIT_AdjustEmailAndSend_ExCon(ApexPages.StandardSetController standardController) {
-        System.debug(System.LoggingLevel.DEBUG, '##DEBUG: standardController.getSelected(): ' + standardController.getSelected());
-        selectedContacts = (List<Contact>) standardController.getSelected();
+    public MSIT_AdjustEmailAndSend_ExCon(ApexPages.StandardSetController standardSetController) {
+        System.debug(System.LoggingLevel.DEBUG, '##DEBUG: standardSetController.getSelected(): ' + standardSetController.getSelected());
+        selectedContacts = (List<Contact>) standardSetController.getSelected();
+
+        // Set booleans as default false
+        bccMe = false;
+        storeActivity = false;
+        dailyEmailLimitExceeded = false;
 
         // ASSUMPTION: Only one entry for this List Custom Setting has been created
         Mass_Stay_In_Touch_Settings__c msitSettings = Mass_Stay_In_Touch_Settings__c.getAll().values();
-        // get the email Template Id from a Custom Setting
         emailTemplateId = msitSettings.Email_Template_Id__c;
-        // get the "Store an activity on every message" from a Custom Setting
         storeActivity = msitSettings.Create_Activity_Record__c;
+
         // Attempt to reserve email capacity. By-product of failure will alert user.
         try {
             Messaging.reserveMassEmailCapacity(numberOfTargetedContacts);
@@ -46,18 +49,21 @@ public with sharing class MSIT_AdjustEmailAndSend_ExCon {
     }
 
     /* PUBLIC VARIABLES AND METHODS*/
-    public Boolean dailyEmailLimitExceeded {get; set;}
     public Boolean bccMe {get; set;}
-    public Boolean storeActivity {get; set;}
+    public Boolean dailyEmailLimitExceeded {get; set;}
+    public Id emailTemplateId {get; set;}
     public Integer numberOfTargetedContacts {
         get {
             return targetedContactIdToContact.values().size();
         }
         set;
     }
-    public Id emailTemplateId {get; set;}
-    public PageReference sendEmail() {
+    public Boolean emailSendAttempted {get; set;}
+    public Boolean storeActivity {get; set;}
 
+    // Core email send method
+    public PageReference sendEmail() {
+        emailSendAttempted = true;
         List<Messaging.Email> emails = new List<Messaging.Email>();
         Messaging.MassEmailMessage massEmailMessage = new Messaging.MassEmailMessage();
 
@@ -79,7 +85,9 @@ public with sharing class MSIT_AdjustEmailAndSend_ExCon {
             try {
                 List<Messaging.SendEmailResult> sendEmailResults = Messaging.sendEmail(emails, false);
                 for(Messaging.SendEmailResult sendResult : sendEmailResults) {
-                    if(!sendResult.isSuccess()) {
+                    if(sendResult.isSuccess()) {
+                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.INFO, 'Emails sent successfully! '));
+                    } else if (!sendResult.isSuccess()) {
                         ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error message: ' + sendResult.getErrors()[0].getMessage()));
                         ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error Status Code: ' + sendResult.getErrors()[0].getStatusCode()));
                         ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error fields: ' + sendResult.getErrors()[0].getFields()));

@@ -1,3 +1,4 @@
+
 <!-- 
     Copyright (C) 2014  Manu Erwin
 
@@ -22,7 +23,7 @@
                 they do not wish to be contacted (Email Opt Out) have been excluded.
                 
     Used By:    Custom Contact List Button
-    History:    17-Apr-2014 Manu Erwin (Salesforce.com)    Created
+    History:    see https://github.com/manuerwin/salesforce-mass-stay-in-touch
 -->
 
 <apex:page standardController="Contact" recordSetVar="contacts" extensions="MSIT_AdjustEmailAndSend_ExCon" >
@@ -37,35 +38,42 @@
 
         <apex:pageMessages />
 
-        <apex:pageBlock id="reviewAndConfirm" title="Review and Confirm" rendered="{!!dailyEmailLimitExceeded}" >
-            <apex:pageBlockButtons id="pageButtons" >
-                <apex:commandButton id="cancel" action="{!cancel}" value="Cancel" />
-                <apex:commandButton id="send" action="{!sendEmail}" value="Send Email to all Contacts" />
-            </apex:pageBlockButtons>
-            <apex:pageBlockSection id="numberOfRecipients" collapsible="false" columns="1" >
-                You currently have <b>{!numberOfTargetedContacts} recipient(s)</b> selected to receive this email.
-                Note: Contacts without an email address and who have opted out of email have been excluded.
-            </apex:pageBlockSection>
+        <apex:outputPanel id="reviewAndConfirm" layout="block" rendered="{!!emailSendAttempted}">
+            <apex:pageBlock id="reviewAndConfirmEntry" title="Review and Confirm" rendered="{!!dailyEmailLimitExceeded}" >
+                <apex:pageBlockButtons id="pageButtons" >
+                    <apex:commandButton id="cancel" action="{!cancel}" value="Cancel" />
+                    <apex:commandButton id="send" action="{!sendEmail}" value="Send Email to all Contacts" reRender="theForm" />
+                </apex:pageBlockButtons>
+                <apex:pageBlockSection id="numberOfRecipients" collapsible="false" columns="1" >
+                    You currently have <b>{!numberOfTargetedContacts} recipient(s)</b> selected to receive this email.
+                    Note: Contacts without an email address and who have opted out of email have been excluded.
+                </apex:pageBlockSection>
 
-            <apex:pageBlockSection id="bccAndStoreActivityCheckboxes" collapsible="false" columns="2" >
-                <apex:inputCheckbox id="bccMe" label="BCC me on one message" value="{!bccMe}" />
-                <apex:inputCheckbox id="storeActivityDisabled" label="Store an activity for each message" value="{!storeActivity}" disabled="{!storeActivity}" title="Select whether to store an activity against each Contact. If this is disabled, your admin has forced this on."/>
-            </apex:pageBlockSection>
+                <apex:pageBlockSection id="bccAndStoreActivityCheckboxes" collapsible="false" columns="2" >
+                    <apex:inputCheckbox id="bccMe" label="BCC me on one message" value="{!bccMe}" />
+                    <apex:inputCheckbox id="storeActivityDisabled" label="Store an activity for each message" value="{!storeActivity}" disabled="{!storeActivity}" title="Select whether to store an activity against each Contact. If this is disabled, your admin has forced this on."/>
+                </apex:pageBlockSection>
 
-            <apex:pageBlockSection id="emailTemplate" collapsible="false" columns="1" title="Email Template" >
-                This Email Template will be used for the mass email to your selected contacts, please ensure it is updated with your desired stay in touch greeting, messsage, and signature. Note: if you can't edit it, please request changes via your System Administrator.
-                <apex:outputLink id="emailTemplateLink" value="/{!emailTemplateId}" target="_blank">
-                    Click to view the Email Template.
-                </apex:outputLink>
-            </apex:pageBlockSection>
+                <apex:pageBlockSection id="emailTemplate" collapsible="false" columns="1" title="Email Template" >
+                    This Email Template will be used for the mass email to your selected contacts, please ensure it is updated with your desired stay in touch greeting, messsage, and signature. Note: if you can't edit it, please request changes via your System Administrator.
+                    <apex:outputLink id="emailTemplateLink" value="/{!emailTemplateId}" target="_blank">
+                        Click to view the Email Template.
+                    </apex:outputLink>
+                </apex:pageBlockSection>
 
-            <apex:pageBlockSection id="emailFields" collapsible="false" columns="1" title="Fields for review" >
-                <!-- The fields shown on this page are configured by changing the Contact "Mass Stay In Touch" Field Set -->
-                The following fields will be available for the contact to confirm or update. Ensure you include them in the email template.
-                <apex:repeat value="{!$ObjectType.Contact.FieldSets.Mass_Stay_In_Touch}" var="field"> 
-                    <apex:outputText value="{!field.Label}" />
-                </apex:repeat>
-            </apex:pageBlockSection>
-        </apex:pageBlock>
+                <apex:pageBlockSection id="emailFields" collapsible="false" columns="1" title="Fields for review" >
+                    <!-- The fields shown on this page are configured by changing the Contact "Mass Stay In Touch" Field Set -->
+                    The following fields will be available for the contact to confirm or update. Ensure you include them in the email template.
+                    <apex:repeat value="{!$ObjectType.Contact.FieldSets.Mass_Stay_In_Touch}" var="field"> 
+                        <apex:outputText value="{!field.Label}" />
+                    </apex:repeat>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:outputPanel>
+
+        <apex:outputPanel id="afterSending" layout="block" rendered="{!emailSendAttempted}" >
+            <apex:commandButton id="afterSendingButton" action="{!cancel}" value="Back" />
+        </apex:outputPanel>
+
     </apex:form>
 </apex:page>

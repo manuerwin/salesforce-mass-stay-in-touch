@@ -11,10 +11,17 @@ private class MSIT_AdjustEmailAndSend_ExCon_Test {
 			con.AccountId = acc.Id;
 			con.FirstName = 'MSIT Test';
 			con.LastName = 'MSIT Test-' + i;
-			con.Email = 'msit_test_' + i + '@msit_test.com';
+			con.Email = 'msitTest' + i + '@msitTest.com';
 			defaultContacts.add(con);
 		}
 		insert defaultContacts;
+
+		// Create Custom Setting values
+		Mass_Stay_In_Touch_Settings__c msitSettings = new Mass_Stay_In_Touch_Settings__c();
+		msitSettings.Name = 'testing';
+		msitSettings.Email_Template_Id__c = '00Xi0000001Elo8';
+		msitSettings.Create_Activity_Record__c = true;
+		insert msitSettings;
 	}
 
 	// Story: User sends email
@@ -23,50 +30,51 @@ private class MSIT_AdjustEmailAndSend_ExCon_Test {
 	// I want to select contacts who will receive emails
 
 	@isTest static void emailShouldBeSentWhenContactSelected() {
-		List<Contact> selectedContacts = [SELECT Id FROM Contact];
+		List<Contact> selectedContacts = [SELECT Id FROM Contact LIMIT 10];
+		System.debug('##DEBUG: selectedContacts: ' + selectedContacts);
 		ApexPages.StandardSetController setCon = new ApexPages.StandardSetController(selectedContacts);
-PageReference testPage = Page.MSIT_AdjustEmailAndSend;
-Test.setCurrentPage(testPage);
+		PageReference testPage = Page.MSIT_AdjustEmailAndSend;
+		Test.setCurrentPage(testPage);
 
 		// Given the number of selected Contacts is greater than zero
 		setCon.setSelected(selectedContacts);
+		System.debug('##DEBUG: setCon: ' + setCon);
+		System.debug('##DEBUG: msit custom setting: ' + Mass_Stay_In_Touch_Settings__c.getAll().values());
 
 		// When the Send button is clicked
 		msit.MSIT_AdjustEmailAndSend_ExCon conExt = new msit.MSIT_AdjustEmailAndSend_ExCon(setCon);
 		Test.startTest();
-			PageReference pageRef = conExt.SendEmail();
+			Boolean emailSuccess = conExt.SendEmail();
 		Test.stopTest();
 
 		// Then the email should be sent
-// assert no errors
-//System.assert(conExt);
-// assert number of email invocations is one
-// assert returned page ref (aka navigation behaviour)
+		System.assert(emailSuccess, 'Emails should have been sent - emailSuccess: ' + emailSuccess);
 	}
+/*
 	@isTest static void emailShouldNotBeSentWhenNoContactSelected() {
 		// Given the number of selected Contacts is zero
-List<Contact> deleteContacts = [SELECT Id FROM Contact];
-delete deleteContacts;
-ApexPages.StandardSetController setCon = new ApexPages.StandardSetController(deleteContacts);
+		List<Contact> deleteContacts = [SELECT Id FROM Contact];
+		delete deleteContacts;
+		ApexPages.StandardSetController setCon = new ApexPages.StandardSetController(deleteContacts);
 		// When the Send button is clicked
-msit.MSIT_AdjustEmailAndSend_ExCon conExt = new msit.MSIT_AdjustEmailAndSend_ExCon(setCon);
+		msit.MSIT_AdjustEmailAndSend_ExCon conExt = new msit.MSIT_AdjustEmailAndSend_ExCon(setCon);
 		Test.startTest();
-			PageReference pageRef = conExt.SendEmail();
+			Boolean emailSuccess = conExt.SendEmail();
 		Test.stopTest();
 		// Then the email should not be sent
-// assert number of email invocations is zero
-// assert returned page ref (aka navigation behaviour)
+		// assert number of email invocations is zero
+		// assert returned page ref (aka navigation behaviour)
 	}
 	@isTest static void sendEmailButtonShouldWorkWhenContactsSelected() {
-List<Contact> selectedContacts = [SELECT Id FROM Contact];
+		List<Contact> selectedContacts = [SELECT Id FROM Contact];
 		ApexPages.StandardSetController setCon = new ApexPages.StandardSetController(selectedContacts);
 		// Given there were Contacts selected
-setCon.setSelected(selectedContacts);
+		setCon.setSelected(selectedContacts);
 
 		// When the page loads
 		msit.MSIT_AdjustEmailAndSend_ExCon conExt = new msit.MSIT_AdjustEmailAndSend_ExCon(setCon);
 		Test.startTest();
-			PageReference pageRef = conExt.SendEmail();
+			Boolean emailSuccess = conExt.SendEmail();
 		Test.stopTest();
 
 		// Then the "Send email to all contacts" button should be clickable
@@ -161,4 +169,5 @@ setCon.setSelected(selectedContacts);
 		// When the page loads
 		// Then the user should see an error message
 	}
+*/
 }
