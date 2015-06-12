@@ -27,10 +27,15 @@ public with sharing class MSIT_AdjustEmailAndSend_ExCon {
     public MSIT_AdjustEmailAndSend_ExCon(ApexPages.StandardSetController standardController) {
         System.debug(System.LoggingLevel.DEBUG, '##DEBUG: standardController.getSelected(): ' + standardController.getSelected());
         selectedContacts = (List<Contact>) standardController.getSelected();
-        // TODO: get the email Template Id from a Custom Setting
-        //EmailTemplate template = [select Id, Name, Subject,body, HtmlValue FROM EmailTemplate WHERE Name LIKE :templateName+'%'];
-        emailTemplateId = '00Xi0000001Elo8';
-// Messaging.reserveMassEmailCapacity(numberOfTargetedContacts);
+
+        // ASSUMPTION: Only one entry for this List Custom Setting has been created
+        Mass_Stay_In_Touch_Settings__c msitSettings = Mass_Stay_In_Touch_Settings__c.getAll().values();
+        // get the email Template Id from a Custom Setting
+        emailTemplateId = msitSettings.Email_Template_Id__c;
+        // get the "Store an activity on every message" from a Custom Setting
+        storeActivity = msitSettings.Create_Activity_Record__c;
+
+        // Messaging.reserveMassEmailCapacity(numberOfTargetedContacts);
     }
 
     /* PUBLIC VARIABLES AND METHODS*/
@@ -42,7 +47,7 @@ public with sharing class MSIT_AdjustEmailAndSend_ExCon {
         }
         set;
     }
-    public String emailTemplateId {get; set;}
+    public Id emailTemplateId {get; set;}
     public PageReference sendEmail() {
 
         List<Messaging.Email> emails = new List<Messaging.Email>();

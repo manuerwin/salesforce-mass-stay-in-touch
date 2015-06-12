@@ -3,5 +3,27 @@
     <customSettingsType>List</customSettingsType>
     <customSettingsVisibility>Public</customSettingsVisibility>
     <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Create_Activity_Record__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If value is true, forces creation of related Stay In Touch activity records</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If value is true, forces creation of related Stay In Touch activity records</inlineHelpText>
+        <label>Create Activity Record</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Email_Template_Id__c</fullName>
+        <description>Contains the Id of the email template used</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The Id of the email template used</inlineHelpText>
+        <label>Email Template Id</label>
+        <length>18</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
     <label>Mass Stay In Touch Settings</label>
 </CustomObject>
