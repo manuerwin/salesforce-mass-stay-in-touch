@@ -49,7 +49,7 @@
 
             <apex:pageBlockSection id="bccAndStoreActivityCheckboxes" collapsible="false" columns="2" >
                 <apex:inputCheckbox id="bccMe" label="BCC me on one message" value="{!bccMe}" />
-                <apex:inputCheckbox id="storeActivity" label="Store an activity for each message" value="{!storeActivity}" />
+                <apex:inputCheckbox id="storeActivityDisabled" label="Store an activity for each message" value="{!storeActivity}" disabled="{!storeActivity}" title="Select whether to store an activity against each Contact. If this is disabled, your admin has forced this on."/>
             </apex:pageBlockSection>
 
             <apex:pageBlockSection id="emailTemplate" collapsible="false" columns="1" title="Email Template" >
