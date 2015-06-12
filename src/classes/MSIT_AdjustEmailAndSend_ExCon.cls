@@ -34,11 +34,19 @@ public with sharing class MSIT_AdjustEmailAndSend_ExCon {
         emailTemplateId = msitSettings.Email_Template_Id__c;
         // get the "Store an activity on every message" from a Custom Setting
         storeActivity = msitSettings.Create_Activity_Record__c;
-
-        // Messaging.reserveMassEmailCapacity(numberOfTargetedContacts);
+        // Attempt to reserve email capacity. By-product of failure will alert user.
+        try {
+            Messaging.reserveMassEmailCapacity(numberOfTargetedContacts);
+        } catch (HandledException handledEx) {
+            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, the daily email limit for the org would be exceeded by this request. Try a smaller number of Contacts.'));
+            dailyEmailLimitExceeded = true;
+        } catch (Exception ex) {
+            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something broke: ' + ex.getTypeName() + ' : ' + ex.getMessage()));
+        }
     }
 
     /* PUBLIC VARIABLES AND METHODS*/
+    public Boolean dailyEmailLimitExceeded {get; set;}
     public Boolean bccMe {get; set;}
     public Boolean storeActivity {get; set;}
     public Integer numberOfTargetedContacts {
@@ -72,14 +80,14 @@ public with sharing class MSIT_AdjustEmailAndSend_ExCon {
                 List<Messaging.SendEmailResult> sendEmailResults = Messaging.sendEmail(emails, false);
                 for(Messaging.SendEmailResult sendResult : sendEmailResults) {
                     if(!sendResult.isSuccess()) {
-                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Email sending error message: ' + sendResult.getErrors()[0].getMessage()));
-                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Email sending error Status Code: ' + sendResult.getErrors()[0].getStatusCode()));
-                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Email sending error fields: ' + sendResult.getErrors()[0].getFields()));
-                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Email sending error record ids: ' + sendResult.getErrors()[0].getTargetObjectId()));
+                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error message: ' + sendResult.getErrors()[0].getMessage()));
+                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error Status Code: ' + sendResult.getErrors()[0].getStatusCode()));
+                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error fields: ' + sendResult.getErrors()[0].getFields()));
+                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error record ids: ' + sendResult.getErrors()[0].getTargetObjectId()));
                     }
                 }
             } catch (Exception ex) {
-                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'An exception has occurred: ' + ex.getMessage()));
+                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something broke: ' + ex.getTypeName() + ' : ' + ex.getMessage()));
             }
         }
 

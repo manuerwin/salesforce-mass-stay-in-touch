@@ -1,18 +1,13 @@
 <!-- 
     Copyright (C) 2014  Manu Erwin
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+    This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     Type:       Visualforce Page for Mass Stay In Touch Requests
     Purpose:    The user should be shown a page where they can adjust the text content of the email subject,
@@ -30,15 +25,19 @@
     History:    17-Apr-2014 Manu Erwin (Salesforce.com)    Created
 -->
 
-<apex:page standardController="Contact" recordSetVar="contacts" extensions="MSIT_AdjustEmailAndSend_ExCon">
+<apex:page standardController="Contact" recordSetVar="contacts" extensions="MSIT_AdjustEmailAndSend_ExCon" >
 
     <apex:sectionHeader id="sectionHeader" title="Mass Stay-in-Touch" subtitle="Confirmation" />
 
     <apex:form id="theForm" >
-        <apex:pageBlock id="reviewAndConfirm" title="Review and Confirm" >
 
-            <apex:pageMessages />
+        <apex:outputPanel id="limitExceeded" layout="block" rendered="{!dailyEmailLimitExceeded}" >    
+            <apex:commandButton id="cancelLimitExceeded" action="{!cancel}" value="Back" />
+        </apex:outputPanel>
 
+        <apex:pageMessages />
+
+        <apex:pageBlock id="reviewAndConfirm" title="Review and Confirm" rendered="{!!dailyEmailLimitExceeded}" >
             <apex:pageBlockButtons id="pageButtons" >
                 <apex:commandButton id="cancel" action="{!cancel}" value="Cancel" />
                 <apex:commandButton id="send" action="{!sendEmail}" value="Send Email to all Contacts" />
@@ -67,7 +66,6 @@
                     <apex:outputText value="{!field.Label}" />
                 </apex:repeat>
             </apex:pageBlockSection>
-
         </apex:pageBlock>
     </apex:form>
 </apex:page>
