@@ -1,5 +1,5 @@
-//	Type:		Controller Extension
-//	Purpose:	Provide functionality for VF Page Mass Stay In Touch Requests
+//  Type:       Controller Extension
+//  Purpose:    Provide functionality for VF Page Mass Stay In Touch Requests
 //  Copyright (C) 2014  Manu Erwin
 
 //  This program is free software: you can redistribute it and/or modify
@@ -15,85 +15,86 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-//	Used By:	MSIT_AdjustEmailAndSend.page
+//  Used By:    MSIT_AdjustEmailAndSend.page
 
-//	History:	17-Apr-2014	Manu Erwin	Created
+//  History:    17-Apr-2014 Manu Erwin  Created
 
 public with sharing class MSIT_AdjustEmailAndSend_ExCon {
 
-	/* CONSTANTS */
+    /* CONSTANTS */
 
     /* CONSTRUCTOR */
     public MSIT_AdjustEmailAndSend_ExCon(ApexPages.StandardSetController standardController) {
-    	System.debug(System.LoggingLevel.DEBUG, '##DEBUG: standardController.getSelected(): ' + standardController.getSelected());
-    	selectedContacts = (List<Contact>) standardController.getSelected();
-		// TODO: get the email Template Id from a Custom Setting
-		//EmailTemplate template = [select Id, Name, Subject,body, HtmlValue FROM EmailTemplate WHERE Name LIKE :templateName+'%'];
-		emailTemplateId = '00Xi0000001Elo8';
-	}
+        System.debug(System.LoggingLevel.DEBUG, '##DEBUG: standardController.getSelected(): ' + standardController.getSelected());
+        selectedContacts = (List<Contact>) standardController.getSelected();
+        // TODO: get the email Template Id from a Custom Setting
+        //EmailTemplate template = [select Id, Name, Subject,body, HtmlValue FROM EmailTemplate WHERE Name LIKE :templateName+'%'];
+        emailTemplateId = '00Xi0000001Elo8';
+// Messaging.reserveMassEmailCapacity(numberOfTargetedContacts);
+    }
 
-	/* PUBLIC VARIABLES AND METHODS*/
-	public Boolean bccMe {get; set;}
-	public Boolean storeActivity {get; set;}
-	public Integer numberOfTargetedContacts {
-		get {
-			return targetedContactIdToContact.values().size();
-		}
-		set;
-	}
-	public String emailTemplateId {get; set;}
-	public PageReference sendEmail() {
+    /* PUBLIC VARIABLES AND METHODS*/
+    public Boolean bccMe {get; set;}
+    public Boolean storeActivity {get; set;}
+    public Integer numberOfTargetedContacts {
+        get {
+            return targetedContactIdToContact.values().size();
+        }
+        set;
+    }
+    public String emailTemplateId {get; set;}
+    public PageReference sendEmail() {
 
-		List<Messaging.Email> emails = new List<Messaging.Email>();
-		Messaging.MassEmailMessage massEmailMessage = new Messaging.MassEmailMessage();
+        List<Messaging.Email> emails = new List<Messaging.Email>();
+        Messaging.MassEmailMessage massEmailMessage = new Messaging.MassEmailMessage();
 
-		massEmailMessage.Description = 'Staying in Touch';
-		massEmailMessage.setTemplateID(emailTemplateId);
-		massEmailMessage.setSaveAsActivity(storeActivity);
-		massEmailMessage.setReplyTo(UserInfo.getUserEmail());
-		massEmailMessage.setSenderDisplayName(UserInfo.getFirstName()+' '+UserInfo.getLastName());
-		massEmailMessage.setUseSignature(false);
-		List<Id> contactIds = new List<Id>(targetedContactIdToContact.keySet());
-		massEmailMessage.setTargetObjectIds(contactIds);
-		massEmailMessage.setBccSender(bccMe);
-		emails.add(massEmailMessage);
+        massEmailMessage.Description = 'Staying in Touch';
+        massEmailMessage.setTemplateID(emailTemplateId);
+        massEmailMessage.setSaveAsActivity(storeActivity);
+        massEmailMessage.setReplyTo(UserInfo.getUserEmail());
+        massEmailMessage.setSenderDisplayName(UserInfo.getFirstName()+' '+UserInfo.getLastName());
+        massEmailMessage.setUseSignature(false);
+        List<Id> contactIds = new List<Id>(targetedContactIdToContact.keySet());
+        massEmailMessage.setTargetObjectIds(contactIds);
+        massEmailMessage.setBccSender(bccMe);
+        emails.add(massEmailMessage);
 
-		System.Debug(System.LoggingLevel.DEBUG, '##DEBUG: Number of contactIds: ' + contactIds.size() );
-		System.Debug(System.LoggingLevel.DEBUG, '##DEBUG: contactIds: ' + contactIds );
-		if (contactIds.size() > 0) {
-			System.Debug(System.LoggingLevel.DEBUG, '##DEBUG: Number of contactIds > 0. Proceed');
-			try {
-				List<Messaging.SendEmailResult> sendEmailResults = Messaging.sendEmail(emails, false);
-				for(Messaging.SendEmailResult sendResult : sendEmailResults) {
-					if(!sendResult.isSuccess()) {
-						ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Email sending error message: ' + sendResult.getErrors()[0].getMessage()));
-						ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Email sending error Status Code: ' + sendResult.getErrors()[0].getStatusCode()));
-						ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Email sending error fields: ' + sendResult.getErrors()[0].getFields()));
-						ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Email sending error record ids: ' + sendResult.getErrors()[0].getTargetObjectId()));
-					}
-				}
-			} catch (Exception ex) {
-				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'An exception has occurred: ' + ex.getMessage()));
-			}
-		}
+        System.Debug(System.LoggingLevel.DEBUG, '##DEBUG: Number of contactIds: ' + contactIds.size() );
+        System.Debug(System.LoggingLevel.DEBUG, '##DEBUG: contactIds: ' + contactIds );
+        if (contactIds.size() > 0) {
+            System.Debug(System.LoggingLevel.DEBUG, '##DEBUG: Number of contactIds > 0. Proceed');
+            try {
+                List<Messaging.SendEmailResult> sendEmailResults = Messaging.sendEmail(emails, false);
+                for(Messaging.SendEmailResult sendResult : sendEmailResults) {
+                    if(!sendResult.isSuccess()) {
+                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Email sending error message: ' + sendResult.getErrors()[0].getMessage()));
+                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Email sending error Status Code: ' + sendResult.getErrors()[0].getStatusCode()));
+                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Email sending error fields: ' + sendResult.getErrors()[0].getFields()));
+                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Email sending error record ids: ' + sendResult.getErrors()[0].getTargetObjectId()));
+                    }
+                }
+            } catch (Exception ex) {
+                ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'An exception has occurred: ' + ex.getMessage()));
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	/* PRIVATE VARIABLES AND METHODS */
-	private ApexPages.StandardSetController standardController;
-	private List<Contact> selectedContacts { get; set; }
-	private Map<Id, Contact> targetedContactIdToContact {
-		get {
-			if (targetedContactIdToContact == null) {
-				targetedContactIdToContact = new Map<Id, Contact>([SELECT Id, Email, HasOptedOutOfEmail
-									FROM Contact
-									WHERE Id IN :selectedContacts
-									AND HasOptedOutOfEmail = false
-									AND Email != null]);
-			}
-			return targetedContactIdToContact;
-		}
-		set;
-	}
+    /* PRIVATE VARIABLES AND METHODS */
+    private ApexPages.StandardSetController standardController;
+    private List<Contact> selectedContacts { get; set; }
+    private Map<Id, Contact> targetedContactIdToContact {
+        get {
+            if (targetedContactIdToContact == null) {
+                targetedContactIdToContact = new Map<Id, Contact>([SELECT Id, Email, HasOptedOutOfEmail
+                                    FROM Contact
+                                    WHERE Id IN :selectedContacts
+                                    AND HasOptedOutOfEmail = false
+                                    AND Email != null]);
+            }
+            return targetedContactIdToContact;
+        }
+        set;
+    }
 }

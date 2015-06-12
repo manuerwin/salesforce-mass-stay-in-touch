@@ -5,7 +5,15 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>MSIT_AdjustEmailAndSend_ExCon_Test</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>MSIT_RespondAndSubmit_ExCon</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>MSIT_RespondAndSubmit_ExCon_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <custom>false</custom>

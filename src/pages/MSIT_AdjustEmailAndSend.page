@@ -1,76 +1,73 @@
 <!-- 
-	Copyright (C) 2014  Manu Erwin
+    Copyright (C) 2014  Manu Erwin
 
-	This program is free software: you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
-	the Free Software Foundation, either version 3 of the License, or
-	(at your option) any later version.
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
-	This program is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
-	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-	Type:		Visualforce Page for Mass Stay In Touch Requests
-	Purpose:	The user should be shown a page where they can adjust the text content of the email subject,
-				the text content of the body of the Stay In Touch email, view the list of fields that will be
-				displayed to the recipient, and adjust the text content of their email signature.
+    Type:       Visualforce Page for Mass Stay In Touch Requests
+    Purpose:    The user should be shown a page where they can adjust the text content of the email subject,
+                the text content of the body of the Stay In Touch email, view the list of fields that will be
+                displayed to the recipient, and adjust the text content of their email signature.
 
-				They can optionally tick a checkbox to be bcc’d on one of the emails.
-				They can optionally tick a checkbox to cause each email to be stored as an activity associated to the relevant Contact.
-				Note: this checkbox should not be shown if a custom setting to always store activities is true.
-				As standard List View functionality does not specifically restrict based on “Do Not Contact” Contact attributes,
-				they should be shown text at the top of the page notifying them that Contacts who have indicated
-				they do not wish to be contacted (Email Opt Out) have been excluded.
-				If possible they should be shown the number of emails left that can be sent based on org governor limits.
-				Note: if the limit has been exceeded, the page should only display a message to that effect,
-				advising the user to check back later and/or contact their system administrator.
-				
-	Used By:	Custom Contact List Button
-	History:	17-Apr-2014	Manu Erwin (Salesforce.com)    Created
+                They can optionally tick a checkbox to be bcc’d on one of the emails.
+                They can optionally tick a checkbox to cause each email to be stored as an activity associated to the relevant Contact.
+                Note: this checkbox should not be shown if a custom setting to always store activities is true.
+                As standard List View functionality does not specifically restrict based on “Do Not Contact” Contact attributes,
+                they should be shown text at the top of the page notifying them that Contacts who have indicated
+                they do not wish to be contacted (Email Opt Out) have been excluded.
+                
+    Used By:    Custom Contact List Button
+    History:    17-Apr-2014 Manu Erwin (Salesforce.com)    Created
 -->
 
 <apex:page standardController="Contact" recordSetVar="contacts" extensions="MSIT_AdjustEmailAndSend_ExCon">
 
-	<apex:sectionHeader id="sectionHeader" title="Mass Stay-in-Touch" subtitle="Confirmation" />
+    <apex:sectionHeader id="sectionHeader" title="Mass Stay-in-Touch" subtitle="Confirmation" />
 
-	<apex:form id="theForm" >
-		<apex:pageBlock id="reviewAndConfirm" title="Review and Confirm" >
+    <apex:form id="theForm" >
+        <apex:pageBlock id="reviewAndConfirm" title="Review and Confirm" >
 
-			<apex:pageMessages />
+            <apex:pageMessages />
 
-			<apex:pageBlockButtons id="pageButtons" >
-				<apex:commandButton id="cancel" action="{!cancel}" value="Cancel" />
-				<apex:commandButton id="send" action="{!sendEmail}" value="Send Email to all Contacts" />
-			</apex:pageBlockButtons>
-			<apex:pageBlockSection id="numberOfRecipients" collapsible="false" columns="1" >
-				You currently have <b>{!numberOfTargetedContacts} recipient(s)</b> selected to receive this email.
-				Note: Contacts without an email address and who have opted out of email have been excluded.
-			</apex:pageBlockSection>
+            <apex:pageBlockButtons id="pageButtons" >
+                <apex:commandButton id="cancel" action="{!cancel}" value="Cancel" />
+                <apex:commandButton id="send" action="{!sendEmail}" value="Send Email to all Contacts" />
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection id="numberOfRecipients" collapsible="false" columns="1" >
+                You currently have <b>{!numberOfTargetedContacts} recipient(s)</b> selected to receive this email.
+                Note: Contacts without an email address and who have opted out of email have been excluded.
+            </apex:pageBlockSection>
 
-			<apex:pageBlockSection id="bccAndStoreActivityCheckboxes" collapsible="false" columns="2" >
-				<apex:inputCheckbox id="bccMe" label="BCC me on one message" value="{!bccMe}" />
-				<apex:inputCheckbox id="storeActivity" label="Store an activity for each message" value="{!storeActivity}" />
-			</apex:pageBlockSection>
+            <apex:pageBlockSection id="bccAndStoreActivityCheckboxes" collapsible="false" columns="2" >
+                <apex:inputCheckbox id="bccMe" label="BCC me on one message" value="{!bccMe}" />
+                <apex:inputCheckbox id="storeActivity" label="Store an activity for each message" value="{!storeActivity}" />
+            </apex:pageBlockSection>
 
-			<apex:pageBlockSection id="emailTemplate" collapsible="false" columns="1" title="Email Template" >
-				This Email Template will be used for the mass email to your selected contacts, please ensure it is updated it with your desired stay in touch greeting, messsage, and signature. Note: if you can't edit it, please request changes via your System Administrator.
-				<apex:outputLink id="emailTemplateLink" value="/{!emailTemplateId}" target="_blank">
-					Click to view the Email Template.
-				</apex:outputLink>
-			</apex:pageBlockSection>
+            <apex:pageBlockSection id="emailTemplate" collapsible="false" columns="1" title="Email Template" >
+                This Email Template will be used for the mass email to your selected contacts, please ensure it is updated with your desired stay in touch greeting, messsage, and signature. Note: if you can't edit it, please request changes via your System Administrator.
+                <apex:outputLink id="emailTemplateLink" value="/{!emailTemplateId}" target="_blank">
+                    Click to view the Email Template.
+                </apex:outputLink>
+            </apex:pageBlockSection>
 
-			<apex:pageBlockSection id="emailFields" collapsible="false" columns="1" title="Fields for review" >
-				<!-- The fields shown on this page are configured by changing the Contact "Mass Stay In Touch" Field Set -->
-				The following fields will be available for the contact to confirm or update. Ensure you include them in the email template.
-				<apex:repeat value="{!$ObjectType.Contact.FieldSets.Mass_Stay_In_Touch}" var="field"> 
-					<apex:outputText value="{!field.Label}" />
-				</apex:repeat>
-			</apex:pageBlockSection>
+            <apex:pageBlockSection id="emailFields" collapsible="false" columns="1" title="Fields for review" >
+                <!-- The fields shown on this page are configured by changing the Contact "Mass Stay In Touch" Field Set -->
+                The following fields will be available for the contact to confirm or update. Ensure you include them in the email template.
+                <apex:repeat value="{!$ObjectType.Contact.FieldSets.Mass_Stay_In_Touch}" var="field"> 
+                    <apex:outputText value="{!field.Label}" />
+                </apex:repeat>
+            </apex:pageBlockSection>
 
-		</apex:pageBlock>
-	</apex:form>
+        </apex:pageBlock>
+    </apex:form>
 </apex:page>
