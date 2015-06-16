@@ -78,7 +78,7 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
-        <visibleLines>25</visibleLines>
+        <visibleLines>10</visibleLines>
     </fields>
     <fields>
         <fullName>Email_Body_Rich__c</fullName>
@@ -89,7 +89,7 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Html</type>
-        <visibleLines>25</visibleLines>
+        <visibleLines>10</visibleLines>
     </fields>
     <fields>
         <fullName>Email_Signature__c</fullName>

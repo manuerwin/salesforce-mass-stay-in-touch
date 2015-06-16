@@ -23,76 +23,55 @@ public with sharing class MSIT_AdjustEmailAndSend_ExCon {
         selectedContacts = (List<Contact>) standardSetController.getSelected();
 
         // Set booleans as default false
-        bccMe = false;
+// TODO        bccMe = false;
         storeActivity = false;
         dailyLimitExceeded = false;
 
         // ASSUMPTION: Only one entry for this List Custom Setting has been created
         Mass_Stay_In_Touch_Settings__c msitSettings = Mass_Stay_In_Touch_Settings__c.getAll().values();
         storeActivity = msitSettings.Create_Activity_Record__c;
-
-/*
-        // Attempt to reserve email capacity. By-product of failure will alert user.
-        try {
-            Messaging.reserveMassEmailCapacity(numberOfTargetedContacts);
-        } catch (HandledException handledEx) {
-            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, the daily email limit for the org would be exceeded by this request. Try a smaller number of Contacts.'));
-            dailyLimitExceeded = true;
-        } catch (Exception ex) {
-            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something broke: ' + ex.getTypeName() + ' : ' + ex.getMessage()));
-        }
-*/
     }
 
     /* PUBLIC VARIABLES AND METHODS*/
-    public Boolean bccMe {get; set;}
+// TODO    public Boolean bccMe {get; set;}
     public Boolean dailyLimitExceeded {get; set;}
-    public Id emailTemplateId {get; set;}
+    public Boolean emailSendAttempted {get; set;}
+    public Stay_In_Touch_Request__c proxySIT {
+        get {
+            if (proxySIT == null){
+                proxySIT = new Stay_In_Touch_Request__c();
+            }
+            return proxySIT;
+        }
+        set;
+    }
     public Integer numberOfTargetedContacts {
         get {
             return targetedContactIdToContact.values().size();
         }
         set;
     }
-    public Boolean emailSendAttempted {get; set;}
     public Boolean storeActivity {get; set;}
 
     public PageReference createSITs() {
         emailSendAttempted = true;
 
-        // Loop through selected Contacts
-        // Create a Stay In Touch
+        // Loop through selected Contacts and create Stay In Touch records for each one.
+        List<Stay_In_Touch_Request__c> SITs = new List<Stay_In_Touch_Request__c>();
+        for (Contact con : selectedContacts) {
+            Stay_In_Touch_Request__c SIT = new Stay_In_Touch_Request__c();
+            SIT.Contact__c = con.Id;
+            SIT.Email_Subject__c = proxySIT.Email_Subject__c;
+            SIT.Email_Body_Plain__c = proxySIT.Email_Body_Plain__c;
+            SIT.Email_Body_Rich__c = proxySIT.Email_Body_Rich__c;
+            SIT.Email_Signature__c = proxySIT.Email_Signature__c;
+            SITs.add(SIT);
+        }
 
-        List<Messaging.Email> emails = new List<Messaging.Email>();
-        Messaging.MassEmailMessage massEmailMessage = new Messaging.MassEmailMessage();
-
-        massEmailMessage.Description = 'Staying in Touch';
-        massEmailMessage.setTemplateID(emailTemplateId);
-        massEmailMessage.setSaveAsActivity(storeActivity);
-        massEmailMessage.setReplyTo(UserInfo.getUserEmail());
-        massEmailMessage.setSenderDisplayName(UserInfo.getFirstName()+' '+UserInfo.getLastName());
-        massEmailMessage.setUseSignature(false);
-        List<Id> contactIds = new List<Id>(targetedContactIdToContact.keySet());
-        massEmailMessage.setTargetObjectIds(contactIds);
-        massEmailMessage.setBccSender(bccMe);
-        emails.add(massEmailMessage);
-
-        System.Debug(System.LoggingLevel.DEBUG, '##DEBUG: Number of contactIds: ' + contactIds.size() );
-        System.Debug(System.LoggingLevel.DEBUG, '##DEBUG: contactIds: ' + contactIds );
-        if (contactIds.size() > 0) {
-            System.Debug(System.LoggingLevel.DEBUG, '##DEBUG: Number of contactIds > 0. Proceed');
+        if (!SITs.isEmpty()) {
+            System.Debug(System.LoggingLevel.DEBUG, '##DEBUG: Proceed as SITs should be created');
             try {
-                List<Messaging.SendEmailResult> sendEmailResults = Messaging.sendEmail(emails, false);
-                for(Messaging.SendEmailResult sendResult : sendEmailResults) {
-                    if(sendResult.isSuccess()) {
-                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.INFO, 'Emails sent successfully! '));
-                    } else if (!sendResult.isSuccess()) {
-                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error message: ' + sendResult.getErrors()[0].getMessage()));
-                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error Status Code: ' + sendResult.getErrors()[0].getStatusCode()));
-                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error fields: ' + sendResult.getErrors()[0].getFields()));
-                        ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Error record ids: ' + sendResult.getErrors()[0].getTargetObjectId()));
-                    }
-                }
+                insert SITs;
             } catch (Exception ex) {
                 ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something broke: ' + ex.getTypeName() + ' : ' + ex.getMessage()));
             }
