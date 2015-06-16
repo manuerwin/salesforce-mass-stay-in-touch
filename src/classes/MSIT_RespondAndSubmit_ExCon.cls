@@ -1,5 +1,5 @@
-//	Type:		Controller Extension
-//	Purpose:	Provide functionality for VF Page Mass Stay In Touch - External user responds and submits
+//  Type:       Controller Extension
+//  Purpose:    Provide functionality for VF Page Mass Stay In Touch - External user responds and submits
 //  Copyright (C) 2015  Manu Erwin
 
 //  This program is free software: you can redistribute it and/or modify
@@ -15,9 +15,9 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-//	Used By:	MSIT_RespondAndSubmit.page
+//  Used By:    MSIT_RespondAndSubmit.page
 
-//	History:	29-Mar-2015	Manu Erwin	Created
+//  History:    29-Mar-2015 Manu Erwin  Created
 
 public with sharing class MSIT_RespondAndSubmit_ExCon {
 }

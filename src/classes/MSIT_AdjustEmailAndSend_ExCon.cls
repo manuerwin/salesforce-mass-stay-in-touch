@@ -2,18 +2,13 @@
 //  Purpose:    Provide functionality for VF Page Mass Stay In Touch Requests
 //  Copyright (C) 2014  Manu Erwin
 
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
+//  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or  (at your option) any later version.
 
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
+//  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-//  You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//  You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 //  Used By:    MSIT_AdjustEmailAndSend.page
 //  History:    see https://github.com/manuerwin/salesforce-mass-stay-in-touch
@@ -30,27 +25,28 @@ public with sharing class MSIT_AdjustEmailAndSend_ExCon {
         // Set booleans as default false
         bccMe = false;
         storeActivity = false;
-        dailyEmailLimitExceeded = false;
+        dailyLimitExceeded = false;
 
         // ASSUMPTION: Only one entry for this List Custom Setting has been created
         Mass_Stay_In_Touch_Settings__c msitSettings = Mass_Stay_In_Touch_Settings__c.getAll().values();
-        emailTemplateId = msitSettings.Email_Template_Id__c;
         storeActivity = msitSettings.Create_Activity_Record__c;
 
+/*
         // Attempt to reserve email capacity. By-product of failure will alert user.
         try {
             Messaging.reserveMassEmailCapacity(numberOfTargetedContacts);
         } catch (HandledException handledEx) {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, the daily email limit for the org would be exceeded by this request. Try a smaller number of Contacts.'));
-            dailyEmailLimitExceeded = true;
+            dailyLimitExceeded = true;
         } catch (Exception ex) {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something broke: ' + ex.getTypeName() + ' : ' + ex.getMessage()));
         }
+*/
     }
 
     /* PUBLIC VARIABLES AND METHODS*/
     public Boolean bccMe {get; set;}
-    public Boolean dailyEmailLimitExceeded {get; set;}
+    public Boolean dailyLimitExceeded {get; set;}
     public Id emailTemplateId {get; set;}
     public Integer numberOfTargetedContacts {
         get {
@@ -61,9 +57,12 @@ public with sharing class MSIT_AdjustEmailAndSend_ExCon {
     public Boolean emailSendAttempted {get; set;}
     public Boolean storeActivity {get; set;}
 
-    // Core email send method
-    public PageReference sendEmail() {
+    public PageReference createSITs() {
         emailSendAttempted = true;
+
+        // Loop through selected Contacts
+        // Create a Stay In Touch
+
         List<Messaging.Email> emails = new List<Messaging.Email>();
         Messaging.MassEmailMessage massEmailMessage = new Messaging.MassEmailMessage();
 

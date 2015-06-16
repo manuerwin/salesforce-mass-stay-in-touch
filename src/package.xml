@@ -21,6 +21,7 @@
         <members>Activity</members>
         <members>Contact</members>
         <members>Mass_Stay_In_Touch_Settings__c</members>
+        <members>Stay_In_Touch_Request__c</members>
         <name>CustomObject</name>
     </types>
     <types>
@@ -45,6 +46,7 @@
     <types>
         <members>Contact</members>
         <members>Mass_Stay_In_Touch_Settings__c</members>
+        <members>Stay_In_Touch_Request__c</members>
         <name>Workflow</name>
     </types>
     <version>31.0</version>

@@ -1,4 +1,3 @@
-
 <!-- 
     Copyright (C) 2014  Manu Erwin
 
@@ -15,12 +14,15 @@
                 the text content of the body of the Stay In Touch email, view the list of fields that will be
                 displayed to the recipient, and adjust the text content of their email signature.
 
-                They can optionally tick a checkbox to be bcc’d on one of the emails.
+                TODO: They can optionally tick a checkbox to be bcc’d on one of the emails.
                 They can optionally tick a checkbox to cause each email to be stored as an activity associated to the relevant Contact.
                 Note: this checkbox should not be shown if a custom setting to always store activities is true.
                 As standard List View functionality does not specifically restrict based on “Do Not Contact” Contact attributes,
                 they should be shown text at the top of the page notifying them that Contacts who have indicated
                 they do not wish to be contacted (Email Opt Out) have been excluded.
+
+                NOTE: this page creates custom Stay In Touch records behind the scenes and relies on Workflow Email Alerts to send
+                the actual stay in touch email and Process Builder to create the related Task recording the sent email.
                 
     Used By:    Custom Contact List Button
     History:    see https://github.com/manuerwin/salesforce-mass-stay-in-touch
@@ -32,17 +34,17 @@
 
     <apex:form id="theForm" >
 
-        <apex:outputPanel id="limitExceeded" layout="block" rendered="{!dailyEmailLimitExceeded}" >    
+        <apex:outputPanel id="limitExceeded" layout="block" rendered="{!dailyLimitExceeded}" >
             <apex:commandButton id="cancelLimitExceeded" action="{!cancel}" value="Back" />
         </apex:outputPanel>
 
         <apex:pageMessages />
 
         <apex:outputPanel id="reviewAndConfirm" layout="block" rendered="{!!emailSendAttempted}">
-            <apex:pageBlock id="reviewAndConfirmEntry" title="Review and Confirm" rendered="{!!dailyEmailLimitExceeded}" >
+            <apex:pageBlock id="reviewAndConfirmEntry" title="Review and Confirm" rendered="{!!dailyLimitExceeded}" >
                 <apex:pageBlockButtons id="pageButtons" >
                     <apex:commandButton id="cancel" action="{!cancel}" value="Cancel" />
-                    <apex:commandButton id="send" action="{!sendEmail}" value="Send Email to all Contacts" reRender="theForm" />
+                    <apex:commandButton id="send" action="{!createSITs}" value="Create Stay In Touch Requests" reRender="theForm" />
                 </apex:pageBlockButtons>
                 <apex:pageBlockSection id="numberOfRecipients" collapsible="false" columns="1" >
                     You currently have <b>{!numberOfTargetedContacts} recipient(s)</b> selected to receive this email.
@@ -72,6 +74,7 @@
         </apex:outputPanel>
 
         <apex:outputPanel id="afterSending" layout="block" rendered="{!emailSendAttempted}" >
+            TODO: Show the number of SIT's created (aka the number of emails sent)
             <apex:commandButton id="afterSendingButton" action="{!cancel}" value="Back" />
         </apex:outputPanel>
 
