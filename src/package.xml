@@ -37,6 +37,14 @@
     </types>
     <types>
         <members>*</members>
+        <name>Flow</name>
+    </types>
+    <types>
+        <members>Stay_In_Touch_Request__c-Stay In Touch Request Layout</members>
+        <name>Layout</name>
+    </types>
+    <types>
+        <members>*</members>
         <name>Letterhead</name>
     </types>
     <types>

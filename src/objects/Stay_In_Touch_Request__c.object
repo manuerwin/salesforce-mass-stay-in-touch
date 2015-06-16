@@ -70,10 +70,20 @@
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
     </fields>
     <fields>
-        <fullName>Email_Body_Plain__c</fullName>
+        <fullName>Signature__c</fullName>
+        <externalId>false</externalId>
+        <label>Signature</label>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Stay_In_Touch_Note__c</fullName>
+        <defaultValue>&quot;Hi &lt;Contact.FirstName&gt;, I&apos;m updating my address book and want to make sure I have your correct contact information so we can stay in touch. Can you take a look at the info I have for you below and let me know if it&apos;s out of date?&quot;</defaultValue>
         <description>Plain text email body</description>
         <externalId>false</externalId>
-        <label>Email Body (Plain)</label>
+        <label>Stay-in-Touch Note</label>
         <length>131072</length>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -81,29 +91,10 @@
         <visibleLines>10</visibleLines>
     </fields>
     <fields>
-        <fullName>Email_Body_Rich__c</fullName>
-        <description>Rich text email body</description>
+        <fullName>Subject__c</fullName>
+        <defaultValue>&quot;Staying in touch&quot;</defaultValue>
         <externalId>false</externalId>
-        <label>Email Body</label>
-        <length>131072</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Html</type>
-        <visibleLines>10</visibleLines>
-    </fields>
-    <fields>
-        <fullName>Email_Signature__c</fullName>
-        <externalId>false</externalId>
-        <label>Email Signature</label>
-        <required>true</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>TextArea</type>
-    </fields>
-    <fields>
-        <fullName>Email_Subject__c</fullName>
-        <externalId>false</externalId>
-        <label>Email Subject</label>
+        <label>Subject</label>
         <length>255</length>
         <required>true</required>
         <trackHistory>false</trackHistory>
@@ -114,6 +105,12 @@
     <label>Stay In Touch Request</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Contact__c</columns>
+        <columns>Subject__c</columns>
+        <columns>Stay_In_Touch_Note__c</columns>
+        <columns>Signature__c</columns>
+        <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
@@ -124,6 +121,12 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Stay In Touch Requests</pluralLabel>
-    <searchLayouts/>
+    <searchLayouts>
+        <customTabListAdditionalFields>Contact__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Subject__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Stay_In_Touch_Note__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Signature__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>UPDATEDBY_USER</customTabListAdditionalFields>
+    </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
 </CustomObject>

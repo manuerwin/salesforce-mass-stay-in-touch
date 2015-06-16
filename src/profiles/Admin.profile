@@ -304,12 +304,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Stay_In_Touch_Request__c.Email_Body_Plain__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Stay_In_Touch_Request__c.Email_Body_Rich__c</field>
+        <field>Stay_In_Touch_Request__c.Stay_In_Touch_Note__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -337,6 +332,9 @@
         <field>Task.WhoId</field>
         <readable>true</readable>
     </fieldPermissions>
+    <layoutAssignments>
+        <layout>Stay_In_Touch_Request__c-Stay In Touch Request Layout</layout>
+    </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>

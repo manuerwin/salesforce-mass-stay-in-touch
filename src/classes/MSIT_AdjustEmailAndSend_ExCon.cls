@@ -61,10 +61,10 @@ public with sharing class MSIT_AdjustEmailAndSend_ExCon {
         for (Contact con : selectedContacts) {
             Stay_In_Touch_Request__c SIT = new Stay_In_Touch_Request__c();
             SIT.Contact__c = con.Id;
-            SIT.Email_Subject__c = proxySIT.Email_Subject__c;
-            SIT.Email_Body_Plain__c = proxySIT.Email_Body_Plain__c;
-            SIT.Email_Body_Rich__c = proxySIT.Email_Body_Rich__c;
-            SIT.Email_Signature__c = proxySIT.Email_Signature__c;
+            SIT.Subject__c = proxySIT.Subject__c;
+            //String replacedStayInTouchNote = 
+            SIT.Stay_In_Touch_Note__c = proxySIT.Stay_In_Touch_Note__c;
+            SIT.Signature__c = proxySIT.Signature__c;
             SITs.add(SIT);
         }
 
