@@ -101,9 +101,19 @@
 - to the internal user on the initial mass email page (although note they are not currently used by the email that is sent, mass email requires an email template is used)
 - to the external user on the confirm/amend page</description>
         <displayedFields>
-            <field>LastName</field>
+            <field>Salutation</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>FirstName</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>true</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>LastName</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>true</isRequired>
         </displayedFields>
         <displayedFields>
             <field>Title</field>
@@ -137,6 +147,21 @@
         </displayedFields>
         <displayedFields>
             <field>MobilePhone</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Fax</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>AssistantName</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>AssistantPhone</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
