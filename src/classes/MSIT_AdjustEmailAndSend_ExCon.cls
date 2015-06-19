@@ -30,12 +30,14 @@ public with sharing class MSIT_AdjustEmailAndSend_ExCon {
         // ASSUMPTION: Only one entry for this List Custom Setting has been created
         Mass_Stay_In_Touch_Settings__c msitSettings = Mass_Stay_In_Touch_Settings__c.getAll().values();
         storeActivity = msitSettings.Create_Activity_Record__c;
+        emailTemplateId = msitSettings.Email_Template_Id__c;
     }
 
     /* PUBLIC VARIABLES AND METHODS*/
 // TODO    public Boolean bccMe {get; set;}
     public Boolean dailyLimitExceeded {get; set;}
     public Boolean emailSendAttempted {get; set;}
+    public Id emailTemplateId {get; set;}
     public Stay_In_Touch_Request__c proxySIT {
         get {
             if (proxySIT == null){
