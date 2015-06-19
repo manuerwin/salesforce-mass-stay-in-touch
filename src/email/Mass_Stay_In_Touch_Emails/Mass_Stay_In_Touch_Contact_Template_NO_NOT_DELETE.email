@@ -1,16 +1,19 @@
-{!Stay_In_Touch_Request__c.Stay_In_Touch_Note__c}
+Hi {!Contact.FirstName},
+I'm updating my address book and want to make sure I have your correct contact information so we can stay in touch. Can you take a look at the info I have for you below and let me know if it's out of date?
 
-Name: {!Contact.Name}
-Title: {!Contact.Title}
-Department: {!Contact.Department}
-Company: {!Account.Name}
-Mailing Address: {!Contact.MailingAddress}
-Email: {!Contact.Email}
-Phone: {!Contact.Phone}
-Mobile: {!Contact.MobilePhone}
-Fax: {!Contact.Fax}
-Assistant: {!Contact.AssistantName}
-Assistant Phone: {!Contact.AssistantPhone}
+{!NullValue(Contact.Salutation, "(Salutation)")} {!NullValue(Contact.FirstName, "(First Name)")} {!NullValue(Contact.LastName, "(Last Name)")}
+{!NullValue(Contact.Title, "(Title)")}
+{!NullValue(Contact.Department, "(Department)")}
+
+{!NullValue(Account.Name, "(Company)")}
+{!NullValue(Contact.MailingAddress, "(Mailing Address)")}
+
+{!NullValue(Contact.Email, "(Email)")}
+{!NullValue(Contact.Phone, "(Phone)")}
+{!NullValue(Contact.MobilePhone, "(Mobile)")}
+{!NullValue(Contact.Fax, "(Fax)")}
+{!NullValue(Contact.AssistantName, "(Assistant)")}
+{!NullValue(Contact.AssistantPhone, "(Assistant Phone)")}
 
 These details are correct! <INSERT LINK FOR CONFIRM>
 
