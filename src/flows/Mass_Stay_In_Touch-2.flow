@@ -7,6 +7,9 @@
         <locationY>300</locationY>
         <actionName>msit__Stay_In_Touch_Request__c.Mass_Stay_In_Touch_Send_Stay_In_Touch_Request_to_Contact</actionName>
         <actionType>emailAlert</actionType>
+        <connector>
+            <targetReference>myRule_1_A3</targetReference>
+        </connector>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -36,23 +39,23 @@
             <label>Always create SIT Task for Contact</label>
         </rules>
     </decisions>
-    <description>Upon creation of custom Stay In Touch Request record, send an email to the Contact and create a Task to record the details.</description>
+    <description>Upon creation of custom Stay In Touch Request record, send an email to the Contact, create a Task to record the details, and stamp parent Contact fields with current date time and status values.</description>
     <formulas>
-        <name>formula_2_myRule_1_A1_ActivityDate</name>
+        <name>formula_2_myRule_1_A3_msit_Last_MSIT_Sent_Datetime_c</name>
+        <dataType>DateTime</dataType>
+        <expression>NOW()</expression>
+    </formulas>
+    <formulas>
+        <name>formula_3_myRule_1_A1_ActivityDate</name>
         <dataType>Date</dataType>
         <expression>TODAY()</expression>
     </formulas>
     <formulas>
-        <name>formula_3_myRule_1_A1_Subject</name>
-        <dataType>String</dataType>
-        <expression>&quot;Mass Stay In Touch: &quot; &amp; {!myVariable_current.msit__Email_Subject__c}</expression>
-    </formulas>
-    <formulas>
         <name>formula_myRule_1</name>
         <dataType>Boolean</dataType>
-        <expression>TRUE</expression>
+        <expression>true</expression>
     </formulas>
-    <label>MSIT - Send Stay In Touch email and create SIT Task</label>
+    <label>Mass Stay In Touch</label>
     <processMetadataValues>
         <name>ObjectType</name>
         <value>
@@ -89,13 +92,7 @@
         <inputAssignments>
             <field>ActivityDate</field>
             <value>
-                <elementReference>formula_2_myRule_1_A1_ActivityDate</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Description</field>
-            <value>
-                <elementReference>myVariable_current.Stay_In_Touch_Note__c</elementReference>
+                <elementReference>formula_3_myRule_1_A1_ActivityDate</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -119,7 +116,7 @@
         <inputAssignments>
             <field>Subject</field>
             <value>
-                <elementReference>formula_3_myRule_1_A1_Subject</elementReference>
+                <elementReference>myVariable_current.Subject__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -130,6 +127,26 @@
         </inputAssignments>
         <object>Task</object>
     </recordCreates>
+    <recordUpdates>
+        <name>myRule_1_A3</name>
+        <label>Update Contact Last MSIT Sent Datetime</label>
+        <locationX>100</locationX>
+        <locationY>400</locationY>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>myVariable_current.Contact__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Last_MSIT_Sent_Datetime__c</field>
+            <value>
+                <elementReference>formula_2_myRule_1_A3_msit_Last_MSIT_Sent_Datetime_c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Contact</object>
+    </recordUpdates>
     <startElementReference>myDecision</startElementReference>
     <variables>
         <name>myVariable_current</name>
