@@ -1,5 +1,5 @@
 @isTest
-private class MSIT_RespondAndSubmit_ExCon_Test {
+private class MSIT_RespondAndSubmit_Test {
 
     // Story: Confirming no change to details
     // In order to confirm my details are correct
@@ -10,6 +10,12 @@ private class MSIT_RespondAndSubmit_ExCon_Test {
         // Given "no change" was indicated
         // When the page loads
         // Then a "thank you" message should show
+    }
+    @isTest static void contactMsitRequestResultShouldBeUpdatedToNoChange() {
+        // Given "no change" was indicated
+        // When the page loads
+        // Then the Last MSIT Request Result field should be 'No Change'
+        // And the Last MSIT Response Datetime should be the current date time
     }
 
     // Story: Making changes to details
@@ -29,7 +35,7 @@ private class MSIT_RespondAndSubmit_ExCon_Test {
     }
 
     // Story: Error handling
-    // Should the URL not be correct
+    // Should the SITR record not exist (e.g. hacking attempt or deleted)
     // As a Contact
     // I want to see a warning message
 

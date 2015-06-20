@@ -1,5 +1,5 @@
 @isTest
-private class MSIT_AdjustEmailAndSend_ExCon_Test {
+private class MSIT_AdjustEmailAndSend_Test {
 
     @testSetup static void setupCommonData() {
         Account acc = new Account(Name = 'MSIT Test');
@@ -41,7 +41,7 @@ private class MSIT_AdjustEmailAndSend_ExCon_Test {
         System.debug('##DEBUG: msit custom setting: ' + Mass_Stay_In_Touch_Settings__c.getAll().values());
 
         // When the Send button is clicked
-        msit.MSIT_AdjustEmailAndSend_ExCon conExt = new msit.MSIT_AdjustEmailAndSend_ExCon(setCon);
+        msit.MSIT_AdjustEmailAndSend conExt = new msit.MSIT_AdjustEmailAndSend(setCon);
         Test.startTest();
             conExt.createSITs();
         Test.stopTest();

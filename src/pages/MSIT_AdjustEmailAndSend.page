@@ -28,7 +28,7 @@
     History:    see https://github.com/manuerwin/salesforce-mass-stay-in-touch
 -->
 
-<apex:page standardController="Contact" recordSetVar="contacts" extensions="MSIT_AdjustEmailAndSend_ExCon" >
+<apex:page standardController="Contact" recordSetVar="contacts" extensions="MSIT_AdjustEmailAndSend" >
 
     <apex:sectionHeader id="sectionHeader" title="Mass Stay-in-Touch" subtitle="Confirmation" />
 

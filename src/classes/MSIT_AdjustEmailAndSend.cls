@@ -13,12 +13,12 @@
 //  Used By:    MSIT_AdjustEmailAndSend.page
 //  History:    see https://github.com/manuerwin/salesforce-mass-stay-in-touch
 
-public with sharing class MSIT_AdjustEmailAndSend_ExCon {
+public with sharing class MSIT_AdjustEmailAndSend {
 
     /* CONSTANTS */
 
     /* CONSTRUCTOR */
-    public MSIT_AdjustEmailAndSend_ExCon(ApexPages.StandardSetController standardSetController) {
+    public MSIT_AdjustEmailAndSend(ApexPages.StandardSetController standardSetController) {
         System.debug(System.LoggingLevel.DEBUG, '##DEBUG: standardSetController.getSelected(): ' + standardSetController.getSelected());
         selectedContacts = (List<Contact>) standardSetController.getSelected();
 

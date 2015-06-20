@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Profile xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
-        <apexClass>MSIT_AdjustEmailAndSend_ExCon</apexClass>
+        <apexClass>MSIT_AdjustEmailAndSend</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>MSIT_AdjustEmailAndSend_ExCon_Test</apexClass>
+        <apexClass>MSIT_AdjustEmailAndSend_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>MSIT_RespondAndSubmit_ExCon</apexClass>
+        <apexClass>MSIT_RespondAndSubmit</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>MSIT_RespondAndSubmit_ExCon_Test</apexClass>
+        <apexClass>MSIT_RespondAndSubmit_Test</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <custom>false</custom>

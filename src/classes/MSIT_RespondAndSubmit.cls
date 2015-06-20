@@ -13,5 +13,5 @@
 //  Used By:    MSIT_RespondAndSubmit.page
 //  History:    see https://github.com/manuerwin/salesforce-mass-stay-in-touch
 
-public with sharing class MSIT_RespondAndSubmit_ExCon {
+public with sharing class MSIT_RespondAndSubmit {
 }
