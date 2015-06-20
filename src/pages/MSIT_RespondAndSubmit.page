@@ -21,9 +21,16 @@
     Used By:    Force.com Site
     History:    see https://github.com/manuerwin/salesforce-mass-stay-in-touch
 -->
-<apex:page >
-  <!-- Begin Default Content REMOVE THIS -->
-  <h1>Congratulations</h1>
-  This is your new Page
-  <!-- End Default Content REMOVE THIS -->
+<apex:page controller="MSIT_RespondAndSubmit" showHeader="false" showChat="false" sidebar="false" action="{!processConfirmation}" >
+
+    <apex:form id="theForm" >
+
+        <apex:pageMessages />
+
+        <apex:outputPanel id="confirmed" layout="block" rendered="{!status == 'confirm'}" >
+            <apex:pageMessage id="confirmMessage" summary="Thanks for confirming all your details are correct!" severity="confirm" strength="3" />
+        </apex:outputPanel>
+
+    </apex:form>
+
 </apex:page>

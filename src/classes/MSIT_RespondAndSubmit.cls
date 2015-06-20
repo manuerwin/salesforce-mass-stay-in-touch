@@ -14,4 +14,74 @@
 //  History:    see https://github.com/manuerwin/salesforce-mass-stay-in-touch
 
 public with sharing class MSIT_RespondAndSubmit {
+    /* CONSTANTS */
+    public static final String CONFIRMED = 'confirm';
+    public static final String CHANGED = 'change';
+
+    /* CONSTRUCTOR */
+    public MSIT_RespondAndSubmit() {
+        pageParameters = ApexPages.currentPage().getParameters();
+    }
+
+    /* PUBLIC VARIABLES AND METHODS */
+    public Contact contact {
+		get {
+			if (contact == null) {
+				contact = [SELECT Id, Last_MSIT_Response_Datetime__c, Last_MSIT_Request_Result__c FROM Contact WHERE Id = :stayInTouchRequest.Contact__c];
+			}
+			return contact;
+		}
+		set;
+	}
+	public String status {
+	   	get {
+    		if (status == null) {
+    			status = pageParameters.get('status');
+    		}
+    		return status;
+    	}
+    	set;
+    }
+    public Void processConfirmation() {
+		if (status == CONFIRMED) {
+        	contact.Last_MSIT_Response_Datetime__c = System.now();
+        	contact.Last_MSIT_Request_Result__c = 'Confirmed';
+
+        	try {
+        		update contact;
+        	} catch (Exception ex) {
+        		ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something broke: ' + ex.getTypeName() + ' : ' + ex.getMessage()));
+        	}
+        }
+    }
+
+    /* PRIVATE VARIABLES AND METHODS */
+    private Map<String, String> pageParameters {
+    	get {
+    		if (pageParameters == null) {
+    			pageParameters = new Map<String, String>();
+    		}
+    		return pageParameters;
+    	}
+    	set;
+    }
+    private Id stayInTouchId {
+	   	get {
+    		if (stayInTouchId == null) {
+    			stayInTouchId = pageParameters.get('ref');
+    		}
+    		return stayInTouchId;
+    	}
+    	set;
+    }
+    private Stay_In_Touch_Request__c stayInTouchRequest {
+		get {
+			if (stayInTouchRequest == null) {
+				stayInTouchRequest = [SELECT Id, Contact__c FROM Stay_In_Touch_Request__c WHERE Id = :stayInTouchId];
+			}
+			return stayInTouchRequest;
+		}
+		set;
+	}
+
 }
