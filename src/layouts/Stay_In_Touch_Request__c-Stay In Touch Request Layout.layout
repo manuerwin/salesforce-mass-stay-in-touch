@@ -19,10 +19,6 @@
                 <field>Subject__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Stay_In_Touch_Note__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Signature__c</field>
             </layoutItems>

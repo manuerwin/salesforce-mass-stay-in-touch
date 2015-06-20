@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <actionOverrides>
         <actionName>Accept</actionName>
         <type>Default</type>
@@ -44,6 +44,7 @@
         <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
+    <allowInChatterGroups>true</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Contains all information pertaining to a specific Stay In Touch request by a user to a Contact.</description>
@@ -79,18 +80,6 @@
         <type>TextArea</type>
     </fields>
     <fields>
-        <fullName>Stay_In_Touch_Note__c</fullName>
-        <defaultValue>&quot;Hi &lt;Contact.FirstName&gt;, I&apos;m updating my address book and want to make sure I have your correct contact information so we can stay in touch. Can you take a look at the info I have for you below and let me know if it&apos;s out of date?&quot;</defaultValue>
-        <description>Plain text email body</description>
-        <externalId>false</externalId>
-        <label>Stay-in-Touch Note</label>
-        <length>131072</length>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>LongTextArea</type>
-        <visibleLines>10</visibleLines>
-    </fields>
-    <fields>
         <fullName>Subject__c</fullName>
         <defaultValue>&quot;Staying in touch&quot;</defaultValue>
         <externalId>false</externalId>
@@ -108,7 +97,6 @@
         <columns>NAME</columns>
         <columns>Contact__c</columns>
         <columns>Subject__c</columns>
-        <columns>Stay_In_Touch_Note__c</columns>
         <columns>Signature__c</columns>
         <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
@@ -124,7 +112,7 @@
     <searchLayouts>
         <customTabListAdditionalFields>Contact__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>Subject__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>Stay_In_Touch_Note__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields xsi:nil="true"/>
         <customTabListAdditionalFields>Signature__c</customTabListAdditionalFields>
         <customTabListAdditionalFields>UPDATEDBY_USER</customTabListAdditionalFields>
     </searchLayouts>

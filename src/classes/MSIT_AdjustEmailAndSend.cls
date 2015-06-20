@@ -64,8 +64,6 @@ public with sharing class MSIT_AdjustEmailAndSend {
             Stay_In_Touch_Request__c SIT = new Stay_In_Touch_Request__c();
             SIT.Contact__c = con.Id;
             SIT.Subject__c = proxySIT.Subject__c;
-            //String replacedStayInTouchNote = 
-            SIT.Stay_In_Touch_Note__c = proxySIT.Stay_In_Touch_Note__c;
             SIT.Signature__c = proxySIT.Signature__c;
             SITs.add(SIT);
         }
