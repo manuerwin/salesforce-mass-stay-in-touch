@@ -238,7 +238,7 @@
                 <default>false</default>
             </picklistValues>
             <picklistValues>
-                <fullName>No Change</fullName>
+                <fullName>Confirmed</fullName>
                 <default>false</default>
             </picklistValues>
             <sorted>true</sorted>

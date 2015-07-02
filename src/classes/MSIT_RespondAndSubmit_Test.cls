@@ -40,7 +40,7 @@ private class MSIT_RespondAndSubmit_Test {
         // Given "confirm" was indicated
         Stay_In_Touch_Request__c stayInTouch = [SELECT Id, Contact__c FROM Stay_In_Touch_Request__c LIMIT 1];
         ApexPages.currentPage().getParameters().put('ref', stayInTouch.Id);
-        ApexPages.currentPage().getParameters().put('status', 'confirm');
+        ApexPages.currentPage().getParameters().put('status', MSIT_RespondAndSubmit.CONFIRMED);
 
         // When the page loads
         msit.MSIT_RespondAndSubmit rAs = new msit.MSIT_RespondAndSubmit();
@@ -48,14 +48,13 @@ private class MSIT_RespondAndSubmit_Test {
         Datetime nowPageLoaded = System.now();
 
         // Then a "thank you" message should show
-        System.assertEquals(rAs.status, 'confirm', 'The status should be confirm');
+        System.assertEquals(rAs.status, MSIT_RespondAndSubmit.CONFIRMED, 'The status should be confirm');
         // And the Contact.Last MSIT Request Result field should be 'Confirmed'
         Contact contact = [SELECT Id, Last_MSIT_Request_Result__c, Last_MSIT_Response_Datetime__c FROM Contact WHERE Id = :stayInTouch.Contact__c];
-        System.assertEquals(contact.Last_MSIT_Request_Result__c, 'Confirmed', 'The last request result should be Confirmed');
+        System.assertEquals('Confirmed', contact.Last_MSIT_Request_Result__c, 'The last request result should be Confirmed');
         // And the Contact.Last MSIT Response Datetime should be the date time when the page executed
-        System.assertEquals(contact.Last_MSIT_Response_Datetime__c, nowPageLoaded, 'The last request datetime should be equal to the time of page load/execution');
+        System.assertEquals(nowPageLoaded, contact.Last_MSIT_Response_Datetime__c, 'The last request datetime should be equal to the time of page load/execution');
     }
-/*
     // Story: Making changes to details
     // In order to change my details
     // As a Contact
@@ -63,9 +62,26 @@ private class MSIT_RespondAndSubmit_Test {
 
     @isTest static void changesShouldHaveBeenSavedToContact() {
         // Given changes were made
+        Stay_In_Touch_Request__c stayInTouch = [SELECT Id, Contact__c FROM Stay_In_Touch_Request__c LIMIT 1];
+        ApexPages.currentPage().getParameters().put('ref', stayInTouch.Id);
+        ApexPages.currentPage().getParameters().put('status', MSIT_RespondAndSubmit.CHANGED);
+        msit.MSIT_RespondAndSubmit rAs = new msit.MSIT_RespondAndSubmit();
+        rAs.contact.LastName = 'Test Changed';
+        ras.processChange();
+
         // When the page reloads after submit
-        // Then the changes should be reflected on the Contact record
+        Datetime nowPageLoaded = System.now();
+
+        // Then a "thank you" message should show
+        System.assertEquals(rAs.status, MSIT_RespondAndSubmit.CHANGED, 'The status should be change');
+        // And the changes should be reflected on the Contact record
+        Contact contact = [SELECT Id, LastName, Last_MSIT_Request_Result__c, Last_MSIT_Response_Datetime__c FROM Contact WHERE Id = :stayInTouch.Contact__c];
+        System.assertEquals('Changed', contact.Last_MSIT_Request_Result__c, 'The last request result should be Changed');
+        System.assertEquals('Test Changed', contact.LastName, 'The last name should be Test Changed');
+        // And the Contact.Last MSIT Response Datetime should be the date time when the page executed
+        System.assertEquals(nowPageLoaded, contact.Last_MSIT_Response_Datetime__c, 'The last request datetime should be equal to the time of page load/execution');
     }
+/*
     @isTest static void pageShouldShowThankYouForChangeMessage() {
         // Given changes were made
         // When the page reloads after submit
@@ -78,7 +94,7 @@ private class MSIT_RespondAndSubmit_Test {
     // I want to see a warning message
 
     @isTest static void pageShouldShowWarningMessage() {
-        // Given information is missing from the URL
+        // Given information is missing from or incorrect in the URL
         // When the page loads
         // Then a warning message should show
     }

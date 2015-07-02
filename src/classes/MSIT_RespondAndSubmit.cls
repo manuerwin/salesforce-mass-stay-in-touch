@@ -15,8 +15,8 @@
 
 public with sharing class MSIT_RespondAndSubmit {
     /* CONSTANTS */
-    public static final String CONFIRMED = 'confirm';
-    public static final String CHANGED = 'change';
+    public static final String CONFIRMED = 'Confirmed';
+    public static final String CHANGED = 'Changed';
 
     /* CONSTRUCTOR */
     public MSIT_RespondAndSubmit() {
@@ -27,7 +27,7 @@ public with sharing class MSIT_RespondAndSubmit {
     public Contact contact {
 		get {
 			if (contact == null) {
-				contact = [SELECT Id, Last_MSIT_Response_Datetime__c, Last_MSIT_Request_Result__c FROM Contact WHERE Id = :stayInTouchRequest.Contact__c];
+				contact = [SELECT Id, LastName, Last_MSIT_Response_Datetime__c, Last_MSIT_Request_Result__c FROM Contact WHERE Id = :stayInTouchRequest.Contact__c];
 			}
 			return contact;
 		}
@@ -42,46 +42,64 @@ public with sharing class MSIT_RespondAndSubmit {
     	}
     	set;
     }
-    public Void processConfirmation() {
+    public void processConfirmation() {
 		if (status == CONFIRMED) {
         	contact.Last_MSIT_Response_Datetime__c = System.now();
-        	contact.Last_MSIT_Request_Result__c = 'Confirmed';
+        	contact.Last_MSIT_Request_Result__c = CONFIRMED;
+            updateContact();
 
-        	try {
-        		update contact;
-        	} catch (Exception ex) {
-        		ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something broke: ' + ex.getTypeName() + ' : ' + ex.getMessage()));
-        	}
         }
+    }
+    public void processChange() {
+        System.debug('## DEBUG: contact: ' + contact);
+        contact.Last_MSIT_Response_Datetime__c = System.now();
+        contact.Last_MSIT_Request_Result__c = CHANGED;
+        updateContact();
     }
 
     /* PRIVATE VARIABLES AND METHODS */
     private Map<String, String> pageParameters {
-    	get {
-    		if (pageParameters == null) {
-    			pageParameters = new Map<String, String>();
-    		}
-    		return pageParameters;
-    	}
-    	set;
+        get {
+            if (pageParameters == null) {
+                pageParameters = new Map<String, String>();
+            }
+            return pageParameters;
+        }
+        set;
+    }
+    private String refParameter {
+        get {
+            if (refParameter == null) {
+                refParameter = pageParameters.get('ref');
+            }
+            return refParameter;
+        }
+        private set;
     }
     private Id stayInTouchId {
-	   	get {
-    		if (stayInTouchId == null) {
-    			stayInTouchId = pageParameters.get('ref');
-    		}
-    		return stayInTouchId;
-    	}
-    	set;
+        get {
+            if (stayInTouchId == null) {
+                if (refParameter != null)
+                stayInTouchId = refParameter;
+            }
+            return stayInTouchId;
+        }
+        set;
     }
     private Stay_In_Touch_Request__c stayInTouchRequest {
-		get {
-			if (stayInTouchRequest == null) {
-				stayInTouchRequest = [SELECT Id, Contact__c FROM Stay_In_Touch_Request__c WHERE Id = :stayInTouchId];
-			}
-			return stayInTouchRequest;
-		}
-		set;
-	}
-
+        get {
+            if (stayInTouchRequest == null) {
+                stayInTouchRequest = [SELECT Id, Contact__c FROM Stay_In_Touch_Request__c WHERE Id = :stayInTouchId];
+            }
+            return stayInTouchRequest;
+        }
+        set;
+    }
+    private void updateContact(){
+    	try {
+    		update contact;
+    	} catch (Exception ex) {
+    		ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something broke: ' + ex.getTypeName() + ' : ' + ex.getMessage()));
+    	}
+    }
 }
