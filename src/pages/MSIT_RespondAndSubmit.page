@@ -27,7 +27,7 @@
 
         <apex:pageMessages />
 
-        <apex:outputPanel id="confirmed" layout="block" rendered="{!status == 'confirm'}" >
+        <apex:outputPanel id="confirmed" layout="block" rendered="{!status == 'Confirmed'}" >
             <apex:pageMessage id="confirmMessage" summary="Thanks for confirming all your details are correct!" severity="confirm" strength="3" />
         </apex:outputPanel>
 

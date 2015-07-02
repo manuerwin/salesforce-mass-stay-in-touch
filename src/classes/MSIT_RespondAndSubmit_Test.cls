@@ -47,7 +47,7 @@ private class MSIT_RespondAndSubmit_Test {
         rAs.processConfirmation();
         Datetime nowPageLoaded = System.now();
 
-        // Then a "thank you" message should show
+        // Then a "thank you" message should show (just testing the status value not the UI)
         System.assertEquals(rAs.status, MSIT_RespondAndSubmit.CONFIRMED, 'The status should be confirm');
         // And the Contact.Last MSIT Request Result field should be 'Confirmed'
         Contact contact = [SELECT Id, Last_MSIT_Request_Result__c, Last_MSIT_Response_Datetime__c FROM Contact WHERE Id = :stayInTouch.Contact__c];
@@ -55,37 +55,35 @@ private class MSIT_RespondAndSubmit_Test {
         // And the Contact.Last MSIT Response Datetime should be the date time when the page executed
         System.assertEquals(nowPageLoaded, contact.Last_MSIT_Response_Datetime__c, 'The last request datetime should be equal to the time of page load/execution');
     }
+
     // Story: Making changes to details
     // In order to change my details
     // As a Contact
     // I want to make changes and be thanked
 
     @isTest static void changesShouldHaveBeenSavedToContact() {
+        PageReference testPage = Page.MSIT_RespondAndSubmit;
+        Test.setCurrentPageReference(testPage);
+
         // Given changes were made
         Stay_In_Touch_Request__c stayInTouch = [SELECT Id, Contact__c FROM Stay_In_Touch_Request__c LIMIT 1];
         ApexPages.currentPage().getParameters().put('ref', stayInTouch.Id);
-        ApexPages.currentPage().getParameters().put('status', MSIT_RespondAndSubmit.CHANGED);
+        ApexPages.currentPage().getParameters().put('status', MSIT_RespondAndSubmit.CHANGE);
         msit.MSIT_RespondAndSubmit rAs = new msit.MSIT_RespondAndSubmit();
-        rAs.contact.LastName = 'Test Changed';
+        rAs.contact.LastName = 'Test Change';
         ras.processChange();
 
         // When the page reloads after submit
         Datetime nowPageLoaded = System.now();
 
-        // Then a "thank you" message should show
-        System.assertEquals(rAs.status, MSIT_RespondAndSubmit.CHANGED, 'The status should be change');
+        // Then a "thank you" message should show (just testing the status value not the UI)
+        System.assertEquals(MSIT_RespondAndSubmit.CHANGE, rAs.status, 'The status should be change');
         // And the changes should be reflected on the Contact record
         Contact contact = [SELECT Id, LastName, Last_MSIT_Request_Result__c, Last_MSIT_Response_Datetime__c FROM Contact WHERE Id = :stayInTouch.Contact__c];
-        System.assertEquals('Changed', contact.Last_MSIT_Request_Result__c, 'The last request result should be Changed');
-        System.assertEquals('Test Changed', contact.LastName, 'The last name should be Test Changed');
+        System.assertEquals('Change', contact.Last_MSIT_Request_Result__c, 'The last request result should be Change');
+        System.assertEquals('Test Change', contact.LastName, 'The last name should be Test Change');
         // And the Contact.Last MSIT Response Datetime should be the date time when the page executed
         System.assertEquals(nowPageLoaded, contact.Last_MSIT_Response_Datetime__c, 'The last request datetime should be equal to the time of page load/execution');
-    }
-/*
-    @isTest static void pageShouldShowThankYouForChangeMessage() {
-        // Given changes were made
-        // When the page reloads after submit
-        // Then a "thank you" message should show
     }
 
     // Story: Error handling
@@ -94,9 +92,18 @@ private class MSIT_RespondAndSubmit_Test {
     // I want to see a warning message
 
     @isTest static void pageShouldShowWarningMessage() {
+        PageReference testPage = Page.MSIT_RespondAndSubmit;
+        Test.setCurrentPageReference(testPage);
+
         // Given information is missing from or incorrect in the URL
+        ApexPages.currentPage().getParameters().put('ref', 'invalid id');
+        ApexPages.currentPage().getParameters().put('status', MSIT_RespondAndSubmit.CONFIRMED);
+
         // When the page loads
-        // Then a warning message should show
+        msit.MSIT_RespondAndSubmit rAs = new msit.MSIT_RespondAndSubmit();
+        rAs.processConfirmation();
+
+        // Then a warning message should show (just testing the status value not the UI)
+        System.assertEquals(true, rAs.errorExists, 'errorExists should be true');
     }
-*/
 }

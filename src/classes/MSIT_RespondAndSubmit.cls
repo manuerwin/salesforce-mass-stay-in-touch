@@ -16,24 +16,32 @@
 public with sharing class MSIT_RespondAndSubmit {
     /* CONSTANTS */
     public static final String CONFIRMED = 'Confirmed';
-    public static final String CHANGED = 'Changed';
+    public static final String CHANGE = 'Change';
 
     /* CONSTRUCTOR */
     public MSIT_RespondAndSubmit() {
         pageParameters = ApexPages.currentPage().getParameters();
+        errorExists = false;
     }
 
     /* PUBLIC VARIABLES AND METHODS */
     public Contact contact {
 		get {
 			if (contact == null) {
-				contact = [SELECT Id, LastName, Last_MSIT_Response_Datetime__c, Last_MSIT_Request_Result__c FROM Contact WHERE Id = :stayInTouchRequest.Contact__c];
+                contact = new Contact();
+                if (!errorExists && contactId != null) {
+				    contact = [SELECT Id, LastName, Last_MSIT_Response_Datetime__c, Last_MSIT_Request_Result__c FROM Contact WHERE Id = :contactId];
+                }
 			}
 			return contact;
 		}
 		set;
 	}
-	public String status {
+	public Boolean errorExists {
+        get;
+        set;
+    }
+    public String status {
 	   	get {
     		if (status == null) {
     			status = pageParameters.get('status');
@@ -51,13 +59,21 @@ public with sharing class MSIT_RespondAndSubmit {
         }
     }
     public void processChange() {
-        System.debug('## DEBUG: contact: ' + contact);
         contact.Last_MSIT_Response_Datetime__c = System.now();
-        contact.Last_MSIT_Request_Result__c = CHANGED;
+        contact.Last_MSIT_Request_Result__c = CHANGE;
         updateContact();
     }
 
     /* PRIVATE VARIABLES AND METHODS */
+    private Id contactId {
+        get {
+            if (contactId == null) {
+                contactId = stayInTouchRequest.Contact__c;
+            }
+            return contactId;
+        }
+        set;
+    }
     private Map<String, String> pageParameters {
         get {
             if (pageParameters == null) {
@@ -78,9 +94,13 @@ public with sharing class MSIT_RespondAndSubmit {
     }
     private Id stayInTouchId {
         get {
-            if (stayInTouchId == null) {
-                if (refParameter != null)
-                stayInTouchId = refParameter;
+            if (stayInTouchId == null && refParameter != null) {
+                try {
+                    stayInTouchId = Id.valueOf(refParameter);
+                } catch (Exception ex) {
+                    errorExists = true;
+                    ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something is wrong with the link, please try again!'));
+                }
             }
             return stayInTouchId;
         }
@@ -89,7 +109,10 @@ public with sharing class MSIT_RespondAndSubmit {
     private Stay_In_Touch_Request__c stayInTouchRequest {
         get {
             if (stayInTouchRequest == null) {
-                stayInTouchRequest = [SELECT Id, Contact__c FROM Stay_In_Touch_Request__c WHERE Id = :stayInTouchId];
+                stayInTouchRequest = new Stay_In_Touch_Request__c();
+                if (!errorExists && stayInTouchId != null) {
+                    stayInTouchRequest = [SELECT Id, Contact__c FROM Stay_In_Touch_Request__c WHERE Id = :stayInTouchId];
+                }
             }
             return stayInTouchRequest;
         }
@@ -99,7 +122,8 @@ public with sharing class MSIT_RespondAndSubmit {
     	try {
     		update contact;
     	} catch (Exception ex) {
-    		ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something broke: ' + ex.getTypeName() + ' : ' + ex.getMessage()));
+    		errorExists = true;
+            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something broke: ' + ex.getTypeName() + ' : ' + ex.getMessage()));
     	}
     }
 }
