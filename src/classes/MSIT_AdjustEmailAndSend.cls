@@ -23,18 +23,14 @@ public with sharing class MSIT_AdjustEmailAndSend {
         selectedContacts = (List<Contact>) standardSetController.getSelected();
 
         // Set booleans as default false
-// TODO        bccMe = false;
-        storeActivity = false;
         dailyLimitExceeded = false;
 
         // ASSUMPTION: Only one entry for this List Custom Setting has been created
         Mass_Stay_In_Touch_Settings__c msitSettings = Mass_Stay_In_Touch_Settings__c.getAll().values();
-        storeActivity = msitSettings.Create_Activity_Record__c;
         emailTemplateId = msitSettings.Email_Template_Id__c;
     }
 
     /* PUBLIC VARIABLES AND METHODS*/
-// TODO    public Boolean bccMe {get; set;}
     public Boolean dailyLimitExceeded {get; set;}
     public Boolean emailSendAttempted {get; set;}
     public Id emailTemplateId {get; set;}
@@ -58,7 +54,7 @@ public with sharing class MSIT_AdjustEmailAndSend {
     public PageReference createSITs() {
         emailSendAttempted = true;
 
-        // Loop through selected Contacts and create Stay In Touch records for each one.
+        // Loop through selected Contacts and create Stay In Touch records for each one. Workflow will then send the stay in touch request email.
         List<Stay_In_Touch_Request__c> SITs = new List<Stay_In_Touch_Request__c>();
         for (Contact con : selectedContacts) {
             Stay_In_Touch_Request__c SIT = new Stay_In_Touch_Request__c();
@@ -71,8 +67,10 @@ public with sharing class MSIT_AdjustEmailAndSend {
         if (!SITs.isEmpty()) {
             System.Debug(System.LoggingLevel.DEBUG, '##DEBUG: Proceed as SITs should be created');
             try {
+                System.Debug(System.LoggingLevel.DEBUG, '##DEBUG: insert SITs');
                 insert SITs;
             } catch (Exception ex) {
+                System.Debug(System.LoggingLevel.DEBUG, '##DEBUG: exception');
                 ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something broke: ' + ex.getTypeName() + ' : ' + ex.getMessage()));
             }
         }

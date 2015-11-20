@@ -19,7 +19,7 @@ private class MSIT_AdjustEmailAndSend_Test {
         // Create Custom Setting values
         Mass_Stay_In_Touch_Settings__c msitSettings = new Mass_Stay_In_Touch_Settings__c();
         msitSettings.Name = 'testing';
-        msitSettings.Create_Activity_Record__c = true;
+        msitSettings.Email_Template_Id__c = '00Xi0000001Elo8';
         insert msitSettings;
     }
 
@@ -27,7 +27,6 @@ private class MSIT_AdjustEmailAndSend_Test {
     // In order to send mass stay in touch requests
     // As an internal user
     // I want to select contacts who will receive emails
-
     @isTest static void emailShouldBeSentWhenContactSelected() {
         List<Contact> selectedContacts = [SELECT Id FROM Contact LIMIT 10];
         System.debug('##DEBUG: selectedContacts: ' + selectedContacts);
@@ -41,24 +40,23 @@ private class MSIT_AdjustEmailAndSend_Test {
         System.debug('##DEBUG: msit custom setting: ' + Mass_Stay_In_Touch_Settings__c.getAll().values());
 
         // When the Send button is clicked
-        msit.MSIT_AdjustEmailAndSend conExt = new msit.MSIT_AdjustEmailAndSend(setCon);
+        msit.MSIT_AdjustEmailAndSend controller = new msit.MSIT_AdjustEmailAndSend(setCon);
         Test.startTest();
-            conExt.createSITs();
+            controller.createSITs();
         Test.stopTest();
 
         // Then the email should be sent
 
     }
-/*
     @isTest static void emailShouldNotBeSentWhenNoContactSelected() {
         // Given the number of selected Contacts is zero
         List<Contact> deleteContacts = [SELECT Id FROM Contact];
         delete deleteContacts;
         ApexPages.StandardSetController setCon = new ApexPages.StandardSetController(deleteContacts);
         // When the Send button is clicked
-        msit.MSIT_AdjustEmailAndSend_ExCon conExt = new msit.MSIT_AdjustEmailAndSend_ExCon(setCon);
+        msit.MSIT_AdjustEmailAndSend controller = new msit.MSIT_AdjustEmailAndSend(setCon);
         Test.startTest();
-            Boolean emailSuccess = conExt.SendEmail();
+            controller.createSITs();
         Test.stopTest();
         // Then the email should not be sent
         // assert number of email invocations is zero
@@ -71,9 +69,9 @@ private class MSIT_AdjustEmailAndSend_Test {
         setCon.setSelected(selectedContacts);
 
         // When the page loads
-        msit.MSIT_AdjustEmailAndSend_ExCon conExt = new msit.MSIT_AdjustEmailAndSend_ExCon(setCon);
+        msit.MSIT_AdjustEmailAndSend controller = new msit.MSIT_AdjustEmailAndSend(setCon);
         Test.startTest();
-            Boolean emailSuccess = conExt.SendEmail();
+            controller.createSITs();
         Test.stopTest();
 
         // Then the "Send email to all contacts" button should be clickable
@@ -168,5 +166,4 @@ private class MSIT_AdjustEmailAndSend_Test {
         // When the page loads
         // Then the user should see an error message
     }
-*/
 }

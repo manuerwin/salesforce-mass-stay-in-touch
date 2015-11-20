@@ -48,27 +48,21 @@
                     <apex:commandButton id="send" action="{!createSITs}" value="Create Stay In Touch Requests" reRender="theForm" />
                 </apex:pageBlockButtons>
                 <apex:pageBlockSection id="numberOfRecipients" collapsible="false" columns="1" >
-                    You currently have <b>{!numberOfTargetedContacts} recipient(s)</b> selected to receive this email.
-                    Note: Contacts without an email address and who have opted out of email have been excluded.
+                    You currently have <b>{!numberOfTargetedContacts} recipient(s)</b> selected to receive this email. <br />
+                    Note: Contacts without an email address and who have opted out of email have been excluded. <br />
+                    Note: This process creates a "Stay In Touch Request" record for each Contact.
                 </apex:pageBlockSection>
 
-                <apex:pageBlockSection id="bccAndStoreActivityCheckboxes" collapsible="false" columns="2" >
-<!-- TODO           <apex:inputCheckbox id="bccMe" label="BCC me on one message" value="{!bccMe}" /> -->
-                    <apex:inputCheckbox id="storeActivity" label="Store an activity for each message" value="{!storeActivity}" disabled="{!storeActivity}" title="Select whether to store an activity against each Contact. If this is disabled, your admin has forced this on."/>
-                </apex:pageBlockSection>
-
-                <apex:pageBlockSection id="emailSubjectAndNote" collapsible="false" columns="1" title="Email Subject and Email Template" >
+                <apex:pageBlockSection id="emailSubjectAndNote" collapsible="false" columns="2" title="Email Subject and Email Template" >
                     <apex:inputField id="emailSubject" value="{!proxySIT.Subject__c}" />
-                    <apex:outputLink id="emailTemplateLink" value="/{!emailTemplateId}" target="_blank">
-                        Email Template.
-                    </apex:outputLink>
-                    This Email Template will be used for the mass email to your selected contacts, please ensure it is updated with your desired stay in touch greeting, messsage, and signature. Note: if you can't edit it, please request changes via your System Administrator.
+                    <apex:outputPanel id="emailTemplateInfo" layout="block" >
+                        This <apex:outputLink id="emailTemplateLink" value="/{!emailTemplateId}" target="_blank"> email template </apex:outputLink> will be used for the mass email to your selected contacts, please ensure it is updated with your desired stay in touch greeting, messsage, and signature. Note: if you can't edit it, please request changes via your System Administrator.
+                    </apex:outputPanel>
                 </apex:pageBlockSection>
 
                 <apex:pageBlockSection id="emailFields" collapsible="false" columns="1" title="Fields for review and update" >
-                    <!-- The fields shown on this page are configured by changing the Contact "Mass Stay In Touch" Field Set -->
                     The following fields will be available for the contact to confirm or update. Ensure they are included in the email template. If you need changes made to this list, talk to your administrator.
-
+                    <!-- The fields shown on this page are configured by changing the Contact "Mass Stay In Touch" Field Set -->
                     <apex:repeat value="{!$ObjectType.Contact.FieldSets.Mass_Stay_In_Touch}" var="field"> 
                         <apex:outputText value="{!field.Label}" />
                     </apex:repeat>
@@ -82,7 +76,7 @@
         </apex:outputPanel>
 
         <apex:outputPanel id="afterSending" layout="block" rendered="{!emailSendAttempted}" >
-            TODO: Show the number of SIT's created (aka the number of emails sent) - only if no errors!!
+            <!-- TODO: Show the number of SIT's created (aka the number of emails sent) - only if no errors!! -->
             <apex:commandButton id="afterSendingButton" action="{!cancel}" value="Back" />
         </apex:outputPanel>
 

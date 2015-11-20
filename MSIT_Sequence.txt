@@ -1,0 +1,43 @@
+title Mass Stay In Touch Sequence
+
+Salesforce User->Contact List View: Select List View
+
+Contact List View->AdjustEmailAndSend Page: Multi select Contact(s)
+
+note right of Contact List View: click "Request Stay In Touch" button
+
+note right of AdjustEmailAndSend Page
+  Show Subject, Signature, and
+  Contact Field Set fields
+end note
+
+alt Create Stay In Touch Requests
+
+  AdjustEmailAndSend Page->Workflow: Insert Stay In Touch records
+
+  Workflow->Customer: Send Stay In Touch request email
+  note left of Customer
+    Email template uses Contact fields,
+    however separately configured from
+    Contact Field Set
+  end note
+
+  alt Customer chooses to update
+    Customer->RespondAndSubmit Site: Choose to update details
+    note right of Customer: Click "change" email link
+    note right of RespondAndSubmit Site: Contact Field Set fields edited
+    RespondAndSubmit Site->Contact Record: Update
+    Contact Record->Salesforce User: Advise change occurred (Workflow)
+  else Contact chooses to confirm
+    Customer->RespondAndSubmit Site: Confirm no change
+    note right of Customer: Click "confirm" email link
+    RespondAndSubmit Site->Customer: Show thanks message
+    Contact Record->Salesforce User: Advise no changes (Workflow)
+  end
+  RespondAndSubmit Site->Stay In Touch Record: Stamp Stay In Touch with customer response
+  Stay In Touch Record->Contact Record: Update parent Contact Last SIT Response (Workflow)
+
+else Cancel
+  note right of AdjustEmailAndSend Page: Click "Cancel" button
+  AdjustEmailAndSend Page->Contact List View: Return
+end

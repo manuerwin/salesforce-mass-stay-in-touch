@@ -19,48 +19,61 @@ public with sharing class MSIT_RespondAndSubmit {
     public static final String CHANGE = 'Change';
 
     /* CONSTRUCTOR */
-    public MSIT_RespondAndSubmit() {
+    public MSIT_RespondAndSubmit(){
+        // Put all the URL parameters into a collection to access later
         pageParameters = ApexPages.currentPage().getParameters();
+        // By default no errors at the start of processing
         errorExists = false;
+    }
+
+
+    public List<Schema.FieldSetMember> getFields() {
+        return SObjectType.Contact.FieldSets.msit__Mass_Stay_In_Touch.getFields();
     }
 
     /* PUBLIC VARIABLES AND METHODS */
     public Contact contact {
-		get {
-			if (contact == null) {
+        // The Contact record including all the fields defined in the Field Set
+        get {
+            if (contact == null) {
                 contact = new Contact();
                 if (!errorExists && contactId != null) {
-				    contact = [SELECT Id, LastName, Last_MSIT_Response_Datetime__c, Last_MSIT_Request_Result__c FROM Contact WHERE Id = :contactId];
+                    String query = 'SELECT ';
+                    for(Schema.FieldSetMember f : this.getFields()) {
+                        query += f.getFieldPath() + ', ';
+                    }
+                    query += 'Id, Name, Last_MSIT_Response_Datetime__c, Last_MSIT_Request_Result__c FROM Contact WHERE Id = :contactId';
+                    return Database.query(query);
                 }
-			}
-			return contact;
-		}
-		set;
-	}
-	public Boolean errorExists {
+            }
+            return contact;
+        }
+        set;
+    }
+    public Boolean errorExists {
         get;
         set;
     }
     public String status {
-	   	get {
-    		if (status == null) {
-    			status = pageParameters.get('status');
-    		}
-    		return status;
-    	}
-    	set;
-    }
-    public void processConfirmation() {
-		if (status == CONFIRMED) {
-        	contact.Last_MSIT_Response_Datetime__c = System.now();
-        	contact.Last_MSIT_Request_Result__c = CONFIRMED;
-            updateContact();
-
+        // URL parameter that indicates the contacts response to either confirm all correct, or changes need to be made
+        get {
+            if (status == null) {
+                status = pageParameters.get('status');
+            }
+            return status;
         }
+        set;
     }
-    public void processChange() {
+    public void processResponse() {
+        // Stamp the SIT with contact response - WF will update the contact
+        stayInTouchRequest.Contact_Status__c = status;
+        update stayInTouchRequest;
         contact.Last_MSIT_Response_Datetime__c = System.now();
-        contact.Last_MSIT_Request_Result__c = CHANGE;
+        if (status == CONFIRMED) {
+            contact.Last_MSIT_Request_Result__c = CONFIRMED;
+        } else if (status == CHANGE) {
+            contact.Last_MSIT_Request_Result__c = CHANGE;
+        }
         updateContact();
     }
 
@@ -84,6 +97,7 @@ public with sharing class MSIT_RespondAndSubmit {
         set;
     }
     private String refParameter {
+        // String representation of the Stay In Touch Id passed to the VF page in the URL
         get {
             if (refParameter == null) {
                 refParameter = pageParameters.get('ref');
@@ -111,19 +125,27 @@ public with sharing class MSIT_RespondAndSubmit {
             if (stayInTouchRequest == null) {
                 stayInTouchRequest = new Stay_In_Touch_Request__c();
                 if (!errorExists && stayInTouchId != null) {
-                    stayInTouchRequest = [SELECT Id, Contact__c FROM Stay_In_Touch_Request__c WHERE Id = :stayInTouchId];
+                    stayInTouchRequest = [SELECT Id, Contact__c, Contact_Status__c FROM Stay_In_Touch_Request__c WHERE Id = :stayInTouchId];
                 }
             }
             return stayInTouchRequest;
         }
         set;
     }
-    private void updateContact(){
-    	try {
-    		update contact;
-    	} catch (Exception ex) {
-    		errorExists = true;
+private void updateStayInTouchRequest(){
+        try {
+            update stayInTouchRequest;
+        } catch (Exception ex) {
+            errorExists = true;
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something broke: ' + ex.getTypeName() + ' : ' + ex.getMessage()));
-    	}
+        }
+    }
+    private void updateContact(){
+        try {
+            update contact;
+        } catch (Exception ex) {
+            errorExists = true;
+            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something broke: ' + ex.getTypeName() + ' : ' + ex.getMessage()));
+        }
     }
 }

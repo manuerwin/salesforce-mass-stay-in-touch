@@ -16,12 +16,16 @@
                     - Displays a list of fields with values
                     - Allows them to enter a message to the internal user
                     - Allows them to submit the changes
-                    - Shows them the thank you message             
+                    - Shows them the thank you message
+                URL parameters for this page:
+                    - "status" with possible values of Confirmed, 
+                    - "ref"
+                    e.g., https://msitdev-developer-edition.na15.force.com/stayingintouch?ref=a00i000000cKgAP&status=Confirmed
                 
     Used By:    Force.com Site
     History:    see https://github.com/manuerwin/salesforce-mass-stay-in-touch
 -->
-<apex:page controller="MSIT_RespondAndSubmit" showHeader="false" showChat="false" sidebar="false" action="{!processConfirmation}" >
+<apex:page controller="MSIT_RespondAndSubmit" showHeader="false" showChat="false" sidebar="false" action="{!processResponse}" >
 
     <apex:form id="theForm" >
 
@@ -29,6 +33,15 @@
 
         <apex:outputPanel id="confirmed" layout="block" rendered="{!status == 'Confirmed'}" >
             <apex:pageMessage id="confirmMessage" summary="Thanks for confirming all your details are correct!" severity="confirm" strength="3" />
+        </apex:outputPanel>
+
+        <apex:outputPanel id="changed" layout="block" rendered="{!status == 'Change'}" >
+            <apex:pageMessage id="updateMessage" summary="Please enter your updated information below!" severity="confirm" strength="3" />
+
+            <apex:repeat value="{!$ObjectType.Contact.FieldSets.Mass_Stay_In_Touch}" var="f"> 
+                <apex:inputField value="{!Contact[f]}" /><br/>
+            </apex:repeat>
+
         </apex:outputPanel>
 
     </apex:form>

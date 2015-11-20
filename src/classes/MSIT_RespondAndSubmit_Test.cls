@@ -43,14 +43,14 @@ private class MSIT_RespondAndSubmit_Test {
         ApexPages.currentPage().getParameters().put('status', MSIT_RespondAndSubmit.CONFIRMED);
 
         // When the page loads
-        msit.MSIT_RespondAndSubmit rAs = new msit.MSIT_RespondAndSubmit();
+        Contact contact = [SELECT Id, Last_MSIT_Request_Result__c, Last_MSIT_Response_Datetime__c FROM Contact WHERE Id = :stayInTouch.Contact__c];
+        MSIT_RespondAndSubmit rAs = new MSIT_RespondAndSubmit();
         rAs.processConfirmation();
         Datetime nowPageLoaded = System.now();
 
         // Then a "thank you" message should show (just testing the status value not the UI)
         System.assertEquals(rAs.status, MSIT_RespondAndSubmit.CONFIRMED, 'The status should be confirm');
         // And the Contact.Last MSIT Request Result field should be 'Confirmed'
-        Contact contact = [SELECT Id, Last_MSIT_Request_Result__c, Last_MSIT_Response_Datetime__c FROM Contact WHERE Id = :stayInTouch.Contact__c];
         System.assertEquals('Confirmed', contact.Last_MSIT_Request_Result__c, 'The last request result should be Confirmed');
         // And the Contact.Last MSIT Response Datetime should be the date time when the page executed
         System.assertEquals(nowPageLoaded, contact.Last_MSIT_Response_Datetime__c, 'The last request datetime should be equal to the time of page load/execution');
@@ -69,7 +69,8 @@ private class MSIT_RespondAndSubmit_Test {
         Stay_In_Touch_Request__c stayInTouch = [SELECT Id, Contact__c FROM Stay_In_Touch_Request__c LIMIT 1];
         ApexPages.currentPage().getParameters().put('ref', stayInTouch.Id);
         ApexPages.currentPage().getParameters().put('status', MSIT_RespondAndSubmit.CHANGE);
-        msit.MSIT_RespondAndSubmit rAs = new msit.MSIT_RespondAndSubmit();
+        Contact contact = [SELECT Id, LastName, Last_MSIT_Request_Result__c, Last_MSIT_Response_Datetime__c FROM Contact WHERE Id = :stayInTouch.Contact__c];
+        MSIT_RespondAndSubmit rAs = new MSIT_RespondAndSubmit();
         rAs.contact.LastName = 'Test Change';
         ras.processChange();
 
@@ -79,7 +80,6 @@ private class MSIT_RespondAndSubmit_Test {
         // Then a "thank you" message should show (just testing the status value not the UI)
         System.assertEquals(MSIT_RespondAndSubmit.CHANGE, rAs.status, 'The status should be change');
         // And the changes should be reflected on the Contact record
-        Contact contact = [SELECT Id, LastName, Last_MSIT_Request_Result__c, Last_MSIT_Response_Datetime__c FROM Contact WHERE Id = :stayInTouch.Contact__c];
         System.assertEquals('Change', contact.Last_MSIT_Request_Result__c, 'The last request result should be Change');
         System.assertEquals('Test Change', contact.LastName, 'The last name should be Test Change');
         // And the Contact.Last MSIT Response Datetime should be the date time when the page executed

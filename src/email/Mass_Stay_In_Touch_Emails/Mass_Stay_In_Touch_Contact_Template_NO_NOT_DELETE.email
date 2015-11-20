@@ -15,8 +15,8 @@ I'm updating my address book and want to make sure I have your correct contact i
 {!NullValue(Contact.AssistantName, "(Assistant)")}
 {!NullValue(Contact.AssistantPhone, "(Assistant Phone)")}
 
-These details are correct! <INSERT LINK FOR CONFIRM>
+These details are correct!  Click this link to confirm https://msitdev-developer-edition.na15.force.com/stayingintouch?ref={!Stay_In_Touch_Request__c.Id}&status=Confirmed
 
-These details need to be updated! <INSERT LINK FOR UPDATE>
+These details need to be updated! https://msitdev-developer-edition.na15.force.com/stayingintouch?ref={!Stay_In_Touch_Request__c.Id}&status=Change
 
 {!Stay_In_Touch_Request__c.Signature__c}
