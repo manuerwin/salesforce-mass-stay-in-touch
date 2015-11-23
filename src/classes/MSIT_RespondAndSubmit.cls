@@ -36,11 +36,11 @@ public with sharing class MSIT_RespondAndSubmit {
             if (contact == null) {
                 contact = new Contact();
                 if (contactId != null) {
-                    String query = 'SELECT ';
+                    String query = 'SELECT Id, Name, ';
                     for(Schema.FieldSetMember f : this.getFields()) {
                         query += f.getFieldPath() + ', ';
                     }
-                    query += 'Id, Name, Last_MSIT_Response_Datetime__c, Last_MSIT_Request_Result__c FROM Contact WHERE Id = :contactId';
+                    query += 'Last_MSIT_Response_Datetime__c, Last_MSIT_Request_Result__c FROM Contact WHERE Id = :contactId';
                     return Database.query(query);
                 }
             }
@@ -61,14 +61,7 @@ public with sharing class MSIT_RespondAndSubmit {
     public void processResponse() {
         // Stamp the SIT with contact response - WF will update the contact
         stayInTouchRequest.Contact_Status__c = status;
-        update stayInTouchRequest;
-        contact.Last_MSIT_Response_Datetime__c = System.now();
-        if (status == CONFIRMED) {
-            contact.Last_MSIT_Request_Result__c = CONFIRMED;
-        } else if (status == CHANGE) {
-            contact.Last_MSIT_Request_Result__c = CHANGE;
-        }
-        updateContact();
+        updateStayInTouchRequest();
     }
 
     /* PRIVATE VARIABLES AND METHODS */
@@ -127,6 +120,7 @@ public with sharing class MSIT_RespondAndSubmit {
     }
 private void updateStayInTouchRequest(){
         try {
+            System.debug('## DEBUG: stayInTouchRequest: ' + stayInTouchRequest);
             update stayInTouchRequest;
         } catch (Exception ex) {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something broke: ' + ex.getTypeName() + ' : ' + ex.getMessage()));
@@ -134,6 +128,7 @@ private void updateStayInTouchRequest(){
     }
     private void updateContact(){
         try {
+            System.debug('## DEBUG: contact: ' + contact);
             update contact;
         } catch (Exception ex) {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something broke: ' + ex.getTypeName() + ' : ' + ex.getMessage()));
