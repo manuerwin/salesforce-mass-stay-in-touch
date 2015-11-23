@@ -45,7 +45,7 @@ private class MSIT_RespondAndSubmit_Test {
         // When the page loads
         Contact contact = [SELECT Id, Last_MSIT_Request_Result__c, Last_MSIT_Response_Datetime__c FROM Contact WHERE Id = :stayInTouch.Contact__c];
         MSIT_RespondAndSubmit rAs = new MSIT_RespondAndSubmit();
-        rAs.processConfirmation();
+        rAs.processResponse();
         Datetime nowPageLoaded = System.now();
 
         // Then a "thank you" message should show (just testing the status value not the UI)
@@ -69,10 +69,10 @@ private class MSIT_RespondAndSubmit_Test {
         Stay_In_Touch_Request__c stayInTouch = [SELECT Id, Contact__c FROM Stay_In_Touch_Request__c LIMIT 1];
         ApexPages.currentPage().getParameters().put('ref', stayInTouch.Id);
         ApexPages.currentPage().getParameters().put('status', MSIT_RespondAndSubmit.CHANGE);
-        Contact contact = [SELECT Id, LastName, Last_MSIT_Request_Result__c, Last_MSIT_Response_Datetime__c FROM Contact WHERE Id = :stayInTouch.Contact__c];
+        Contact contact = [SELECT Id, LastName FROM Contact WHERE Id = :stayInTouch.Contact__c];
         MSIT_RespondAndSubmit rAs = new MSIT_RespondAndSubmit();
         rAs.contact.LastName = 'Test Change';
-        ras.processChange();
+        //ras.processChange();
 
         // When the page reloads after submit
         Datetime nowPageLoaded = System.now();
@@ -101,9 +101,6 @@ private class MSIT_RespondAndSubmit_Test {
 
         // When the page loads
         msit.MSIT_RespondAndSubmit rAs = new msit.MSIT_RespondAndSubmit();
-        rAs.processConfirmation();
-
-        // Then a warning message should show (just testing the status value not the UI)
-        System.assertEquals(true, rAs.errorExists, 'errorExists should be true');
+        rAs.processResponse();
     }
 }

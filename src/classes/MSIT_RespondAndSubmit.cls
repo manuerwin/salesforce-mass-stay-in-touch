@@ -36,11 +36,11 @@ public with sharing class MSIT_RespondAndSubmit {
             if (contact == null) {
                 contact = new Contact();
                 if (contactId != null) {
-                    String query = 'SELECT Id, Name, ';
+                    String query = 'SELECT Id, ';
                     for(Schema.FieldSetMember f : this.getFields()) {
                         query += f.getFieldPath() + ', ';
                     }
-                    query += 'Last_MSIT_Response_Datetime__c, Last_MSIT_Request_Result__c FROM Contact WHERE Id = :contactId';
+                    query += 'Name FROM Contact WHERE Id = :contactId';
                     return Database.query(query);
                 }
             }
@@ -60,7 +60,7 @@ public with sharing class MSIT_RespondAndSubmit {
     }
     public void processResponse() {
         // Stamp the SIT with contact response - WF will update the contact
-        stayInTouchRequest.Contact_Status__c = status;
+        stayInTouchRequest.Contact_Response__c = status;
         updateStayInTouchRequest();
     }
 
@@ -111,7 +111,7 @@ public with sharing class MSIT_RespondAndSubmit {
             if (stayInTouchRequest == null) {
                 stayInTouchRequest = new Stay_In_Touch_Request__c();
                 if (stayInTouchId != null) {
-                    stayInTouchRequest = [SELECT Id, Contact__c, Contact_Status__c FROM Stay_In_Touch_Request__c WHERE Id = :stayInTouchId];
+                    stayInTouchRequest = [SELECT Id, Contact__c, Contact_Response__c FROM Stay_In_Touch_Request__c WHERE Id = :stayInTouchId];
                 }
             }
             return stayInTouchRequest;

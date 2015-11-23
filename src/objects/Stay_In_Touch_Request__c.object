@@ -56,6 +56,27 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <fields>
+        <fullName>Contact_Response__c</fullName>
+        <description>Updated when the contact confirms current values are true OR indicates they need to be changed.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Updated when the contact confirms current values are true OR indicates they need to be changed.</inlineHelpText>
+        <label>Contact Response</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Confirmed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Change</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
         <fullName>Contact__c</fullName>
         <description>The parent Contact record</description>
         <externalId>false</externalId>

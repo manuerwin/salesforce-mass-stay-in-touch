@@ -137,6 +137,11 @@
         <field>Contact.Title</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Stay_In_Touch_Request__c.Contact_Response__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <layoutAssignments>
         <layout>Stay_In_Touch_Request__c-Stay In Touch Request Layout</layout>
     </layoutAssignments>
