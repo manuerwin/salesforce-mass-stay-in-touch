@@ -22,8 +22,6 @@ public with sharing class MSIT_RespondAndSubmit {
     public MSIT_RespondAndSubmit(){
         // Put all the URL parameters into a collection to access later
         pageParameters = ApexPages.currentPage().getParameters();
-        // By default no errors at the start of processing
-        errorExists = false;
     }
 
 
@@ -37,7 +35,7 @@ public with sharing class MSIT_RespondAndSubmit {
         get {
             if (contact == null) {
                 contact = new Contact();
-                if (!errorExists && contactId != null) {
+                if (contactId != null) {
                     String query = 'SELECT ';
                     for(Schema.FieldSetMember f : this.getFields()) {
                         query += f.getFieldPath() + ', ';
@@ -48,10 +46,6 @@ public with sharing class MSIT_RespondAndSubmit {
             }
             return contact;
         }
-        set;
-    }
-    public Boolean errorExists {
-        get;
         set;
     }
     public String status {
@@ -112,7 +106,6 @@ public with sharing class MSIT_RespondAndSubmit {
                 try {
                     stayInTouchId = Id.valueOf(refParameter);
                 } catch (Exception ex) {
-                    errorExists = true;
                     ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something is wrong with the link, please try again!'));
                 }
             }
@@ -124,7 +117,7 @@ public with sharing class MSIT_RespondAndSubmit {
         get {
             if (stayInTouchRequest == null) {
                 stayInTouchRequest = new Stay_In_Touch_Request__c();
-                if (!errorExists && stayInTouchId != null) {
+                if (stayInTouchId != null) {
                     stayInTouchRequest = [SELECT Id, Contact__c, Contact_Status__c FROM Stay_In_Touch_Request__c WHERE Id = :stayInTouchId];
                 }
             }
@@ -136,7 +129,6 @@ private void updateStayInTouchRequest(){
         try {
             update stayInTouchRequest;
         } catch (Exception ex) {
-            errorExists = true;
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something broke: ' + ex.getTypeName() + ' : ' + ex.getMessage()));
         }
     }
@@ -144,7 +136,6 @@ private void updateStayInTouchRequest(){
         try {
             update contact;
         } catch (Exception ex) {
-            errorExists = true;
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something broke: ' + ex.getTypeName() + ' : ' + ex.getMessage()));
         }
     }
