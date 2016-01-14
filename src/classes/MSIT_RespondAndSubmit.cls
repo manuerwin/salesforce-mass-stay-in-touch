@@ -22,31 +22,13 @@ public with sharing class MSIT_RespondAndSubmit {
     public MSIT_RespondAndSubmit(){
         // Put all the URL parameters into a collection to access later
         pageParameters = ApexPages.currentPage().getParameters();
-    }
-
-
-    public List<Schema.FieldSetMember> getFields() {
-        return SObjectType.Contact.FieldSets.msit__Mass_Stay_In_Touch.getFields();
+        this.theContact = getContact();
     }
 
     /* PUBLIC VARIABLES AND METHODS */
-    public Contact contact {
-        // The Contact record including all the fields defined in the Field Set
-        get {
-            if (contact == null) {
-                contact = new Contact();
-                if (contactId != null) {
-                    String query = 'SELECT Id, ';
-                    for(Schema.FieldSetMember f : this.getFields()) {
-                        query += f.getFieldPath() + ', ';
-                    }
-                    query += 'Name FROM Contact WHERE Id = :contactId';
-                    return Database.query(query);
-                }
-            }
-            return contact;
-        }
-        set;
+    public Contact theContact { get; set; }
+    public List<Schema.FieldSetMember> getFields() {
+        return SObjectType.Contact.FieldSets.msit__Mass_Stay_In_Touch.getFields();
     }
     public String status {
         // URL parameter that indicates the contacts response to either confirm all correct, or changes need to be made
@@ -60,11 +42,24 @@ public with sharing class MSIT_RespondAndSubmit {
     }
     public void processResponse() {
         // Stamp the SIT with contact response - WF will update the contact
+        System.debug('## DEBUG: about to update SIT Contact Response with status ' + status);
         stayInTouchRequest.Contact_Response__c = status;
         updateStayInTouchRequest();
     }
+    public void processChange() {
+        // Update the Contact record with the updated field values
+        updateContact();
+    }
 
     /* PRIVATE VARIABLES AND METHODS */
+    private Contact getContact() {
+        String query = 'SELECT Id, ';
+        for(Schema.FieldSetMember f : this.getFields()) {
+            query += f.getFieldPath() + ', ';
+        }
+        query += 'Name FROM Contact WHERE Id = :contactId';
+        return Database.query(query);
+    }
     private Id contactId {
         get {
             if (contactId == null) {
@@ -118,7 +113,7 @@ public with sharing class MSIT_RespondAndSubmit {
         }
         set;
     }
-private void updateStayInTouchRequest(){
+    private void updateStayInTouchRequest(){
         try {
             System.debug('## DEBUG: stayInTouchRequest: ' + stayInTouchRequest);
             update stayInTouchRequest;
@@ -128,8 +123,8 @@ private void updateStayInTouchRequest(){
     }
     private void updateContact(){
         try {
-            System.debug('## DEBUG: contact: ' + contact);
-            update contact;
+            System.debug('## DEBUG: contact: ' + theContact);
+            update theContact;
         } catch (Exception ex) {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something broke: ' + ex.getTypeName() + ' : ' + ex.getMessage()));
         }

@@ -30,7 +30,7 @@ private class MSIT_RespondAndSubmit_Test {
 
     // Story: Confirming details are correct
     // In order to confirm my details are correct
-    // As a Contact
+    // As a Customer
     // I want to see a message thanking me for confirmation
 
     @isTest static void pageShouldShowThankYouConfirmMessage() {
@@ -43,22 +43,19 @@ private class MSIT_RespondAndSubmit_Test {
         ApexPages.currentPage().getParameters().put('status', MSIT_RespondAndSubmit.CONFIRMED);
 
         // When the page loads
-        Contact contact = [SELECT Id, Last_MSIT_Request_Result__c, Last_MSIT_Response_Datetime__c FROM Contact WHERE Id = :stayInTouch.Contact__c];
         MSIT_RespondAndSubmit rAs = new MSIT_RespondAndSubmit();
         rAs.processResponse();
-        Datetime nowPageLoaded = System.now();
+        stayInTouch = [SELECT Id, Contact__c, Name, Contact_Response__c FROM Stay_In_Touch_Request__c WHERE Id = :stayInTouch.Id];
 
         // Then a "thank you" message should show (just testing the status value not the UI)
-        System.assertEquals(rAs.status, MSIT_RespondAndSubmit.CONFIRMED, 'The status should be confirm');
-        // And the Contact.Last MSIT Request Result field should be 'Confirmed'
-        System.assertEquals('Confirmed', contact.Last_MSIT_Request_Result__c, 'The last request result should be Confirmed');
-        // And the Contact.Last MSIT Response Datetime should be the date time when the page executed
-        System.assertEquals(nowPageLoaded, contact.Last_MSIT_Response_Datetime__c, 'The last request datetime should be equal to the time of page load/execution');
+        System.assertEquals(MSIT_RespondAndSubmit.CONFIRMED, rAs.status, 'The status should be ' + MSIT_RespondAndSubmit.CONFIRMED);
+        // And the SIT Contact Response should be 'Confirmed'
+        System.assertEquals(MSIT_RespondAndSubmit.CONFIRMED, stayInTouch.Contact_Response__c, 'The SIT contact response should be ' + MSIT_RespondAndSubmit.CONFIRMED);
     }
 
     // Story: Making changes to details
     // In order to change my details
-    // As a Contact
+    // As a Customer
     // I want to make changes and be thanked
 
     @isTest static void changesShouldHaveBeenSavedToContact() {
@@ -69,26 +66,26 @@ private class MSIT_RespondAndSubmit_Test {
         Stay_In_Touch_Request__c stayInTouch = [SELECT Id, Contact__c FROM Stay_In_Touch_Request__c LIMIT 1];
         ApexPages.currentPage().getParameters().put('ref', stayInTouch.Id);
         ApexPages.currentPage().getParameters().put('status', MSIT_RespondAndSubmit.CHANGE);
-        Contact contact = [SELECT Id, LastName FROM Contact WHERE Id = :stayInTouch.Contact__c];
         MSIT_RespondAndSubmit rAs = new MSIT_RespondAndSubmit();
-        rAs.contact.LastName = 'Test Change';
-        //ras.processChange();
+        rAs.processResponse();
+        rAs.theContact.LastName = 'Test Change';
+        rAs.processChange();
 
         // When the page reloads after submit
-        Datetime nowPageLoaded = System.now();
+        stayInTouch = [SELECT Id, Contact__c, Name, Contact_Response__c FROM Stay_In_Touch_Request__c WHERE Id = :stayInTouch.Id];
+        Contact contact = [SELECT Id, LastName FROM Contact WHERE Id = :stayInTouch.Contact__c];
 
         // Then a "thank you" message should show (just testing the status value not the UI)
-        System.assertEquals(MSIT_RespondAndSubmit.CHANGE, rAs.status, 'The status should be change');
+        System.assertEquals(MSIT_RespondAndSubmit.CHANGE, rAs.status, 'The status should be ' + MSIT_RespondAndSubmit.CHANGE);
+        // And the SIT Contact Response should be 'Change'
+        System.assertEquals(MSIT_RespondAndSubmit.CHANGE, stayInTouch.Contact_Response__c, 'The SIT contact response should be ' + MSIT_RespondAndSubmit.CHANGE);
         // And the changes should be reflected on the Contact record
-        System.assertEquals('Change', contact.Last_MSIT_Request_Result__c, 'The last request result should be Change');
         System.assertEquals('Test Change', contact.LastName, 'The last name should be Test Change');
-        // And the Contact.Last MSIT Response Datetime should be the date time when the page executed
-        System.assertEquals(nowPageLoaded, contact.Last_MSIT_Response_Datetime__c, 'The last request datetime should be equal to the time of page load/execution');
     }
 
     // Story: Error handling
     // Should the SITR record not exist (e.g. hacking attempt or deleted)
-    // As a Contact
+    // As a Customer
     // I want to see a warning message
 
     @isTest static void pageShouldShowWarningMessage() {

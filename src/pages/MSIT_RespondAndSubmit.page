@@ -18,17 +18,16 @@
                     - Allows them to submit the changes
                     - Shows them the thank you message
                 URL parameters for this page:
-                    - "status" with possible values of Confirmed, 
+                    - "status" with possible values of Confirmed or Change
                     - "ref"
                     e.g., https://msitdev-developer-edition.na15.force.com/stayingintouch?ref=a00i000000cKgAP&status=Confirmed
+                    e.g., https://msitdev-developer-edition.na15.force.com/stayingintouch?ref=a00i000000h3hRD&status=Change
                 
     Used By:    Force.com Site
     History:    see https://github.com/manuerwin/salesforce-mass-stay-in-touch
 -->
 <apex:page controller="MSIT_RespondAndSubmit" showHeader="false" showChat="false" sidebar="false" action="{!processResponse}" >
-
     <apex:form id="theForm" >
-
         <apex:pageMessages />
 
         <apex:outputPanel id="confirmed" layout="block" rendered="{!status == 'Confirmed'}" >
@@ -36,14 +35,15 @@
         </apex:outputPanel>
 
         <apex:outputPanel id="changed" layout="block" rendered="{!status == 'Change'}" >
-            <apex:pageMessage id="updateMessage" summary="Please enter your updated information below!" severity="confirm" strength="3" />
+            <apex:pageMessage id="changeMessage" summary="Please enter your updated information below!" severity="info" strength="3" />
 
-            <apex:repeat value="{!$ObjectType.Contact.FieldSets.Mass_Stay_In_Touch}" var="f"> 
-                <apex:inputField value="{!Contact[f]}" /><br/>
-            </apex:repeat>
-
+            <apex:pageBlock id="changeContactValues" title="Review and Change" >
+                <apex:pageBlockSection id="changeContactFields" columns="1" collapsible="false" >
+                    <apex:repeat value="{!fields}" var="f">
+                        X<apex:inputText value="{!theContact[f.fieldPath]}" required="{!OR(f.required, f.dbrequired)}" />Y
+                    </apex:repeat>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
         </apex:outputPanel>
-
     </apex:form>
-
 </apex:page>
