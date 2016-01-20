@@ -22,6 +22,9 @@
                     - "ref"
                     e.g., https://msitdev-developer-edition.na15.force.com/stayingintouch?ref=a00i000000cKgAP&status=Confirmed
                     e.g., https://msitdev-developer-edition.na15.force.com/stayingintouch?ref=a00i000000h3hRD&status=Change
+
+                Note: should an "Authorization Required" error ever be seen, it is likely due to the Force.com Site Guest User
+                not having sharing access to the Contact record in question.
                 
     Used By:    Force.com Site
     History:    see https://github.com/manuerwin/salesforce-mass-stay-in-touch
@@ -35,14 +38,105 @@
         </apex:outputPanel>
 
         <apex:outputPanel id="changed" layout="block" rendered="{!status == 'Change'}" >
-            <apex:pageMessage id="changeMessage" summary="Please enter your updated information below!" severity="info" strength="3" />
 
-            <apex:pageBlock id="changeContactValues" title="Review and Change" >
-                <apex:pageBlockSection id="changeContactFields" columns="1" collapsible="false" >
-                    <apex:repeat value="{!fields}" var="f">
-                        X<apex:inputText value="{!theContact[f.fieldPath]}" required="{!OR(f.required, f.dbrequired)}" />Y
-                    </apex:repeat>
+            <apex:pageBlock id="changeContactValues" title="Please enter your updated information below!" >
+                <apex:pageMessage id="changeMessage" summary="Information entered in this section will be sent to [Contact Owner Name : Contact Owner Email]. For further information, please [read our Privacy Statement]." severity="info" strength="3" />
+
+                <apex:pageBlockSection id="changeContactFields" columns="2" collapsible="false" >
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Salutation" for="Salutation" />
+                        <apex:inputText id="Salutation" value="{!salutation}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="First Name" for="FirstName" />
+                        <apex:inputText id="FirstName" value="{!firstName}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Last Name" for="LastName" />
+                        <apex:inputText id="LastName" value="{!lastName}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Mailing Street" for="MailingStreet" />
+                        <apex:inputText id="MailingStreet" value="{!mailingStreet}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Mailing City" for="MailingCity" />
+                        <apex:inputText id="MailingCity" value="{!mailingCity}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Mailing State" for="MailingState" />
+                        <apex:inputText id="MailingState" value="{!mailingState}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Mailing PostalCode" for="MailingPostalCode" />
+                        <apex:inputText id="MailingPostalCode" value="{!mailingPostalCode}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Mailing Country" for="MailingCountry" />
+                        <apex:inputText id="MailingCountry" value="{!mailingCountry}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Email" for="Email" />
+                        <apex:inputText id="Email" value="{!email}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Company" for="AccountName" />
+                        <apex:inputText id="AccountName" value="{!company}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Title" for="Title" />
+                        <apex:inputText id="Title" value="{!title}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Department" for="Department" />
+                        <apex:inputText id="Department" value="{!department}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Phone" for="Phone" />
+                        <apex:inputText id="Phone" value="{!phone}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Mobile" for="MobilePhone" />
+                        <apex:inputText id="MobilePhone" value="{!mobilePhone}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Home Phone" for="HomePhone" />
+                        <apex:inputText id="HomePhone" value="{!homePhone}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Fax" for="Fax" />
+                        <apex:inputText id="Fax" value="{!fax}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Assistant" for="Assistant" />
+                        <apex:inputText id="AssistantName" value="{!assistantName}" />
+                    </apex:pageBlockSectionItem>
+
+                    <apex:pageBlockSectionItem>
+                        <apex:outputLabel value="Assistant Phone" for="AssistantPhone" />
+                        <apex:inputText id="AssistantPhone" value="{!assistantPhone}" />
+                    </apex:pageBlockSectionItem>
+
                 </apex:pageBlockSection>
+                <apex:pageBlockButtons id="pageButtons" location="bottom" >
+                    <apex:commandButton id="saveButton" action="{!processChange}" value="Continue" />
+                </apex:pageBlockButtons>
             </apex:pageBlock>
         </apex:outputPanel>
     </apex:form>

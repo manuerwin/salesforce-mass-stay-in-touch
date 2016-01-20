@@ -13,7 +13,8 @@
 //  Used By:    MSIT_RespondAndSubmit.page
 //  History:    see https://github.com/manuerwin/salesforce-mass-stay-in-touch
 
-public with sharing class MSIT_RespondAndSubmit {
+public without sharing class MSIT_RespondAndSubmit {
+    // without sharing is used so the Force.com Site Guest User can see and update all Contact records
     /* CONSTANTS */
     public static final String CONFIRMED = 'Confirmed';
     public static final String CHANGE = 'Change';
@@ -22,14 +23,10 @@ public with sharing class MSIT_RespondAndSubmit {
     public MSIT_RespondAndSubmit(){
         // Put all the URL parameters into a collection to access later
         pageParameters = ApexPages.currentPage().getParameters();
-        this.theContact = getContact();
+        getContact();
     }
 
     /* PUBLIC VARIABLES AND METHODS */
-    public Contact theContact { get; set; }
-    public List<Schema.FieldSetMember> getFields() {
-        return SObjectType.Contact.FieldSets.msit__Mass_Stay_In_Touch.getFields();
-    }
     public String status {
         // URL parameter that indicates the contacts response to either confirm all correct, or changes need to be made
         get {
@@ -50,15 +47,177 @@ public with sharing class MSIT_RespondAndSubmit {
         // Update the Contact record with the updated field values
         updateContact();
     }
+    public String salutation {
+        get {
+            if (salutation == null) {
+                salutation = theContact.Salutation;
+            }
+            return salutation;
+        }
+        set;
+    }
+    public String firstName {
+        get {
+            if (firstName == null) {
+                firstName = theContact.FirstName;
+            }
+            return firstName;
+        }
+        set;
+    }
+    public String lastName {
+        get {
+            if (lastName == null) {
+                lastName = theContact.LastName;
+            }
+            return lastName;
+        }
+        set;
+    }
+    public String email {
+        get {
+            if (email == null) {
+                email = theContact.Email;
+            }
+            return email;
+        }
+        set;
+    }
+    public String company {
+        get {
+            if (company == null) {
+                company = theContact.Account.Name;
+            }
+            return company;
+        }
+        set;
+    }
+    public String title {
+        get {
+            if (title == null) {
+                title = theContact.Title;
+            }
+            return title;
+        }
+        set;
+    }
+    public String department {
+        get {
+            if (department == null) {
+                department = theContact.Department;
+            }
+            return department;
+        }
+        set;
+    }
+    public String phone {
+        get {
+            if (phone == null) {
+                phone = theContact.Phone;
+            }
+            return phone;
+        }
+        set;
+    }
+    public String mobilePhone {
+        get {
+            if (mobilePhone == null) {
+                mobilePhone = theContact.MobilePhone;
+            }
+            return mobilePhone;
+        }
+        set;
+    }
+    public String homePhone {
+        get {
+            if (homePhone == null) {
+                homePhone = theContact.HomePhone;
+            }
+            return homePhone;
+        }
+        set;
+    }
+    public String fax {
+        get {
+            if (fax == null) {
+                fax = theContact.Fax;
+            }
+            return fax;
+        }
+        set;
+    }
+    public String assistantName {
+        get {
+            if (assistantName == null) {
+                assistantName = theContact.AssistantName;
+            }
+            return assistantName;
+        }
+        set;
+    }
+    public String assistantPhone {
+        get {
+            if (assistantPhone == null) {
+                assistantPhone = theContact.AssistantPhone;
+            }
+            return assistantPhone;
+        }
+        set;
+    }
+    public String mailingStreet {
+        get {
+            if (mailingStreet == null) {
+                mailingStreet = theContact.MailingStreet;
+            }
+            return mailingStreet;
+        }
+        set;
+    }
+    public String mailingCity {
+        get {
+            if (mailingCity == null) {
+                mailingCity = theContact.MailingCity;
+            }
+            return mailingCity;
+        }
+        set;
+    }
+    public String mailingState {
+        get {
+            if (mailingState == null) {
+                mailingState = theContact.MailingState;
+            }
+            return mailingState;
+        }
+        set;
+    }
+    public String mailingPostalCode {
+        get {
+            if (mailingPostalCode == null) {
+                mailingPostalCode = theContact.MailingPostalCode;
+            }
+            return mailingPostalCode;
+        }
+        set;
+    }
+    public String mailingCountry {
+        get {
+            if (mailingCountry == null) {
+                mailingCountry = theContact.MailingCountry;
+            }
+            return mailingCountry;
+        }
+        set;
+    }
 
     /* PRIVATE VARIABLES AND METHODS */
-    private Contact getContact() {
-        String query = 'SELECT Id, ';
-        for(Schema.FieldSetMember f : this.getFields()) {
-            query += f.getFieldPath() + ', ';
-        }
-        query += 'Name FROM Contact WHERE Id = :contactId';
-        return Database.query(query);
+    private Contact theContact { get; set; }
+    private void getContact() {
+        // To add custom fields, add a comma after MailingCountry and then the API name of the custom field e.g. MailingCountry, MyCustomField
+        theContact = [SELECT Id, Name, Salutation, FirstName, LastName, Email,
+            Account.Name, Title, Department, Phone, MobilePhone, HomePhone, Fax, AssistantName, AssistantPhone,
+            MailingStreet, MailingCity, MailingState, MailingPostalCode, MailingCountry
+            FROM Contact WHERE Id = :contactId];
     }
     private Id contactId {
         get {
@@ -113,20 +272,41 @@ public with sharing class MSIT_RespondAndSubmit {
         }
         set;
     }
-    private void updateStayInTouchRequest(){
+    private PageReference updateStayInTouchRequest() {
         try {
             System.debug('## DEBUG: stayInTouchRequest: ' + stayInTouchRequest);
             update stayInTouchRequest;
         } catch (Exception ex) {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something broke: ' + ex.getTypeName() + ' : ' + ex.getMessage()));
         }
+        return null;
     }
-    private void updateContact(){
+    private PageReference updateContact() {
         try {
+            theContact.Salutation = salutation;
+            theContact.FirstName = firstName;
+            theContact.LastName = lastName;
+            theContact.Email = email;
+            theContact.Account.Name = company;
+            theContact.Title = title;
+            theContact.Department = department;
+            theContact.Phone = phone;
+            theContact.MobilePhone = mobilePhone;
+            theContact.HomePhone = homePhone;
+            theContact.Fax = fax;
+            theContact.AssistantName = assistantName;
+            theContact.AssistantPhone = assistantPhone;
+            theContact.MailingStreet = mailingStreet;
+            theContact.MailingCity = mailingCity;
+            theContact.MailingState = mailingState;
+            theContact.MailingPostalCode = mailingPostalCode;
+            theContact.MailingCountry = mailingCountry;
+
             System.debug('## DEBUG: contact: ' + theContact);
             update theContact;
         } catch (Exception ex) {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something broke: ' + ex.getTypeName() + ' : ' + ex.getMessage()));
         }
+        return null;
     }
 }
