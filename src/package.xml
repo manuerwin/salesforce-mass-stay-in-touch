@@ -51,6 +51,10 @@
         <name>Profile</name>
     </types>
     <types>
+        <members>bootstrap_3_3_6</members>
+        <name>StaticResource</name>
+    </types>
+    <types>
         <members>Contact</members>
         <members>Mass_Stay_In_Touch_Settings__c</members>
         <members>Stay_In_Touch_Request__c</members>
