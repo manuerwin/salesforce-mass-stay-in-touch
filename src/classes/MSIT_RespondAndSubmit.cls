@@ -37,15 +37,18 @@ public without sharing class MSIT_RespondAndSubmit {
         }
         set;
     }
-    public void processResponse() {
+    public PageReference processResponse() {
         // Stamp the SIT with contact response - WF will update the contact
         System.debug('## DEBUG: about to update SIT Contact Response with status ' + status);
         stayInTouchRequest.Contact_Response__c = status;
         updateStayInTouchRequest();
+        return null;
     }
-    public void processChange() {
+    public PageReference processChange() {
         // Update the Contact record with the updated field values
         updateContact();
+        status = 'Success';
+        return null;
     }
     public String salutation {
         get {
@@ -274,16 +277,15 @@ public without sharing class MSIT_RespondAndSubmit {
         }
         set;
     }
-    private PageReference updateStayInTouchRequest() {
+    private void updateStayInTouchRequest() {
         try {
             System.debug('## DEBUG: stayInTouchRequest: ' + stayInTouchRequest);
             update stayInTouchRequest;
         } catch (Exception ex) {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something broke: ' + ex.getTypeName() + ' : ' + ex.getMessage()));
         }
-        return null;
     }
-    private PageReference updateContact() {
+    private void updateContact() {
         try {
             theContact.Salutation = salutation;
             theContact.FirstName = firstName;
@@ -309,6 +311,5 @@ public without sharing class MSIT_RespondAndSubmit {
         } catch (Exception ex) {
             ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, 'Sorry, something broke: ' + ex.getTypeName() + ' : ' + ex.getMessage()));
         }
-        return null;
     }
 }
