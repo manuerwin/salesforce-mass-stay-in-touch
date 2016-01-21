@@ -62,10 +62,24 @@
 
                 <apex:pageBlockSection id="emailFields" collapsible="false" columns="1" title="Fields for review and update" >
                     The following fields will be available for the contact to confirm or update. Ensure they are included in the email template. If you need changes made to this list, talk to your administrator.
-                    <!-- The fields shown on this page are configured by changing the Contact "Mass Stay In Touch" Field Set -->
-                    <apex:repeat value="{!$ObjectType.Contact.FieldSets.Mass_Stay_In_Touch}" var="field"> 
-                        <apex:outputText value="{!field.Label}" />
-                    </apex:repeat>
+                    <apex:outputText value="Salutation" />
+                    <apex:outputText value="First Name" />
+                    <apex:outputText value="Last Name" />
+                    <apex:outputText value="Mailing Street" />
+                    <apex:outputText value="Mailing City" />
+                    <apex:outputText value="Mailing State" />
+                    <apex:outputText value="Mailing PostalCode" />
+                    <apex:outputText value="Mailing Country" />
+                    <apex:outputText value="Email" />
+                    <apex:outputText value="Company" />
+                    <apex:outputText value="Title" />
+                    <apex:outputText value="Department" />
+                    <apex:outputText value="Phone" />
+                    <apex:outputText value="Mobile" />
+                    <apex:outputText value="Home Phone" />
+                    <apex:outputText value="Fax" />
+                    <apex:outputText value="Assistant" />
+                    <apex:outputText value="Assistant Phone" />
                 </apex:pageBlockSection>
 
                 <apex:pageBlockSection id="emailSignature" collapsible="false" columns="1" title="Email Signature" >

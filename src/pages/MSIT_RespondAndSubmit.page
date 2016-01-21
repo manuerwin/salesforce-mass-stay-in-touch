@@ -43,92 +43,92 @@
                 <apex:pageMessage id="changeMessage" summary="Information entered in this section will be sent to [Contact Owner Name : Contact Owner Email]. For further information, please [read our Privacy Statement]." severity="info" strength="3" />
 
                 <apex:pageBlockSection id="changeContactFields" columns="2" collapsible="false" >
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Salutation" for="Salutation" />
                         <apex:inputText id="Salutation" value="{!salutation}" />
                     </apex:pageBlockSectionItem>
 
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="First Name" for="FirstName" />
                         <apex:inputText id="FirstName" value="{!firstName}" />
                     </apex:pageBlockSectionItem>
 
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Last Name" for="LastName" />
                         <apex:inputText id="LastName" value="{!lastName}" />
                     </apex:pageBlockSectionItem>
 
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Mailing Street" for="MailingStreet" />
                         <apex:inputText id="MailingStreet" value="{!mailingStreet}" />
                     </apex:pageBlockSectionItem>
 
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Mailing City" for="MailingCity" />
                         <apex:inputText id="MailingCity" value="{!mailingCity}" />
                     </apex:pageBlockSectionItem>
 
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Mailing State" for="MailingState" />
                         <apex:inputText id="MailingState" value="{!mailingState}" />
                     </apex:pageBlockSectionItem>
 
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Mailing PostalCode" for="MailingPostalCode" />
                         <apex:inputText id="MailingPostalCode" value="{!mailingPostalCode}" />
                     </apex:pageBlockSectionItem>
 
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Mailing Country" for="MailingCountry" />
                         <apex:inputText id="MailingCountry" value="{!mailingCountry}" />
                     </apex:pageBlockSectionItem>
 
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Email" for="Email" />
                         <apex:inputText id="Email" value="{!email}" />
                     </apex:pageBlockSectionItem>
 
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Company" for="AccountName" />
                         <apex:inputText id="AccountName" value="{!company}" />
                     </apex:pageBlockSectionItem>
 
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Title" for="Title" />
                         <apex:inputText id="Title" value="{!title}" />
                     </apex:pageBlockSectionItem>
 
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Department" for="Department" />
                         <apex:inputText id="Department" value="{!department}" />
                     </apex:pageBlockSectionItem>
 
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Phone" for="Phone" />
                         <apex:inputText id="Phone" value="{!phone}" />
                     </apex:pageBlockSectionItem>
 
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Mobile" for="MobilePhone" />
                         <apex:inputText id="MobilePhone" value="{!mobilePhone}" />
                     </apex:pageBlockSectionItem>
 
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Home Phone" for="HomePhone" />
                         <apex:inputText id="HomePhone" value="{!homePhone}" />
                     </apex:pageBlockSectionItem>
 
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Fax" for="Fax" />
                         <apex:inputText id="Fax" value="{!fax}" />
                     </apex:pageBlockSectionItem>
 
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Assistant" for="Assistant" />
                         <apex:inputText id="AssistantName" value="{!assistantName}" />
                     </apex:pageBlockSectionItem>
 
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Assistant Phone" for="AssistantPhone" />
                         <apex:inputText id="AssistantPhone" value="{!assistantPhone}" />
                     </apex:pageBlockSectionItem>
