@@ -214,10 +214,12 @@ public without sharing class MSIT_RespondAndSubmit {
     private Contact theContact { get; set; }
     private void getContact() {
         // To add custom fields, add a comma after MailingCountry and then the API name of the custom field e.g. MailingCountry, MyCustomField
-        theContact = [SELECT Id, Name, Salutation, FirstName, LastName, Email,
+        if (contactId != null) {
+            theContact = [SELECT Id, Name, Salutation, FirstName, LastName, Email,
             Account.Name, Title, Department, Phone, MobilePhone, HomePhone, Fax, AssistantName, AssistantPhone,
             MailingStreet, MailingCity, MailingState, MailingPostalCode, MailingCountry
             FROM Contact WHERE Id = :contactId];
+        }
     }
     private Id contactId {
         get {
