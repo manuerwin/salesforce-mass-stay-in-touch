@@ -1,3 +1,6 @@
+# sensitive git properties that should not be stored anywhere except locally
+build.properties
+
 # OSX file system
 .DS_Store*
 Thumbs.db
