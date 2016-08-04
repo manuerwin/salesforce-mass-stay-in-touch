@@ -13,6 +13,13 @@
 
     <!-- Deploys all metadata in src directory to target Salesforce environment, runs All Tests in Local namespace, never actually saves to the server -->
     <target name="deployCodeCheckOnly">
+        <echo message="deploying all src, run local namespace tests, do not save" />
+        <echo message="ANT_HOME=${ant.home}"/>
+        <echo message="BASEDIR=${basedir}"/>
+        <echo message="ANT_CORE_LIB=${ant.core.lib}"/>
+        <echo message="JAVA_VERSION=${ant.java.version}"/>
+        <echo message="ANT_LIBRARY_DIR=${ant.library.dir}"/>
+        <echo message="classpath=${java.class.path}"/>
         <echo message="User: ${env.sfdc_username}" />
         <echo message="Env: ${env.sfdc_server_url}" />
 
@@ -30,6 +37,13 @@
 
     <!-- Deploys all metadata in src directory to target Salesforce environment, runs All Tests in Local namespace -->
     <target name="deployCodeRunLocalTests">
+        <echo message="deploying all src, run local namespace tests" />
+        <echo message="ANT_HOME=${ant.home}"/>
+        <echo message="BASEDIR=${basedir}"/>
+        <echo message="ANT_CORE_LIB=${ant.core.lib}"/>
+        <echo message="JAVA_VERSION=${ant.java.version}"/>
+        <echo message="ANT_LIBRARY_DIR=${ant.library.dir}"/>
+        <echo message="classpath=${java.class.path}"/>
         <echo message="User: ${env.sfdc_username}" />
         <echo message="Env: ${env.sfdc_server_url}" />
 
