@@ -1,10 +1,13 @@
 <project name="ANT Deployment script" default="pull" basedir="." xmlns:sf="antlib:com.salesforce">
 
+    <!-- Optionally use local build properties -->
+    <property file="build.properties"/>
     <property environment="env" />
 
+    <!-- Set the location of the ant-salesforce.jar -->
     <taskdef resource="com/salesforce/antlib.xml" uri="antlib:com.salesforce">
         <classpath>
-            <pathelement location="./salesforce_ant_37.0/ant-salesforce.jar" />
+            <pathelement location="./salesforce_ant/ant-salesforce.jar" />            
         </classpath>
     </taskdef>
 
