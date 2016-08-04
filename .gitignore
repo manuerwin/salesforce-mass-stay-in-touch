@@ -1,6 +1,3 @@
-# ANT config files
-build.*
-
 # OSX file system
 .DS_Store*
 Thumbs.db
