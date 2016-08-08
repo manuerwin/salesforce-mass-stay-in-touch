@@ -23,9 +23,31 @@
             </value>
         </inputParameters>
     </actionCalls>
+    <assignments>
+        <name>myVariable_waitStartTimeAssignment</name>
+        <label>myVariable_waitStartTimeAssignment</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>myVariable_waitStartTimeVariable</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>myDecision</targetReference>
+        </connector>
+    </assignments>
     <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>0.0</numberValue>
+            </value>
+        </processMetadataValues>
         <name>myDecision</name>
-        <label>Primary Decision</label>
+        <label>myDecision</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>default</defaultConnectorLabel>
@@ -42,7 +64,7 @@
             <connector>
                 <targetReference>myRule_1_A1</targetReference>
             </connector>
-            <label>Always create SIT Task for Contact</label>
+            <label>Always Execute</label>
         </rules>
     </decisions>
     <description>Upon creation of custom Stay In Touch Request record, send an email to the Contact, create a Task to record the details, and stamp parent Contact fields with current date time and status values.</description>
@@ -69,18 +91,12 @@
         <expression>TODAY()</expression>
     </formulas>
     <formulas>
-        <processMetadataValues>
-            <name>originalFormula</name>
-            <value>
-                <stringValue>true</stringValue>
-            </value>
-        </processMetadataValues>
         <name>formula_myRule_1</name>
         <dataType>Boolean</dataType>
         <expression>true</expression>
     </formulas>
-    <interviewLabel>Mass_Stay_In_Touch-2_msit__Stay_In_Touch_Request__c</interviewLabel>
-    <label>Mass Stay In Touch</label>
+    <interviewLabel>Mass_Stay_In_Touch-3_msit__Stay_In_Touch_Request__c</interviewLabel>
+    <label>MSIT-Creation</label>
     <processMetadataValues>
         <name>ObjectType</name>
         <value>
@@ -116,12 +132,6 @@
         </connector>
         <inputAssignments>
             <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Due Date Only</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
                 <name>dataType</name>
                 <value>
                     <stringValue>Date</stringValue>
@@ -131,6 +141,12 @@
                 <name>isRequired</name>
                 <value>
                     <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Due Date Only</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -146,12 +162,6 @@
         </inputAssignments>
         <inputAssignments>
             <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Assigned To ID</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
                 <name>dataType</name>
                 <value>
                     <stringValue>ID</stringValue>
@@ -161,6 +171,12 @@
                 <name>isRequired</name>
                 <value>
                     <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Assigned To ID</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -176,12 +192,6 @@
         </inputAssignments>
         <inputAssignments>
             <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Priority</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
                 <name>dataType</name>
                 <value>
                     <stringValue>Picklist</stringValue>
@@ -191,6 +201,12 @@
                 <name>isRequired</name>
                 <value>
                     <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Priority</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -206,12 +222,6 @@
         </inputAssignments>
         <inputAssignments>
             <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Status</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
                 <name>dataType</name>
                 <value>
                     <stringValue>Picklist</stringValue>
@@ -221,6 +231,12 @@
                 <name>isRequired</name>
                 <value>
                     <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Status</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -236,12 +252,6 @@
         </inputAssignments>
         <inputAssignments>
             <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Subject</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
                 <name>dataType</name>
                 <value>
                     <stringValue>String</stringValue>
@@ -251,6 +261,12 @@
                 <name>isRequired</name>
                 <value>
                     <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Subject</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -266,12 +282,6 @@
         </inputAssignments>
         <inputAssignments>
             <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Name ID</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
                 <name>dataType</name>
                 <value>
                     <stringValue>ID</stringValue>
@@ -281,6 +291,12 @@
                 <name>isRequired</name>
                 <value>
                     <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Name ID</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -298,6 +314,12 @@
     </recordCreates>
     <recordUpdates>
         <processMetadataValues>
+            <name>evaluationType</name>
+            <value>
+                <stringValue>always</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
             <name>isChildRelationship</name>
             <value>
                 <booleanValue>false</booleanValue>
@@ -307,12 +329,6 @@
             <name>reference</name>
             <value>
                 <stringValue>[msit__Stay_In_Touch_Request__c].Contact</stringValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>evaluationType</name>
-            <value>
-                <stringValue>always</stringValue>
             </value>
         </processMetadataValues>
         <name>myRule_1_A3</name>
@@ -334,12 +350,6 @@
         </filters>
         <inputAssignments>
             <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Last MSIT Sent Datetime</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
                 <name>dataType</name>
                 <value>
                     <stringValue>DateTime</stringValue>
@@ -349,6 +359,12 @@
                 <name>isRequired</name>
                 <value>
                     <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Last MSIT Sent Datetime</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -364,7 +380,7 @@
         </inputAssignments>
         <object>Contact</object>
     </recordUpdates>
-    <startElementReference>myDecision</startElementReference>
+    <startElementReference>myVariable_waitStartTimeAssignment</startElementReference>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>
@@ -380,5 +396,15 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Stay_In_Touch_Request__c</objectType>
+    </variables>
+    <variables>
+        <name>myVariable_waitStartTimeVariable</name>
+        <dataType>DateTime</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <elementReference>$Flow.CurrentDateTime</elementReference>
+        </value>
     </variables>
 </Flow>
