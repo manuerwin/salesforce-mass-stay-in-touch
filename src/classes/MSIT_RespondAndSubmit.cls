@@ -1,6 +1,6 @@
 //  Type:       Controller Extension
 //  Purpose:    Provide functionality for VF Page Mass Stay In Touch - External user responds and submits
-//  Copyright (C) 2015  Manu Erwin
+//  Copyright (C) 2016  Manu Erwin
 
 //  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
@@ -49,6 +49,24 @@ public without sharing class MSIT_RespondAndSubmit {
         updateContact();
         status = 'Success';
         return null;
+    }
+    public String contactOwnerName {
+        get {
+            if (contactOwnerName == null) {
+                contactOwnerName = theContact.Owner.FirstName +' '+ theContact.Owner.LastName;
+            }
+            return contactOwnerName;
+        }
+        set;
+    }
+    public String contactOwnerEmail {
+        get {
+            if (contactOwnerEmail == null) {
+                contactOwnerEmail = theContact.Owner.Email;
+            }
+            return contactOwnerEmail;
+        }
+        set;
     }
     public String salutation {
         get {
@@ -212,15 +230,24 @@ public without sharing class MSIT_RespondAndSubmit {
         }
         set;
     }
+    public String messageToOwner {
+        get {
+            if (messageToOwner == null) {
+                messageToOwner = theContact.Last_MSIT_Message__c;
+            }
+            return messageToOwner;
+        }
+        set;
+    }
 
     /* PRIVATE VARIABLES AND METHODS */
     private Contact theContact { get; set; }
     private void getContact() {
-        // To add custom fields, add a comma after MailingCountry and then the API name of the custom field e.g. MailingCountry, MyCustomField
+        // To add custom fields, add a comma after Last_MSIT_Message__c and then the API name of the custom field e.g. Last_MSIT_Message__c, MyCustomField__c
         if (contactId != null) {
-            theContact = [SELECT Id, Name, Salutation, FirstName, LastName, Email,
+            theContact = [SELECT Id, Name, Salutation, FirstName, LastName, Email, Owner.FirstName, Owner.LastName, Owner.Email,
             Account.Name, Title, Department, Phone, MobilePhone, HomePhone, Fax, AssistantName, AssistantPhone,
-            MailingStreet, MailingCity, MailingState, MailingPostalCode, MailingCountry
+            MailingStreet, MailingCity, MailingState, MailingPostalCode, MailingCountry, Last_MSIT_Message__c
             FROM Contact WHERE Id = :contactId];
         }
     }
@@ -286,6 +313,7 @@ public without sharing class MSIT_RespondAndSubmit {
         }
     }
     private void updateContact() {
+        // To add custom fields, add a new line after Last_MSIT_Message__c with the custom field e.g. MyCustomField__c
         try {
             theContact.Salutation = salutation;
             theContact.FirstName = firstName;
@@ -305,6 +333,7 @@ public without sharing class MSIT_RespondAndSubmit {
             theContact.MailingState = mailingState;
             theContact.MailingPostalCode = mailingPostalCode;
             theContact.MailingCountry = mailingCountry;
+            theContact.Last_MSIT_Message__c = messageToOwner;
 
             System.debug('## DEBUG: contact: ' + theContact);
             update theContact;

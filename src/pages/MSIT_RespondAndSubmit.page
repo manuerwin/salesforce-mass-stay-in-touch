@@ -1,5 +1,5 @@
 <!-- 
-    Copyright (C) 2015  Manu Erwin
+    Copyright (C) 2016  Manu Erwin
 
 //  This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
 //  the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
@@ -69,7 +69,7 @@
                 <apex:outputPanel id="information" layout="block" styleClass="col-xs-12" >
                     <h3>Staying in touch</h3>
                     <p class="text-primary">Please enter your updated information below!</p>
-                    <p class="text-info">Information entered in this section will be sent to [Contact Owner Name : Contact Owner Email]. For further information, please [read our Privacy Statement].</p>
+                    <p class="text-info">Information entered in this section will be sent to {!contactOwnerName} : {!contactOwnerEmail}. For further information, please [read our Privacy Statement].</p>
                 </apex:outputPanel>
 
                 <!-- Left side fields -->
@@ -166,6 +166,13 @@
                         <apex:outputLabel value="Assistant Phone:" for="AssistantPhone" />
                         <apex:inputText id="AssistantPhone" value="{!assistantPhone}" styleClass="form-control" />
                     </apex:outputPanel>
+
+                    If you would also like to send a note to {!contactOwnerName} you may enter it here:
+
+                    <apex:outputPanel layout="block" styleClass="form-group" >
+                        <apex:inputTextarea id="noteToOwner" value="{!messageToOwner}" styleClass="form-control" />
+                    </apex:outputPanel>
+
                 </apex:outputPanel>
 
                 <!-- Submit changes button-->

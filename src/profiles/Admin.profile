@@ -84,6 +84,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contact.Last_MSIT_Message__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contact.Last_MSIT_Request_Result__c</field>
         <readable>true</readable>
     </fieldPermissions>
