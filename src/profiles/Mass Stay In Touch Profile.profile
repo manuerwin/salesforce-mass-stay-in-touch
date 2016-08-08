@@ -162,6 +162,14 @@
         <apexPage>MSIT_RespondAndSubmit</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
+    <tabVisibilities>
+        <tab>Stay_In_Touch_Request__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>standard-Contact</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
     <userLicense>Guest</userLicense>
     <userPermissions>
         <enabled>true</enabled>

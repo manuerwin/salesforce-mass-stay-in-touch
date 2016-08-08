@@ -29,8 +29,6 @@
     <types>
         <members>Mass_Stay_In_Touch_Emails</members>
         <members>Mass_Stay_In_Touch_Emails/Mass_Stay_In_Touch_Contact_Template_NO_NOT_DELETE</members>
-        <members>Mass_Stay_In_Touch_Emails/Stay_In_Touch_notify_changes</members>
-        <members>Mass_Stay_In_Touch_Emails/Stay_In_Touch_notify_no_change</members>
         <name>EmailTemplate</name>
     </types>
     <types>
@@ -55,10 +53,9 @@
         <name>StaticResource</name>
     </types>
     <types>
-        <members>Contact</members>
         <members>Mass_Stay_In_Touch_Settings__c</members>
         <members>Stay_In_Touch_Request__c</members>
         <name>Workflow</name>
     </types>
-    <version>34.0</version>
+    <version>37.0</version>
 </Package>
