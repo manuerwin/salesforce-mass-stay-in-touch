@@ -1,6 +1,6 @@
 <project name="ANT Deployment script" default="pull" basedir="." xmlns:sf="antlib:com.salesforce">
 
-    <!-- Optionally use local build properties -->
+    <!-- Optionally use local build properties - which should NEVER be stored in git! -->
     <property file="build.properties"/>
     <property environment="env" />
 

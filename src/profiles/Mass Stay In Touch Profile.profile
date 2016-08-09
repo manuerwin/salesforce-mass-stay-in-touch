@@ -175,11 +175,6 @@
         <tab>standard-Contact</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
-    <userLicense>Guest</userLicense>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>AllowUniversalSearch</name>
-    </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
         <name>EnableNotifications</name>
