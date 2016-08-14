@@ -97,7 +97,7 @@ private class MSIT_RespondAndSubmit_Test {
         ApexPages.currentPage().getParameters().put('status', MSIT_RespondAndSubmit.CONFIRMED);
 
         // When the page loads
-        msit.MSIT_RespondAndSubmit rAs = new msit.MSIT_RespondAndSubmit();
+        MSIT_RespondAndSubmit rAs = new MSIT_RespondAndSubmit();
         rAs.processResponse();
     }
 }

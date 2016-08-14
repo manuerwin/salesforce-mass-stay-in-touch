@@ -40,7 +40,7 @@ private class MSIT_AdjustEmailAndSend_Test {
         System.debug('##DEBUG: msit custom setting: ' + Mass_Stay_In_Touch_Settings__c.getAll().values());
 
         // When the Send button is clicked
-        msit.MSIT_AdjustEmailAndSend controller = new msit.MSIT_AdjustEmailAndSend(setCon);
+        MSIT_AdjustEmailAndSend controller = new MSIT_AdjustEmailAndSend(setCon);
         Test.startTest();
             controller.createSITs();
         Test.stopTest();
@@ -54,7 +54,7 @@ private class MSIT_AdjustEmailAndSend_Test {
         delete deleteContacts;
         ApexPages.StandardSetController setCon = new ApexPages.StandardSetController(deleteContacts);
         // When the Send button is clicked
-        msit.MSIT_AdjustEmailAndSend controller = new msit.MSIT_AdjustEmailAndSend(setCon);
+        MSIT_AdjustEmailAndSend controller = new MSIT_AdjustEmailAndSend(setCon);
         Test.startTest();
             controller.createSITs();
         Test.stopTest();
@@ -69,7 +69,7 @@ private class MSIT_AdjustEmailAndSend_Test {
         setCon.setSelected(selectedContacts);
 
         // When the page loads
-        msit.MSIT_AdjustEmailAndSend controller = new msit.MSIT_AdjustEmailAndSend(setCon);
+        MSIT_AdjustEmailAndSend controller = new MSIT_AdjustEmailAndSend(setCon);
         Test.startTest();
             controller.createSITs();
         Test.stopTest();
