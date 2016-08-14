@@ -94,8 +94,8 @@
         <name>formula_myRule_1</name>
         <dataType>Boolean</dataType>
         <expression>true</expression>
-    </formulas>
-    <interviewLabel>Mass_Stay_In_Touch-3_msit__Stay_In_Touch_Request__c</interviewLabel>
+    </formulas> 
+    <interviewLabel>MSIT_Creation-1_msit__Stay_In_Touch_Request__c</interviewLabel>
     <label>MSIT-Creation</label>
     <processMetadataValues>
         <name>ObjectType</name>
