@@ -17,7 +17,7 @@ public without sharing class MSIT_RespondAndSubmit {
     // without sharing is used so the Force.com Site Guest User can see and update all Contact records
     /* CONSTANTS */
     public static final String CONFIRMED = 'Confirmed';
-    public static final String CHANGE = 'Change';
+    public static final String SUCCESS = 'Success';
 
     /* CONSTRUCTOR */
     public MSIT_RespondAndSubmit(){
@@ -47,7 +47,7 @@ public without sharing class MSIT_RespondAndSubmit {
     public PageReference processChange() {
         // Update the Contact record with the updated field values
         updateContact();
-        status = 'Success';
+        status = SUCCESS;
         return null;
     }
     public String contactOwnerName {

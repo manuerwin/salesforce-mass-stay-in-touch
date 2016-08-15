@@ -65,7 +65,7 @@ private class MSIT_RespondAndSubmit_Test {
         // Given changes were made
         Stay_In_Touch_Request__c stayInTouch = [SELECT Id, Contact__c FROM Stay_In_Touch_Request__c LIMIT 1];
         ApexPages.currentPage().getParameters().put('ref', stayInTouch.Id);
-        ApexPages.currentPage().getParameters().put('status', MSIT_RespondAndSubmit.CHANGE);
+        ApexPages.currentPage().getParameters().put('status', MSIT_RespondAndSubmit.SUCCESS);
         MSIT_RespondAndSubmit rAs = new MSIT_RespondAndSubmit();
         rAs.processResponse();
         rAs.theContact.LastName = 'Test Change';
@@ -76,9 +76,9 @@ private class MSIT_RespondAndSubmit_Test {
         Contact contact = [SELECT Id, LastName FROM Contact WHERE Id = :stayInTouch.Contact__c];
 
         // Then a "thank you" message should show (just testing the status value not the UI)
-        System.assertEquals(MSIT_RespondAndSubmit.CHANGE, rAs.status, 'The status should be ' + MSIT_RespondAndSubmit.CHANGE);
-        // And the SIT Contact Response should be 'Change'
-        System.assertEquals(MSIT_RespondAndSubmit.CHANGE, stayInTouch.Contact_Response__c, 'The SIT contact response should be ' + MSIT_RespondAndSubmit.CHANGE);
+        System.assertEquals(MSIT_RespondAndSubmit.SUCCESS, rAs.status, 'The status should be ' + MSIT_RespondAndSubmit.SUCCESS);
+        // And the SIT Contact Response should be 'Success'
+        System.assertEquals(MSIT_RespondAndSubmit.SUCCESS, stayInTouch.Contact_Response__c, 'The SIT contact response should be ' + MSIT_RespondAndSubmit.SUCCESS);
         // And the changes should be reflected on the Contact record
         System.assertEquals('Test Change', contact.LastName, 'The last name should be Test Change');
     }
