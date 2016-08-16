@@ -52,12 +52,14 @@
         <trackHistory>false</trackHistory>
         <type>DateTime</type>
     </fields>
-
     <listViews>
         <fullName>Stay_In_Touch_Contacts</fullName>
         <filterScope>Everything</filterScope>
         <label>Stay In Touch Contacts</label>
     </listViews>
+    <searchLayouts>
+        <listViewButtons>Mass_Stay_In_Touch_Request</listViewButtons>
+    </searchLayouts>
     <webLinks>
         <fullName>Mass_Stay_In_Touch_Request</fullName>
         <availability>online</availability>
