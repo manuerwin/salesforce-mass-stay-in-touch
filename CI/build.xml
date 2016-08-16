@@ -12,7 +12,7 @@
     </taskdef>
 
     <!-- Deploys all metadata in src directory to target Salesforce environment, runs All Tests in Local namespace, never actually saves to the server -->
-    <target name="deployCodeCheckOnly">
+    <target name="deployCodeCheckOnlyRunLocalTests">
         <echo message="deploying all src, run local namespace tests, do not save" />
         <echo message="ANT_HOME=${ant.home}"/>
         <echo message="BASEDIR=${basedir}"/>
@@ -31,6 +31,29 @@
             logType="Debugonly"
             rollbackOnError="true"
             testlevel="RunLocalTests"
+            checkOnly="true"
+        />
+    </target>
+    <!-- Deploys all metadata in src directory to target Salesforce environment, no tests executed, never actually saves to the server -->
+    <target name="deployCodeCheckOnlyNoTests">
+        <echo message="deploying all src, no tests, do not save" />
+        <echo message="ANT_HOME=${ant.home}"/>
+        <echo message="BASEDIR=${basedir}"/>
+        <echo message="ANT_CORE_LIB=${ant.core.lib}"/>
+        <echo message="JAVA_VERSION=${ant.java.version}"/>
+        <echo message="ANT_LIBRARY_DIR=${ant.library.dir}"/>
+        <echo message="classpath=${java.class.path}"/>
+        <echo message="User: ${env.sfdc_username}" />
+        <echo message="Env: ${env.sfdc_server_url}" />
+
+        <sf:deploy username="${env.sfdc_username}" 
+            password="${env.sfdc_pass_and_token}" 
+            serverurl="${env.sfdc_server_url}"
+            maxPoll="200" 
+            deployRoot="../src" 
+            logType="Debugonly"
+            rollbackOnError="true"
+            testlevel="NoTestRun"
             checkOnly="true"
         />
     </target>
@@ -55,7 +78,31 @@
             logType="Debugonly"
             rollbackOnError="true"
             testlevel="RunLocalTests"
+            checkOnly="false"
         />
     </target>
 
+    <!-- Deploys all metadata in src directory to target Salesforce environment, no tests -->
+    <target name="deployCodeNoTests">
+        <echo message="deploying all src, run local namespace tests" />
+        <echo message="ANT_HOME=${ant.home}"/>
+        <echo message="BASEDIR=${basedir}"/>
+        <echo message="ANT_CORE_LIB=${ant.core.lib}"/>
+        <echo message="JAVA_VERSION=${ant.java.version}"/>
+        <echo message="ANT_LIBRARY_DIR=${ant.library.dir}"/>
+        <echo message="classpath=${java.class.path}"/>
+        <echo message="User: ${env.sfdc_username}" />
+        <echo message="Env: ${env.sfdc_server_url}" />
+
+        <sf:deploy username="${env.sfdc_username}" 
+            password="${env.sfdc_pass_and_token}" 
+            serverurl="${env.sfdc_server_url}" 
+            maxPoll="200" 
+            deployRoot="../src" 
+            logType="Debugonly"
+            rollbackOnError="true"
+            testlevel="NoTestRun"
+            checkOnly="false"
+        />
+    </target>
 </project>
