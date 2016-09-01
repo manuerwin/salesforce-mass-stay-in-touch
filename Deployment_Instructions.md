@@ -11,4 +11,10 @@ Create a New Site with the following details (make sure they are exactly the sam
 4 Active Site Home Page: InMaintenance
 5 Leave all other default values and click Save
 
-# 2) 
+# 2) Migrate metadata into target environment
+Manually remove the MSIT-Creation flow from the src/flow directory as error occurs when migration is attempted.
+Run the ant deploy script 'deployCodeNoTests' to get around test method failure in sandbox.
+Confirm all metadata items present.
+Manually provision Read permissions for Contact MSIT fields to appropriate profiles.
+Manually add the MSIT custom fields to the Contact page layout and set to Read Only.
+Manually add the Stay In Touch related list to the Contact page layout, with Stay In Touch Ref, Subject, Signature, Contact Response, and Last Modified By as columns. Set Sort By to Last Modified By Descending. Remove the New button.
